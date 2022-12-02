@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `bam` package is an R package designed to estimate dynamic models of
+The `bamm` package is an R package designed to estimate dynamic models of
 species distributions using the concepts of the **BAM** shceme. It allows
 to  operate on large matrices (tens of millions of cells) regarding to each 
 element of the **BAM**, for example, the adjacency matrix 
@@ -48,9 +48,9 @@ The main functions of the package are:
 
 ```r
 if (!require('devtools')) install.packages('devtools')
-devtools::install_github('luismurao/bam')
+devtools::install_github('luismurao/bamm')
 # If you want to build vignette, install pandoc before and then
-devtools::install_github('luismurao/bam',build_vignettes=TRUE)
+devtools::install_github('luismurao/bamm',build_vignettes=TRUE)
 ```
 
 ## Acknowledgements
