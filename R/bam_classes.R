@@ -28,11 +28,14 @@ g_area <- methods::setClass(Class = "g_area",
 #' A class for the A set of the BAM diagram. It contains raster models and
 #' IDs of pixels with values different than NA.
 #'
-#' @slot niche_model A niche model in raster format. It can be a binary model or continuous.
+#' @slot niche_model A niche model in raster format. It can be a binary model
+#' or continuous.
 #' If the model is in a continuous format.
 #' @slot suit_threshold Suitability value used to binarize continuous model
-#' @slot cellIDs A numeric vector with the IDs of the cells with prediction values
-#' @slot suit_values A numeric vector with suitability value of the continuous map
+#' @slot cellIDs A numeric vector with the IDs of the cells with prediction
+#' values
+#' @slot suit_values A numeric vector with suitability value of the continuous
+#' map
 #' @slot sparse_model A niche model in sparse matrix format
 #' @importClassesFrom raster RasterLayer
 #' @importClassesFrom raster RasterStack
@@ -66,7 +69,8 @@ setA <- methods::setClass(Class = "setA",
 #' @slot adj_matix An adjacency matrix
 #' @slot adj_list An adjacency list
 #' @slot initial_points A presence-absence vector with species' occurrences
-#' @slot n_initial_points Number of initial points used to start the dispersal process
+#' @slot n_initial_points Number of initial points used to start the dispersal
+#' process
 #' @slot ngbs Number of neighbors
 #' @importClassesFrom raster RasterLayer
 #' @importClassesFrom raster RasterStack
@@ -87,7 +91,8 @@ setM <- methods::setClass(Class = "setM",
 #' @aliases bam-class
 #' @author Luis Osorio-Olvera & Jorge Soberón
 #' @slot sdm_sim A list of sparse vectors representing the area occupied
-#' @slot palatable_matrices A list of sparse vectors representing palatable sites.
+#' @slot palatable_matrices A list of sparse vectors representing palatable
+#' sites.
 #' @slot sim_steps Number of simulation steps
 #' by the species
 #' @exportClass bam
@@ -140,8 +145,10 @@ leaflet <- methods::setClass(Class = "leaflet")
 #' Class  \code{csd}
 #' @aliases csd-class
 #' @author Luis Osorio-Olvera & Jorge Soberón
-#' @slot connections A data.frame with four columns: x, y, clusterID and cluster_size
-#' @slot interactive_map A leaflet map with markers showing the geographical clusters
+#' @slot connections A data.frame with four columns: x, y, clusterID and
+#' cluster_size
+#' @slot interactive_map A leaflet map with markers showing the geographical
+#' clusters
 #' @slot raster_map A raster map with cluster IDs as values.
 #' @exportClass csd
 #' @export
@@ -162,7 +169,8 @@ csd <- methods::setClass(Class = "csd",
 #' @author Luis Osorio-Olvera & Jorge Soberón
 #' @slot alpha A sparse matrix with the richness of species per site
 #' @slot omega A sparse matrix with the range size of every species
-#' @slot dispersion_field A sparse matrix with the set of ranges of all species that occur in at each locality
+#' @slot dispersion_field A sparse matrix with the set of ranges of all species
+#' that occur in at each locality
 #' @exportClass bioindex
 #' @export
 
@@ -179,7 +187,8 @@ bioindex_sparse <- methods::setClass(Class = "bioindex_sparse",
 #' @author Luis Osorio-Olvera & Jorge Soberón
 #' @slot alpha A matrix with the richness of species per site
 #' @slot omega A matrix with the range size of every species
-#' @slot dispersion_field A matrix with the set of ranges of all species that occur in at each locality
+#' @slot dispersion_field A matrix with the set of ranges of all species that
+#' occur in at each locality
 #' @exportClass bioindex
 #' @export
 
@@ -195,15 +204,20 @@ bioindex <- methods::setClass(Class = "bioindex",
 #' @aliases diversityrange
 #' @author Luis Osorio-Olvera & Jorge Soberón
 #' @slot alpha A coulmn vector with species richness per site
-#' @slot omega A coulmn vector with the size of the area of distribution per species.
+#' @slot omega A coulmn vector with the size of the area of distribution per
+#' species.
 #' @slot alpha_raster Species richness in raster format.
-#' @slot dispersion_field A matrix with the set of ranges of all species that occur in at each locality.
-#' @slot dispersion_field_raster Raster object with the observed values of dispersion field.
+#' @slot dispersion_field A matrix with the set of ranges of all species that
+#' occur in at each locality.
+#' @slot dispersion_field_raster Raster object with the observed values of
+#' dispersion field.
 #' @slot diversity_range_raster Raster object of diversity range.
 #' @slot diversity_range_colors Colors to plot endemism levels.
-#' @slot null_dispersion_field_dist A matrix whith dispersion field null distribution.
+#' @slot null_dispersion_field_dist A matrix whith dispersion field null
+#' distribution.
 #' @slot xy_coordinates A matrix of geographical coordinates
-#' @slot n_iterations Number of iterations used to estimate the dispersion field null distribution.
+#' @slot n_iterations Number of iterations used to estimate the dispersion
+#' field null distribution.
 #' @slot nsps Number of species in the PAM.
 #' @slot nsites Number of sites in the PAM.
 #' @exportClass diversity_range
