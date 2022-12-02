@@ -32,11 +32,12 @@ Imports:
     animation (>= 2.3),
     future (>= 1.18.0),
     furrr (>= 0.1.0),
-    Rcpp (>= 0.12.18)
+    Rcpp (>= 0.12.18),
+    sp(>= 1.3.0)
 Suggest: 
-    maptools(>= 0.9.4), sp(>= 1.3.0)
+    maptools(>= 0.9.4)
 RdMacros: Rdpack
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Suggests: 
     knitr,
     crosstalk,
