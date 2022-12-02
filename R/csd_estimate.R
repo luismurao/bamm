@@ -2,8 +2,10 @@
 #' @description csd_plot gives an estimate of the number of geographic clusters
 #' given a set of dispersal hypothesis and a suitability raster
 #'
-#' @param model A raster model or a setA object representing the suitability model
-#' @param dispersal_steps A numeric vector with elements representing the dispersal
+#' @param model A raster model or a setA object representing the
+#' suitability model
+#' @param dispersal_steps A numeric vector with elements representing
+#' the dispersal
 #' hypothesis to test.
 #' @author Luis Osorio-Olvera & Jorge Soberon
 #' @examples
@@ -27,23 +29,23 @@ csd_estimate <- function(model,dispersal_steps=c(2,4,8,16,32,64)){
   dispersal_steps <- sort(dispersal_steps)
   ds <- seq_along(dispersal_steps)
   pb <- utils::txtProgressBar(min = 0, max = max(ds), style = 3)
-  testworks <- TRUE
+  #testworks <- TRUE
   csd <- ds %>% purrr::map(function(x){
-    if(testworks){
-      bclust <- try({
-        r <- bamm::bam_clusters(model,ngbs = dispersal_steps[x])
-      },silent = TRUE)
+    #if(testworks){
+    bclust <- try({
+      r <- bamm::bam_clusters(model,ngbs = dispersal_steps[x])
+       },silent = TRUE)
 
-      if(!methods::is(bclust,"csd")){
-        warning("There is not enough memory to calculate",
-                "the adjacency matrix for dispersal step =",
-                dispersal_steps[x],"\n returning ",
-                paste(dispersal_steps[1:(x-1)],collapse = " "))
-        testworks <- FALSE
-      }
-    }
-    utils::setTxtProgressBar(pb, x)
-    return(bclust)
+      #if(!methods::is(bclust,"csd")){
+      #  warning("There is not enough memory to calculate",
+      #          "the adjacency matrix for dispersal step =",
+      #          dispersal_steps[x],"\n returning ",
+      #          paste(dispersal_steps[1:(x-1)],collapse = " "))
+      #  testworks <- FALSE
+      #}
+      #}
+      utils::setTxtProgressBar(pb, x)
+      return(bclust)
   })
 
 
