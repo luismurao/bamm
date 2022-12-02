@@ -1,16 +1,23 @@
 #' bam_clusters: Function to estimate the connectivity of suitable areas
 #'
-#' @description Function to estimate the connectivity of suitable areas given an adjacency matrix.
+#' @description Function to estimate the connectivity of suitable areas given
+#' an adjacency matrix.
 #' @param model A niche model in raster format
 #' @param ngbs Numeric. Number of neighbors (see details).
-#' @param plot_model Logical. Indicates whether to plot the model in the cluster map.
+#' @param plot_model Logical. Indicates whether to plot the model in the
+#' cluster map.
 #' @details
-#' The grid_base raster object is the area where the dispersal process will occur.
-#' The number of neighbors depends on the dispersal abilities of the species and the spatial resolution of the grid_base;
-#' for example, a species's with big dispersal abilities will move throughout more than 1 km^2 per day, so the idea is to give an approximate number of moving neighbors (pixels) per unit of time.
+#' The grid_base raster object is the area where the dispersal process will
+#' occur.
+#' The number of neighbors depends on the dispersal abilities of the species
+#' and the spatial resolution of the grid_base;
+#' for example, a species's with big dispersal abilities will move throughout
+#' more than 1 km^2 per day, so the idea is to give an approximate number of
+#' moving neighbors (pixels) per unit of time.
 #' @importFrom methods as
-
-#' @return A list with a data.frame of the coordinates of each cluster and a leaflet map.
+#' @import raster
+#' @return A list with a data.frame of the coordinates of each cluster and a
+#' leaflet map.
 #'
 #' @examples
 
@@ -33,8 +40,11 @@ bam_clusters <- function(model,ngbs=1,plot_model=FALSE){
   if(methods::is(model,"RasterLayer")){
     msparse <- bamm::model2sparse(model)
   }
-  else{
+  else if(methods::is(model,"setA")){
     msparse <- model
+  }
+  else{
+    stop("model should be a RasterLayer or setA class object")
   }
   #if(class(model) != "setA")
   #  stop("model should be of raster class or setA class")
@@ -109,6 +119,7 @@ bam_clusters <- function(model,ngbs=1,plot_model=FALSE){
 
     mod <- round(msparse@niche_model)
     mod <- raster::as.factor(mod)
+    #raster::crs(mod)
     m <- m %>%
       leaflet::addRasterImage( mod,
                                colors = c("gray100","blue"),
