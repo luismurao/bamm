@@ -7,25 +7,36 @@
 adj_mat(modelsparse, ngbs = 1, eigen_sys = FALSE, which_eigs = 1)
 }
 \arguments{
-\item{modelsparse}{A setA object returned by the function \code{\link[bamm]{model2sparse}}.}
+\item{modelsparse}{A setA object returned by the function
+\code{\link[bamm]{model2sparse}}.}
 
 \item{ngbs}{Numeric. Number of neighbors (see details).}
 
-\item{eigen_sys}{Logical. If TRUE the eigen analsys of the adjancency matrix will be returned.}
+\item{eigen_sys}{Logical. If TRUE the eigen analyses of the
+adjacency matrix will be returned.}
 
-\item{which_eigs}{Numeric. Which eigen value and eigen vector will be returned.}
+\item{which_eigs}{Numeric. Which eigen value and eigen vector will
+be returned.}
 }
 \value{
-Returns an adjacency matrix of class sparseMatrix of n+2 x n columns (n number of the non-NA cells of grid_base) with the coordinates of the non-NA cells of grid_base.
+Returns an adjacency matrix of class sparseMatrix of n+2 x n
+columns (n number of the non-NA cells of grid_base) with the coordinates
+of the non-NA cells of grid_base.
 }
 \description{
-Creates an adjacency matrix of an area of interest. This could be the accessible area (M) of a species or any geographic region of interest.
+Creates an adjacency matrix of an area of interest.
+This could be the accessible area (M) of a species or any geographic
+region of interest.
 }
 \details{
-The grid_base raster object is the area where the dispersal process will occur.
-The number of neighbors depends on the dispersal abilities of the species and the spatial resolution
-of the grid_base; for example, a species's with big dispersal abilities will move throughout more
-than 1 km^2 per day, so the idea is to give an approximate number of moving neighbors (pixels) per
+The grid_base raster object is the area where the dispersal
+process will occur.
+The number of neighbors depends on the dispersal abilities of the species
+and the spatial resolution
+of the grid_base; for example, a species's with big dispersal abilities
+will move throughout more
+than 1 km^2 per day, so the idea is to give an approximate number of moving
+neighbors (pixels) per
 unit of time.
 }
 \examples{
