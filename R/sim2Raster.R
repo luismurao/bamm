@@ -13,7 +13,7 @@
 #' model <- raster::raster(model_path)
 
 #' sparse_mod <- bamm::model2sparse(model)
-#' adj_mod <- bamm::adj_mat(sparse_mod,nbgs=1)
+#' adj_mod <- bamm::adj_mat(sparse_mod,ngbs = 1)
 
 #' occs_lep_cal <- data.frame(longitude = c(-115.10417,
 #'                                          -104.90417),
@@ -35,8 +35,10 @@ sim2Raster <- function(sdm_simul,which_steps = NULL){
   if(!inherits(sdm_simul,"bam")){
     stop("sdm_simul should be of class bam")
   }
-  if(is.null(which_steps))
+  if(is.null(which_steps)){
     stepsvec <- 1:sdm_simul@sim_steps
+    which_steps <- stepsvec
+  }
   if(max(which_steps)>sdm_simul@sim_steps)
     stop("One or more steps were not simulated by the sdm_sim function")
   if(!all(which_steps%% 1 %in% 0))
