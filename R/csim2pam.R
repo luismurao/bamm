@@ -8,7 +8,6 @@
 #' @examples
 #'
 #' \dontrun{
-#' library(bamm)
 #' lagos_path <- system.file("extdata/conejos",
 #'                           package = "bamm")
 #' enm_path <- list.files(lagos_path,
@@ -33,16 +32,16 @@
 #' }
 #'
 csim2pam <- function(community_sim, which_steps){
-  if(inherits(community_sim, "community_sim"))
-    stop("Object should be of class community_bam")
+  if(!inherits(community_sim, "community_sim"))
+    stop("Object should be of class community_sim")
 
   n_sps <- length(community_sim@community_sim)
   sps_names <- names(community_sim@community_sim)
   pamL <- lapply(which_steps, function(t_step){
-    sim_t <- community_sim@community_sim[[1]]@sdm_sim[[t_step]]
+    sim_t <- Matrix::t(community_sim@community_sim[[1]]@sdm_sim[[t_step]])
     for (sps in 2:n_sps) {
       sim_tm <- community_sim@community_sim[[sps]]@sdm_sim[[t_step]]
-      sim_t <- Matrix::cbind2(sim_t,sim_tm)
+      sim_t <- Matrix::cbind2(sim_t,Matrix::t(sim_tm))
       #dimnames(sim_t) <- list(sps_names)
     }
     #rows=paste0("s",1:nrow(sim_t))
