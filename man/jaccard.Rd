@@ -23,7 +23,7 @@ Estimates the Jaccard index for comparing two binary maps
 }
 \details{
 The Jaccard index is computed as follows
-\deqn{J(A,B)={{|A\cap B|}\over{|A\cup B|}}={{|A\cap B|}\over{|A|+|B|-|A\capB|}}.
+\deqn{J(A,B)={{|A\cap B|}\over{|A\cup B|}}={{|A\cap B|}\over{|A|+|B|-|A\cap B|}}.
 }
 }
 \examples{
