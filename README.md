@@ -1,3 +1,6 @@
+<!-- badges: start -->
+  [![Travis build status](https://travis-ci.com/luismurao/bamm.svg?branch=master)](https://travis-ci.com/luismurao/bamm)
+<!-- badges: end -->
 # The BAM package <a href='https://luismurao.github.io/'><img src='inst/figures/bam_logo.png' align="right" height="139" /></a>
 
 **Authors: Luis Osorio-Olvera & Jorge Soberon**
@@ -5,7 +8,7 @@
 ## Overview
 
 The `bamm` package is an R package designed to estimate dynamic models of
-species distributions using the concepts of the **BAM** shceme. It allows
+species distributions using the concepts of the **BAM** scheme. It allows
 to  operate on large matrices (tens of millions of cells) regarding to each 
 element of the **BAM**, for example, the adjacency matrix 
 (connectivity matrix), and the niche suitability matrices. 
