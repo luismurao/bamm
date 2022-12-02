@@ -1,7 +1,9 @@
 #' sdm_sim: Simulate single species dispersal dynamics using the BAM framework.
 
-#' @param set_A A setA object returned by the function \code{\link[bamm]{model2sparse}}
-#' @param set_M A setM object cointaining the adjacency matrix of the study area.
+#' @param set_A A setA object returned by the function
+#' \code{\link[bamm]{model2sparse}}
+#' @param set_M A setM object cointaining the adjacency matrix of the
+#' study area.
 #' See \code{\link[bamm]{adj_mat}}
 #' @param initial_points A sparse vector returned by the function
 #' \code{\link[bamm]{occs2sparse}}
@@ -9,8 +11,10 @@
 #' @param stochastic_dispersal Logical. If dispersal depends on a probability of
 #' visiting neighbor cells (Moore neighborhood).
 #' @param disper_prop Probability of dispersal to reachable cells.
-#' @param disp_prop2_suitability Logical. If probability of dispersal is proportional
-#' to the suitability of reachable cells. The proportional value must be declered
+#' @param disp_prop2_suitability Logical. If probability of dispersal
+#' is proportional
+#' to the suitability of reachable cells. The proportional value
+#' must be declared
 #' in the parameter `disper_prop`.
 #' @param progress_bar Show progress bar
 

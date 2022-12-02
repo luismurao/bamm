@@ -1,11 +1,12 @@
-#' pam2richness: Converts Presence Absence Matrix (pam object) to richness raster
-#' @description Converts Presence Absence Matrix (pam object) to richness raster
+#' pam2richness: Converts Presence Absence Matrix (pam object) to
+#' richness raster
+#' @description Converts Presence Absence Matrix (pam object) to
+#' richness raster
 #'
 #' @param pamobj An object of class pam see \code{\link[bamm]{csim2pam}}
 #' @param which_steps Time steps in the pam to convert
 #' @examples
 #' \dontrun{
-#' library(bamm)
 #' lagos_path <- system.file("extdata/conejos",
 #'                           package = "bamm")
 #' enm_path <- list.files(lagos_path,
