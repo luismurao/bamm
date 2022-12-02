@@ -12,15 +12,18 @@ methods::setMethod(f = "show",
 
                      cat("Set A of the BAM digram it contains",
                          length(slotsin),"slots \n\n")
-                     #cat("@niche_model, @suit_threshold,@cellIDs,@suit_values\n",
-                     #   "@sparse_model,@coordinates,@eigen_vec,@eigen_val",sep = "")
+                     #cat("@niche_model, @suit_threshold,
+                     #@cellIDs,@suit_values\n",
+                     #   "@sparse_model,@coordinates,@eigen_vec,
+                     #@eigen_val",sep = "")
                      npixs <- length(object@cellIDs)
                      if("niche_model" %in% slotsin){
                        cat("@niche_model: a niche model:\n\n")
                        print(object@niche_model)
                      }
                      if("suit_threshold" %in% slotsin){
-                       cat("@suit_threshold: Threshold value used to binarize model")
+                       cat("@suit_threshold: Threshold value used",
+                           "to binarize model")
                        #print(object@suit_threshold)
                      }
                      if("cellIDs" %in% slotsin){
@@ -68,7 +71,8 @@ methods::setMethod(f = "show",
                          length(slotsin),"slots: \n\n")
                      cat("@connections: Geographic clusters data.frame \n\n")
                      print(head(object@connections,4))
-                     cat("@interactive_map: A leaflet map showing the geographic clusters\n\n")
+                     cat("@interactive_map: A leaflet map showing the",
+                         "geographic clusters\n\n")
                      cat("@raster_map: A raster map of the clusters")
                    })
 
@@ -90,10 +94,12 @@ methods::setMethod(f = "show",
                      cat("\n@sp_names: the species in the pam with ",
                          length(object@sp_names), "species:\n",
                          paste0(object@sp_names,collapse = ", "))
-                     cat("\n\n@which_steps: time steps",object@which_steps,"\n\n")
+                     cat("\n\n@which_steps: time steps",object@which_steps,
+                         "\n\n")
                      cat("@grid:", "raster grid of the studied area\n\n" )
                      print(object@grid)
-                     cat("\n@cellIDs:", "site ids regarding the raster grid\n\n" )
+                     cat("\n@cellIDs:", "site ids regarding the raster grid",
+                         "\n\n" )
 
                    })
 
@@ -110,13 +116,16 @@ methods::setMethod(f = "show",
                      slotsin <- methods::slotNames(object)
                      cat("Object of class bioindex it contains",
                          length(slotsin),"slots: \n\n")
-                     cat("@alpha: A sparse matrix with the richness of species per site \n\n")
+                     cat("@alpha: A sparse matrix with the richness of species",
+                         "per site \n\n")
                      print(object@alpha,6)
                      cat("\n")
-                     cat("@omega: A sparse matrix with the range size of every species \n\n")
+                     cat("@omega: A sparse matrix with the range size of every",
+                         "species \n\n")
                      print(object@omega,6)
                      cat("\n")
-                     cat("@dispersion_field: A sparse with the set of ranges of all species that occur in at each locality \n\n")
+                     cat("@dispersion_field: A sparse with the set of ranges",
+                         "of all species that occur in at each locality \n\n")
                      print(object@omega,6)
 
                    })
@@ -141,16 +150,18 @@ methods::setMethod(f = "show",
                          "values of each cell of the raster area\n\n")
                      print(head(object@coordinates))
 
-                     cat("@initial_points: A list of inital coordinates where the",
-                          "invasion process starts\n\n")
-                     if(length(object@initial_points)>0L)
-                       print(head(object@initial_points))
+                     #cat("@initial_points: A list of inital coordinates where the",
+                    #      "invasion process starts\n\n")
+                     #if(length(object@initial_points)>0L)
+                    #   print(head(object@initial_points))
 
-                     cat("@eigen_val: Eigen values of the connectivity matrix M\n\n")
+                     cat("@eigen_val: Eigen values of the connectivity matrix",
+                         "M\n\n")
                      if(length(object@eigen_val)>0L)
                        print(head(object@eigen_val))
 
-                     cat("@eigen_vec: Eigen vector of the connectivity matrix M\n\n")
+                     cat("@eigen_vec: Eigen vector of the connectivity matrix",
+                         "M\n\n")
                      if(length(object@eigen_vec)>0L)
                        print(head(object@eigen_vec))
                    })
@@ -183,14 +194,16 @@ methods::setMethod(f = "show",
                          " with the range size of each species",
                          "\n\n")
                      print(head(object@omega))
-                     cat("@dispersion_field: A column vector of size ",object@nsites ,
+                     cat("@dispersion_field: A column vector of size ",
+                         object@nsites,
                          "with values of dispersion field at each site",
                          "\n\n")
                      print(head(object@dispersion_field))
                      cat("@dispersion_field_raster: Dispersion field raster",
                          "\n\n")
                      print(object@dispersion_field_raster)
-                     cat("@null_dispersion_field_dist: null dispersion field distribution. ")
+                     cat("@null_dispersion_field_dist: null dispersion field",
+                         "distribution. ")
                      cat("It is matrix of\n n =",object@nsites,"sites x","m =",
                          object@n_iterations, "simulations",
                          "used to generate random values of dispersion field" ,
@@ -199,28 +212,33 @@ methods::setMethod(f = "show",
                        print(head(object@null_dispersion_field_dist[1:2,1:2]))
                      }
 
-                     cat("@diversity_range_raster: Raster with diversity range categories",
+                     cat("@diversity_range_raster: Raster with diversity range",
+                         "categories",
                          "\n\n")
                      print(object@diversity_range_raster)
-                     cat("@xy_coordinates: Geographical coordinates of the sites",
-                         "\n\n")
+                     cat("@xy_coordinates: Geographical coordinates of the",
+                         "sites","\n\n")
                      print(head(object@xy_coordinates))
 
                    })
 
 
-#if (!isGeneric("plot")) {setGeneric("plot", function(x,y,...)standardGeneric("plot"))}
+#if (!isGeneric("plot")) {setGeneric("plot", function(x,y,...)
+#standardGeneric("plot"))}
 
 
 #' Plot method for objects of class diversity_range \pkg{bamm}.
 #' @importFrom methods new
 #' @param x An object of class diversity_range
 
-#' @param plot_type Plot type: possible options: "diversity_range" (range-diversity plot),
-#'                  "diversity_range_map" (a raster map with diversity_range categories),
+#' @param plot_type Plot type: possible options: "diversity_range"
+#' (range-diversity plot),
+#'                  "diversity_range_map" (a raster map with
+#'                  diversity_range categories),
 #'                  "alpha" (a raster mapa with alpha diversity values),
 #'                  "dispersion_field" (a raster with dispersion field)
-#' @param legend Logical. If TRUE the legend of the categorical diversity range values will appear.
+#' @param legend Logical. If TRUE the legend of the categorical diversity
+#' range values will appear.
 #' @param legend_position Lengend position.
 #' @param xlab x label
 #' @param ylab y label
@@ -228,9 +246,9 @@ methods::setMethod(f = "show",
 #' @param pch Patch type.
 #' @param pch_legend Patch type for legends.
 #' @param radius Size of the patch for the interactive map.
-#' @param ... Graphical parameters. Any argument that can be passed to 1) base::plot,
-#'            such as axes=FALSE, main='title', ylab='latitude' 2) leaflet::leaflet
-#'            or 3)leaflet::addCircleMarkers.
+#' @param ... Graphical parameters. Any argument that can be passed to 1)
+#' base::plot, such as axes=FALSE, main='title', ylab='latitude' 2)
+#' leaflet::leaflet or 3) leaflet::addCircleMarkers.
 #' @rdname plot
 #' @export
 
@@ -238,7 +256,8 @@ methods::setMethod(f = "plot",
                    signature = c(x="diversity_range"),
                    function(x,xlab=NULL,plot_type="diversity_range",legend=TRUE,
                             legend_position = "bottomright",
-                            ylab=NULL,col=NULL,pch=NULL,pch_legend=19,radius=0.5,...) {
+                            ylab=NULL,col=NULL,pch=NULL,pch_legend=19,
+                            radius=0.5,...) {
                      if(inherits(x, 'diversity_range')){
 
                        poptions <- c("diversity_range",
@@ -321,7 +340,8 @@ methods::setMethod(f = "plot",
                            ymin1 <- 0.97*min(vy)
                            ymax1 <- 1.03*max(vy)
                            if("diversity_range" == plot_type){
-                             plot(alpha_norm,dispersion_field,xlim=c(xmin1,xmax1),
+                             plot(alpha_norm,dispersion_field,
+                                  xlim=c(xmin1,xmax1),
                                   ylim=c(ymin1,ymax1),
                                   xlab=xlab,ylab=ylab,pch=pch,col=col,...)
                              graphics::lines(graphics::polygon(vx,vy));
@@ -352,24 +372,26 @@ methods::setMethod(f = "plot",
                                               "LE/HR")
 
                              COLORES <- cols[names(cols) %in% names(codifi)]
-                             levels(labs) <-  names(COLORES)[order(COLORES,levels(labs))]
+                             levels(labs) <-  names(COLORES)[order(COLORES,
+                                                                   levels(labs))
+                                                             ]
 
-                             #cols <- c(grDevices::rgb(165/255,170/255,153/255),#1
-                              #         grDevices::rgb(229/255,134/255,6/255), #2
-                               #        grDevices::rgb(93/255,105/255,177/255), #
-                                #       grDevices::rgb(204/255,97/255,176/255), #
-                                 #      grDevices::rgb(153/255,201/255,69/255), #5
-                                  #     grDevices::rgb(218/255,165/255,27/255), #6
-                                   #    grDevices::rgb(237/255,100/255,90/255)) #7
+
                              randiv <- x@diversity_range_raster
                              vals <- stats::na.omit(randiv[])
-                             cols1 <- ifelse(vals == 0,"#000000",
-                                             ifelse(vals ==1, "#F6BDC0",
-                                                    ifelse(vals==2,"#F1A13A",
-                                                           ifelse(vals==3,"#BBDFFA",
-                                                                  ifelse(vals==4,"#DC1C13",
-                                                                         ifelse(vals==6,"#6987D5",
-                                                                                ifelse(vals==12,"#1727AE",NA)))))))
+                             cols1 <- ifelse(
+                               vals == 0,"#000000",
+                               ifelse(vals ==1,
+                                      "#F6BDC0",
+                                      ifelse(vals==2,
+                                             "#F1A13A",
+                                             ifelse(vals==3,
+                                                    "#BBDFFA",
+                                                    ifelse(vals==4,
+                                                           "#DC1C13",
+                                                           ifelse(vals==6,
+                                                                  "#6987D5",
+                                            ifelse(vals==12,"#1727AE",NA)))))))
 
                              div1 <- data.frame(alpha=alpha_norm,
                                                 dispersion_field,
@@ -399,7 +421,8 @@ methods::setMethod(f = "plot",
                                 plotly::add_polygons(x=c(vx,vx[1]),
                                                      y=c(vy,vy[1]),
                                                      #name = paste0("Cluster ",1),
-                                                     line=list(width=2,color="black"),
+                                                     line=list(width=2,
+                                                               color="black"),
                                                      fillcolor='transparent',
                                                      hoverinfo = "none",
                                                      showlegend = FALSE,
@@ -424,7 +447,8 @@ methods::setMethod(f = "plot",
 
                          }
 
-                         if("alpha" %in% plot_type && raster::hasValues(x@alpha_raster)){
+                         if("alpha" %in% plot_type &&
+                            raster::hasValues(x@alpha_raster)){
                            raster::plot(x@alpha_raster,...)
                          }
 
@@ -450,27 +474,40 @@ methods::setMethod(f = "plot",
                             #               "#1727AE")
                            #levels(r) <- rat
                            vals <- randiv[]
-                           cols1 <- ifelse(vals == 0,"#000000",
-                                           ifelse(vals ==1, "#F6BDC0",
-                                                 ifelse(vals==2,"#F1A13A",
-                                                         ifelse(vals==3,"#BBDFFA",
-                                                               ifelse(vals==4,"#DC1C13",
-                                                                     ifelse(vals==6,"#6987D5",
-                                                                            ifelse(vals==12,"#1727AE",NA)))))))
+                           cols1 <- ifelse(
+                             vals == 0,"#000000",
+                             ifelse(vals ==1,
+                                    "#F6BDC0",
+                                    ifelse(vals==2,
+                                           "#F1A13A",
+                                           ifelse(vals==3,
+                                                  "#BBDFFA",
+                                                  ifelse(vals==4,
+                                                         "#DC1C13",
+                                                         ifelse(vals==6,
+                                                                "#6987D5",
+                                                                ifelse(
+                                                                  vals==12,
+                                                                  "#1727AE",NA)
+                                                                ))))))
                            raster::values(r) <- as.factor(cols1)
                            cc <- raster::levels(r)[[1]]
                            raster::plot(r,col=cc$VALUE,legend=FALSE,...)
                            if(legend){
-                             graphics::legend(legend_position,legend = names(COLORES),
-                                              pch=15,col = COLORES,bty = "n",...)
+                             graphics::legend(legend_position,
+                                              legend = names(COLORES),
+                                              pch=15,col = COLORES,
+                                              bty = "n",...)
                            }
                          }
                          if("diversity_range_map" %in% plot_type &&
                             !raster::hasValues(x@diversity_range_raster) &&
                             nrow(x@xy_coordinates) == nsites){
 
-                           plot(x@xy_coordinates,col=x@diversity_range_colors,pch=15)
-                           graphics::legend("bottomleft",legend = names(COLORES),
+                           plot(x@xy_coordinates,col=x@diversity_range_colors,
+                                pch=15)
+                           graphics::legend("bottomleft",
+                                            legend = names(COLORES),
                                             pch=15,col = COLORES,bty = "n")
                          }
                        }
@@ -485,16 +522,21 @@ methods::setMethod(f = "plot",
 #' @param object a of class bam.
 #' @param niche_layers A raster or RasterStack with the niche models for
 #' each time period
-#' @param nbgs_vec A vector with the number of neighbors for the adjacency matrices
+#' @param nbgs_vec A vector with the number of neighbors for the adjacency
+#' matrices
 #' @param nsteps_vec Number of simulation steps for each time period.
 #' @param stochastic_dispersal Logical. If dispersal depends on a probability of
 #' visiting neighbor cells (Moore neighborhood).
 #' @param disper_prop Probability of dispersal to reachable cells.
-#' @param disp_prop2_suitability Logical. If probability of dispersal is proportional
-#' to the suitability of reachable cells. The proportional value must be declered
+#' @param disp_prop2_suitability Logical. If probability of dispersal is
+#' proportional
+#' to the suitability of reachable cells. The proportional value must be
+#' declared
 #' in the parameter `disper_prop`.
-#' @param animate Logical. If TRUE a dispersal animation on climate change scenarios will be created
-#' @param period_names Character vector with the names of periods that will be animated. Default NULL.
+#' @param animate Logical. If TRUE a dispersal animation on climate change
+#' scenarios will be created
+#' @param period_names Character vector with the names of periods that will
+#' be animated. Default NULL.
 #' @param bg_color Color for unsuitable pixels. Default "#F6F2E5".
 #' @param suit_color Color for suitable pixels. Default "#0076BE".
 #' @param occupied_color Color for occupied pixels. Default "#03C33F".
@@ -503,14 +545,12 @@ methods::setMethod(f = "plot",
 #' @param ani.res Animation resolution unit in px
 #' @param fmt Animation format. Posible values are GIF and HTML
 #' @param filename File name.
-#' @param png_keyword A keyword name for the png images generated by the function
+#' @param png_keyword A keyword name for the png images generated by
+#' the function
 #' @export
 #' @rdname predict
 #' @examples
 #' \dontrun{
-#' # Load R packages
-#' library(bamm)
-#' library(raster)
 #' # rm(list = ls())
 #' # Read raster model for Lepus californicus
 #' model_path <- system.file("extdata/Lepus_californicus_cont.tif",
@@ -604,7 +644,7 @@ methods::setMethod(f = "predict",
                        }
                        ad_mat <- lapply(1:n_nbgs_each, function(x){
                          ad <- bamm::adj_mat(modelsparse = object,
-                                            nbgs = nbgs_vec[x])
+                                             ngbs = nbgs_vec[x])
                        })
                      }
                      else{
@@ -617,10 +657,12 @@ methods::setMethod(f = "predict",
 
                      sim_results <- list(object)
 
-                     initial_points <- Matrix::t(object@sdm_sim[[object@sim_steps]])
+                     initial_points <- Matrix::t(object@sdm_sim[[
+                       object@sim_steps]])
                      nsteps <- nsteps_vec[1]
                      niche_mod <- niche_layers[[1]]
-                     sparse_mod <- bamm::model2sparse(niche_mod,threshold = object@suit_threshold)
+                     sparse_mod <- bamm::model2sparse(niche_mod,threshold =
+                                                        object@suit_threshold)
                      sdm <- bamm::sdm_sim(set_A = sparse_mod,
                                          set_M = ad_mat[[1]],
                                          initial_points = initial_points,
@@ -634,9 +676,12 @@ methods::setMethod(f = "predict",
                        for(x in 2:length(nsteps_vec)){
                          nsteps <- nsteps_vec[x]
                          niche_mod <- niche_layers[[x]]
-                         sparse_mod <- bamm::model2sparse(model = niche_mod,threshold = object@suit_threshold)
+                         sparse_mod <- bamm::model2sparse(
+                           model = niche_mod,
+                           threshold = object@suit_threshold)
                          bam_object <- sim_results[[x]]
-                         initial_points <- Matrix::t(bam_object@sdm_sim[[bam_object@sim_steps]])
+                         initial_points <- Matrix::t(
+                           bam_object@sdm_sim[[bam_object@sim_steps]])
 
                          sdm <- bamm::sdm_sim(set_A = sparse_mod,
                                              set_M = ad_mat[[x]],
@@ -678,8 +723,10 @@ methods::setMethod(f = "predict",
                        titles <- lapply(1:length(which_stepsL),
                                         function(x) {
                                           if(!is.null(period_names) &&
-                                             length(period_names) == length(which_stepsL)){
-                                            paste0(period_names[x],paste0(" (t_"),
+                                             length(period_names) ==
+                                             length(which_stepsL)){
+                                            paste0(period_names[x],
+                                                   paste0(" (t_"),
                                                    which_stepsL[[x]],")")
                                           }
                                           else{
@@ -694,9 +741,10 @@ methods::setMethod(f = "predict",
                        sdm_st <- 1:length(sim_results) %>%
                          purrr::map(function(x){
                            #nsims <-length(sim_results[[x]]@sdm_sim) -1
-                           sdm_ani <- bamm::sim2Raster(sim_results[[x]],
-                                                      which_steps = which_stepsL[[x]])
-                           sdm_ani <- sim_results[[x]]@niche_model *1 * (sdm_ani+1)
+                           sdm_ani <- bamm::sim2Raster(
+                             sim_results[[x]],
+                             which_steps = which_stepsL[[x]])
+                           sdm_ani <- sim_results[[x]]@niche_model*1*(sdm_ani+1)
 
                            return(sdm_ani)
                          })
@@ -720,7 +768,8 @@ methods::setMethod(f = "predict",
                            for (i in 1:raster::nlayers(sdm_st)) {
                              maxv <- raster::maxValue(sdm_st[[i]])
                              if(maxv<1.5) colores <- c(bg_color,suit_color)
-                             else colores <- c(bg_color,suit_color,occupied_color)
+                             else colores <- c(bg_color,suit_color,
+                                               occupied_color)
 
                              graphics::par(xpd = FALSE)
 
@@ -758,7 +807,8 @@ methods::setMethod(f = "predict",
                            for (i in 1:raster::nlayers(sdm_st)) {
                              maxv <- raster::maxValue(sdm_st[[i]])
                              if(maxv<1.5) colores <- c(bg_color,suit_color)
-                             else colores <- c(bg_color,suit_color,occupied_color)
+                             else colores <- c(bg_color,suit_color,
+                                               occupied_color)
 
                              graphics::par(xpd = FALSE)
 
@@ -784,7 +834,8 @@ methods::setMethod(f = "predict",
                          htmlfile = filename,
                          ani.width=ani.width,
                          ani.height=ani.width,interval=0.1,
-                         ani.dev = function(...){grDevices::png(res=ani.res,...)})
+                         ani.dev = function(...){
+                           grDevices::png(res=ani.res,...)})
                        }
 
 
