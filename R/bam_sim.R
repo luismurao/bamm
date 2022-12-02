@@ -1,10 +1,12 @@
 #' bam_sim: Simulate dispersal dynamics using the set B of the BAM framework.
 
 #' @param sp1 Niche model of the focal species (the one that disperses).
-#' @param sp2 Niche model of the species with whom sp1 interacts (currently no dispersal dynamics for this species).
+#' @param sp2 Niche model of the species with whom sp1 interacts
+#' (currently no dispersal dynamics for this species).
 #' @param set_M A setM object cointaining the adjacency matrix for sp1.
 #' See \code{\link[bamm]{adj_mat}}
-#' @param periods_toxic  Time periods that sps2 takes to develop defense mechanisms (i.e. toxic).
+#' @param periods_toxic  Time periods that sps2 takes to develop defense
+#' mechanisms (i.e. toxic).
 #' @param periods_suitable This is the time that sp2 takes to become non-toxic
 #' @param initial_points A sparse vector returned by the function
 #' \code{\link[bamm]{occs2sparse}}
@@ -14,10 +16,12 @@
 #'
 #' @examples
 #' \dontrun{
-#' ura <- raster::raster(system.file("extdata/urania_omph/urania_guanahacabibes.tif",
-#'                                   package = "bamm"))
-#' omp <- raster::raster(system.file("extdata/urania_omph/omphalea_guanahacabibes.tif",
-#'                                   package = "bamm"))
+#' urap <- system.file("extdata/urania_omph/urania_guanahacabibes.tif",
+#'                                   package = "bamm")
+#' ura <- raster::raster(urap)
+#' ompp <- system.file("extdata/urania_omph/omphalea_guanahacabibes.tif",
+#'                                   package = "bamm")
+#' omp <- raster::raster(ompp)
 #' msparse <- bamm::model2sparse(ura)
 #' init_coordsdf <- data.frame(x=-84.38751, y= 22.02932)
 #' initial_points <- bamm::occs2sparse(modelsparse = msparse,init_coordsdf)
@@ -71,7 +75,7 @@ bam_sim <- function(sp1,sp2,set_M,initial_points,
     g0 <- AMA%*%g0
     g0[g0>1] <- 1
     time_counter_off[pix_occ, ] <- time_counter_off[pix_occ, ] + 1
-    to_off_vec <- pix_occ[which( time_counter_off[pix_occ, ] >=   periods_toxic)]
+    to_off_vec <- pix_occ[which( time_counter_off[pix_occ, ] >= periods_toxic)]
     time_onID <- .nonzero(time_counter_on)[,1]
 
     if(length(to_off_vec)>0L){
@@ -82,7 +86,7 @@ bam_sim <- function(sp1,sp2,set_M,initial_points,
       time_onID <- c(time_onID,to_off_vec)
     }
     time_counter_on[time_onID, ] <- time_counter_on[time_onID, ]  + 1
-    to_on_vec <- time_onID[which( time_counter_on[time_onID, ] >= periods_suitable)]
+    to_on_vec <- time_onID[which(time_counter_on[time_onID,]>=periods_suitable)]
     if(length(to_on_vec)>0L){
       Matrix::diag(bin_model)[to_on_vec] <- 1
       AMA <- bin_model %*% set_M@adj_matrix
