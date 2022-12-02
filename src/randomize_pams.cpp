@@ -70,17 +70,17 @@ Rcpp::IntegerVector intersectx(IntegerVector x, IntegerVector y){
 // @param x Integer vector
 // @param y Integer vector
 
-IntegerVector std_setdiff(IntegerVector x, IntegerVector y) {
+//IntegerVector std_setdiff(IntegerVector x, IntegerVector y) {
 
-  std::vector<int> v2 = as<std::vector<int> >(x);
-  std::vector<int> v1 = as<std::vector<int> >(y);
-  std::vector<int> out;
+//  std::vector<int> v2 = as<std::vector<int> >(x);
+//  std::vector<int> v1 = as<std::vector<int> >(y);
+//  std::vector<int> out;
 
-  std::set_difference(x.begin(), x.end(), y.begin(), y.end(),
-                      std::inserter(out, out.end()));
-  IntegerVector sdiff = wrap(out);
-  return sdiff;
-}
+//  std::set_difference(x.begin(), x.end(), y.begin(), y.end(),
+//                      std::inserter(out, out.end()));
+//  IntegerVector sdiff = wrap(out);
+//  return sdiff;
+//}
 
 
 // Function to create the list of randomized entries (species) for
