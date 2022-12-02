@@ -1,5 +1,6 @@
 <!-- badges: start -->
   [![Travis build status](https://travis-ci.com/luismurao/bamm.svg?branch=master)](https://travis-ci.com/luismurao/bamm)
+[![R-CMD-check](https://github.com/luismurao/bamm/workflows/R-CMD-check/badge.svg)](https://github.com/luismurao/bamm/actions)
 <!-- badges: end -->
 # The BAM package <a href='https://luismurao.github.io/'><img src='inst/figures/bam_logo.png' align="right" height="139" /></a>
 
