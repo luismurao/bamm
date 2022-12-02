@@ -13,3 +13,8 @@ deploy:
   local-dir: docs
   on:
     branch: master
+r_packages:
+  - covr
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'
