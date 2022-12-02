@@ -17,7 +17,8 @@ y; x is the longitude and y is the latitude of initial disperal points}
 
 \item{nsteps}{Number of iteration steps for the simuation.}
 
-\item{parallel}{TRUE if the simulation should be run in parallel. Default FALSE}
+\item{parallel}{TRUE if the simulation should be run in parallel.
+Default FALSE}
 
 \item{...}{Parameters of the functions of the \code{bamm} class}
 }

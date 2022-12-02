@@ -18,7 +18,8 @@ bam_sim(
 \arguments{
 \item{sp1}{Niche model of the focal species (the one that disperses).}
 
-\item{sp2}{Niche model of the species with whom sp1 interacts (currently no dispersal dynamics for this species).}
+\item{sp2}{Niche model of the species with whom sp1 interacts
+(currently no dispersal dynamics for this species).}
 
 \item{set_M}{A setM object cointaining the adjacency matrix for sp1.
 See \code{\link[bamm]{adj_mat}}}
@@ -26,7 +27,8 @@ See \code{\link[bamm]{adj_mat}}}
 \item{initial_points}{A sparse vector returned by the function
 \code{\link[bamm]{occs2sparse}}}
 
-\item{periods_toxic}{Time periods that sps2 takes to develop defense mechanisms (i.e. toxic).}
+\item{periods_toxic}{Time periods that sps2 takes to develop defense
+mechanisms (i.e. toxic).}
 
 \item{periods_suitable}{This is the time that sp2 takes to become non-toxic}
 
@@ -39,10 +41,12 @@ bam_sim: Simulate dispersal dynamics using the set B of the BAM framework.
 }
 \examples{
 \dontrun{
-ura <- raster::raster(system.file("extdata/urania_omph/urania_guanahacabibes.tif",
-                                  package = "bamm"))
-omp <- raster::raster(system.file("extdata/urania_omph/omphalea_guanahacabibes.tif",
-                                  package = "bamm"))
+urap <- system.file("extdata/urania_omph/urania_guanahacabibes.tif",
+                                  package = "bamm")
+ura <- raster::raster(urap)
+ompp <- system.file("extdata/urania_omph/omphalea_guanahacabibes.tif",
+                                  package = "bamm")
+omp <- raster::raster(ompp)
 msparse <- bamm::model2sparse(ura)
 init_coordsdf <- data.frame(x=-84.38751, y= 22.02932)
 initial_points <- bamm::occs2sparse(modelsparse = msparse,init_coordsdf)

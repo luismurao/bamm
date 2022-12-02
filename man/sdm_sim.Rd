@@ -16,9 +16,11 @@ sdm_sim(
 )
 }
 \arguments{
-\item{set_A}{A setA object returned by the function \code{\link[bamm]{model2sparse}}}
+\item{set_A}{A setA object returned by the function
+\code{\link[bamm]{model2sparse}}}
 
-\item{set_M}{A setM object cointaining the adjacency matrix of the study area.
+\item{set_M}{A setM object cointaining the adjacency matrix of the
+study area.
 See \code{\link[bamm]{adj_mat}}}
 
 \item{initial_points}{A sparse vector returned by the function
@@ -29,8 +31,10 @@ See \code{\link[bamm]{adj_mat}}}
 \item{stochastic_dispersal}{Logical. If dispersal depends on a probability of
 visiting neighbor cells (Moore neighborhood).}
 
-\item{disp_prop2_suitability}{Logical. If probability of dispersal is proportional
-to the suitability of reachable cells. The proportional value must be declered
+\item{disp_prop2_suitability}{Logical. If probability of dispersal
+is proportional
+to the suitability of reachable cells. The proportional value
+must be declared
 in the parameter `disper_prop`.}
 
 \item{disper_prop}{Probability of dispersal to reachable cells.}

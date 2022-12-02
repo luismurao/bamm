@@ -11,9 +11,11 @@ Class  \code{csd}
 \section{Slots}{
 
 \describe{
-\item{\code{connections}}{A data.frame with four columns: x, y, clusterID and cluster_size}
+\item{\code{connections}}{A data.frame with four columns: x, y, clusterID and
+cluster_size}
 
-\item{\code{interactive_map}}{A leaflet map with markers showing the geographical clusters}
+\item{\code{interactive_map}}{A leaflet map with markers showing the geographical
+clusters}
 
 \item{\code{raster_map}}{A raster map with cluster IDs as values.}
 }}

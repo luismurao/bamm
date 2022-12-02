@@ -13,7 +13,8 @@ Class \code{bam} digram
 \describe{
 \item{\code{sdm_sim}}{A list of sparse vectors representing the area occupied}
 
-\item{\code{palatable_matrices}}{A list of sparse vectors representing palatable sites.}
+\item{\code{palatable_matrices}}{A list of sparse vectors representing palatable
+sites.}
 
 \item{\code{sim_steps}}{Number of simulation steps
 by the species}

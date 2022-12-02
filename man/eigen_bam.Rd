@@ -11,9 +11,11 @@ eigen_bam(A = NULL, M = NULL, which_eigen = 1, rmap = TRUE)
 
 \item{M}{A bam object of class setM.}
 
-\item{which_eigen}{An integer representing the which eigen value and eigen vector will be computed.}
+\item{which_eigen}{An integer representing the which eigen value and eigen
+vector will be computed.}
 
-\item{rmap}{Logical. If TRUE the function will return a map of the eigen vector of the product AM.}
+\item{rmap}{Logical. If TRUE the function will return a map of the eigen
+vector of the product AM.}
 }
 \value{
 A table
@@ -27,7 +29,7 @@ model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                           package = "bamm")
 model <- raster::raster(model_path)
 sparse_mod <- bamm::model2sparse(model = model)
-adj_mod <- bamm::adj_mat(sparse_mod,nbgs=1,eigen_sys = T)
+adj_mod <- bamm::adj_mat(sparse_mod,ngbs = 1,eigen_sys = T)
 eig_bam <- bamm::eigen_bam(A=sparse_mod,M=adj_mod)
 raster::plot(eig_bam$map)
 }

@@ -14,14 +14,17 @@ IDs of pixels with values different than NA.
 \section{Slots}{
 
 \describe{
-\item{\code{niche_model}}{A niche model in raster format. It can be a binary model or continuous.
+\item{\code{niche_model}}{A niche model in raster format. It can be a binary model
+or continuous.
 If the model is in a continuous format.}
 
 \item{\code{suit_threshold}}{Suitability value used to binarize continuous model}
 
-\item{\code{cellIDs}}{A numeric vector with the IDs of the cells with prediction values}
+\item{\code{cellIDs}}{A numeric vector with the IDs of the cells with prediction
+values}
 
-\item{\code{suit_values}}{A numeric vector with suitability value of the continuous map}
+\item{\code{suit_values}}{A numeric vector with suitability value of the continuous
+map}
 
 \item{\code{sparse_model}}{A niche model in sparse matrix format}
 }}

@@ -2,7 +2,8 @@
 % Please edit documentation in R/null_dispersion_field_distribution.R
 \name{null_dispersion_field_distribution}
 \alias{null_dispersion_field_distribution}
-\title{null_dispersion_field_distribution: Null distribution of the dispersion field}
+\title{null_dispersion_field_distribution: Null distribution of the
+dispersion field}
 \usage{
 null_dispersion_field_distribution(
   pam,
@@ -21,10 +22,12 @@ null_dispersion_field_distribution(
 \item{n_cores}{Number of cores for the parallel computation.}
 }
 \value{
-A data matrix of size nrow(pam) X n_iter with dispersion field values.
+A data matrix of size nrow(pam) X n_iter with dispersion
+field values.
 }
 \description{
-null_dispersion_field_distribution estimates a random distribution
+null_dispersion_field_distribution estimates a
+random distribution
 of the dispersion field values.
 }
 \details{

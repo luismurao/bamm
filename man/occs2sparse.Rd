@@ -7,9 +7,11 @@
 occs2sparse(modelsparse, occs)
 }
 \arguments{
-\item{modelsparse}{A setA object returned by the function \code{\link[bamm]{model2sparse}}}
+\item{modelsparse}{A setA object returned by the function
+\code{\link[bamm]{model2sparse}}}
 
-\item{occs}{A matrix or a data.frame containing two columns. The first one is the longitude and the second is the latitude.}
+\item{occs}{A matrix or a data.frame containing two columns.
+The first one is the longitude and the second is the latitude.}
 }
 \value{
 A sparse vector of zeros and ones.

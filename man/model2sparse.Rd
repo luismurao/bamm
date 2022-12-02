@@ -7,12 +7,15 @@
 model2sparse(model, threshold = NULL)
 }
 \arguments{
-\item{model}{A raster object representing the geographic projection of a niche model.}
+\item{model}{A raster object representing the geographic projection
+of a niche model.}
 
-\item{threshold}{A threshold to convert a continuous model into a binary model.}
+\item{threshold}{A threshold to convert a continuous model into a
+binary model.}
 }
 \value{
-A diagonal sparse matrix representing the geographic projection of a niche model.
+A diagonal sparse matrix representing the geographic projection
+of a niche model.
 }
 \description{
 model2sparse: Converts a niche model into a diagonal sparse matrix

@@ -14,23 +14,28 @@ Class  \code{diversity_range}
 \describe{
 \item{\code{alpha}}{A coulmn vector with species richness per site}
 
-\item{\code{omega}}{A coulmn vector with the size of the area of distribution per species.}
+\item{\code{omega}}{A coulmn vector with the size of the area of distribution per
+species.}
 
 \item{\code{alpha_raster}}{Species richness in raster format.}
 
-\item{\code{dispersion_field}}{A matrix with the set of ranges of all species that occur in at each locality.}
+\item{\code{dispersion_field}}{A matrix with the set of ranges of all species that
+occur in at each locality.}
 
-\item{\code{dispersion_field_raster}}{Raster object with the observed values of dispersion field.}
+\item{\code{dispersion_field_raster}}{Raster object with the observed values of
+dispersion field.}
 
 \item{\code{diversity_range_raster}}{Raster object of diversity range.}
 
 \item{\code{diversity_range_colors}}{Colors to plot endemism levels.}
 
-\item{\code{null_dispersion_field_dist}}{A matrix whith dispersion field null distribution.}
+\item{\code{null_dispersion_field_dist}}{A matrix whith dispersion field null
+distribution.}
 
 \item{\code{xy_coordinates}}{A matrix of geographical coordinates}
 
-\item{\code{n_iterations}}{Number of iterations used to estimate the dispersion field null distribution.}
+\item{\code{n_iterations}}{Number of iterations used to estimate the dispersion
+field null distribution.}
 
 \item{\code{nsps}}{Number of species in the PAM.}
 

@@ -16,7 +16,8 @@ Class  \code{bioindex_sparse}
 
 \item{\code{omega}}{A sparse matrix with the range size of every species}
 
-\item{\code{dispersion_field}}{A sparse matrix with the set of ranges of all species that occur in at each locality}
+\item{\code{dispersion_field}}{A sparse matrix with the set of ranges of all species
+that occur in at each locality}
 }}
 
 \author{

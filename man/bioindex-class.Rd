@@ -16,7 +16,8 @@ Class  \code{bioindex}
 
 \item{\code{omega}}{A matrix with the range size of every species}
 
-\item{\code{dispersion_field}}{A matrix with the set of ranges of all species that occur in at each locality}
+\item{\code{dispersion_field}}{A matrix with the set of ranges of all species that
+occur in at each locality}
 }}
 
 \author{

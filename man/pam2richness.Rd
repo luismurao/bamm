@@ -2,7 +2,8 @@
 % Please edit documentation in R/pam2richness.R
 \name{pam2richness}
 \alias{pam2richness}
-\title{pam2richness: Converts Presence Absence Matrix (pam object) to richness raster}
+\title{pam2richness: Converts Presence Absence Matrix (pam object) to
+richness raster}
 \usage{
 pam2richness(pamobj, which_steps)
 }
@@ -12,11 +13,11 @@ pam2richness(pamobj, which_steps)
 \item{which_steps}{Time steps in the pam to convert}
 }
 \description{
-Converts Presence Absence Matrix (pam object) to richness raster
+Converts Presence Absence Matrix (pam object) to
+richness raster
 }
 \examples{
 \dontrun{
-library(bamm)
 lagos_path <- system.file("extdata/conejos",
                           package = "bamm")
 enm_path <- list.files(lagos_path,

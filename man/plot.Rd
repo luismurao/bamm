@@ -23,12 +23,15 @@
 
 \item{xlab}{x label}
 
-\item{plot_type}{Plot type: possible options: "diversity_range" (range-diversity plot),
-"diversity_range_map" (a raster map with diversity_range categories),
-"alpha" (a raster mapa with alpha diversity values),
-"dispersion_field" (a raster with dispersion field)}
+\item{plot_type}{Plot type: possible options: "diversity_range"
+(range-diversity plot),
+                 "diversity_range_map" (a raster map with
+                 diversity_range categories),
+                 "alpha" (a raster mapa with alpha diversity values),
+                 "dispersion_field" (a raster with dispersion field)}
 
-\item{legend}{Logical. If TRUE the legend of the categorical diversity range values will appear.}
+\item{legend}{Logical. If TRUE the legend of the categorical diversity
+range values will appear.}
 
 \item{legend_position}{Lengend position.}
 
@@ -42,9 +45,9 @@
 
 \item{radius}{Size of the patch for the interactive map.}
 
-\item{...}{Graphical parameters. Any argument that can be passed to 1) base::plot,
-such as axes=FALSE, main='title', ylab='latitude' 2) leaflet::leaflet
-or 3)leaflet::addCircleMarkers.}
+\item{...}{Graphical parameters. Any argument that can be passed to 1)
+base::plot, such as axes=FALSE, main='title', ylab='latitude' 2)
+leaflet::leaflet or 3) leaflet::addCircleMarkers.}
 }
 \description{
 Plot method for objects of class diversity_range \pkg{bamm}.

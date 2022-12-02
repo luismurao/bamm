@@ -18,7 +18,8 @@ Class for the M set of the \code{bamm} digram
 
 \item{\code{initial_points}}{A presence-absence vector with species' occurrences}
 
-\item{\code{n_initial_points}}{Number of initial points used to start the dispersal process}
+\item{\code{n_initial_points}}{Number of initial points used to start the dispersal
+process}
 
 \item{\code{ngbs}}{Number of neighbors}
 }}

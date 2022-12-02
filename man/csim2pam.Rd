@@ -18,7 +18,6 @@ Presence Absence Matrices (PAM) for a given simultation steps.
 \examples{
 
 \dontrun{
-library(bamm)
 lagos_path <- system.file("extdata/conejos",
                           package = "bamm")
 enm_path <- list.files(lagos_path,

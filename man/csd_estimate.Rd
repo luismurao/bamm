@@ -7,9 +7,11 @@
 csd_estimate(model, dispersal_steps = c(2, 4, 8, 16, 32, 64))
 }
 \arguments{
-\item{model}{A raster model or a setA object representing the suitability model}
+\item{model}{A raster model or a setA object representing the
+suitability model}
 
-\item{dispersal_steps}{A numeric vector with elements representing the dispersal
+\item{dispersal_steps}{A numeric vector with elements representing
+the dispersal
 hypothesis to test.}
 }
 \description{

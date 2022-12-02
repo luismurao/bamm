@@ -11,18 +11,25 @@ bam_clusters(model, ngbs = 1, plot_model = FALSE)
 
 \item{ngbs}{Numeric. Number of neighbors (see details).}
 
-\item{plot_model}{Logical. Indicates whether to plot the model in the cluster map.}
+\item{plot_model}{Logical. Indicates whether to plot the model in the
+cluster map.}
 }
 \value{
-A list with a data.frame of the coordinates of each cluster and a leaflet map.
+A list with a data.frame of the coordinates of each cluster and a
+leaflet map.
 }
 \description{
-Function to estimate the connectivity of suitable areas given an adjacency matrix.
+Function to estimate the connectivity of suitable areas given
+an adjacency matrix.
 }
 \details{
-The grid_base raster object is the area where the dispersal process will occur.
-The number of neighbors depends on the dispersal abilities of the species and the spatial resolution of the grid_base;
-for example, a species's with big dispersal abilities will move throughout more than 1 km^2 per day, so the idea is to give an approximate number of moving neighbors (pixels) per unit of time.
+The grid_base raster object is the area where the dispersal process will
+occur.
+The number of neighbors depends on the dispersal abilities of the species
+and the spatial resolution of the grid_base;
+for example, a species's with big dispersal abilities will move throughout
+more than 1 km^2 per day, so the idea is to give an approximate number of
+moving neighbors (pixels) per unit of time.
 }
 \examples{
 

@@ -11,7 +11,7 @@ bam_ssim(
   initial_points,
   periods_toxic,
   periods_suitable,
-  dispersal_prob = 0.2,
+  dispersal_prob = 0.85,
   palatable_matrices = FALSE,
   nsteps,
   progress_bar = TRUE
@@ -20,7 +20,8 @@ bam_ssim(
 \arguments{
 \item{sp1}{Niche model of the focal species (the one that disperses).}
 
-\item{sp2}{Niche model of the species with whom sp1 interacts (currently no dispersal dynamics for this species).}
+\item{sp2}{Niche model of the species with whom sp1 interacts
+(currently no dispersal dynamics for this species).}
 
 \item{set_M}{A setM object cointaining the adjacency matrix for sp1.
 See \code{\link[bamm]{adj_mat}}}
@@ -28,14 +29,17 @@ See \code{\link[bamm]{adj_mat}}}
 \item{initial_points}{A sparse vector returned by the function
 \code{\link[bamm]{occs2sparse}}}
 
-\item{periods_toxic}{Time periods that sps2 takes to develop defense mechanisms (i.e. toxic).}
+\item{periods_toxic}{Time periods that sps2 takes to develop defense
+mechanisms (i.e. toxic).}
 
 \item{periods_suitable}{This is the time that sp2 takes to become non-toxic}
 
-\item{dispersal_prob}{A numeric value indicating the probability to disperse to neighboring cells.
+\item{dispersal_prob}{A numeric value indicating the probability to disperse
+to neighboring cells.
 This probability is assumed to be binomially distributed}
 
-\item{palatable_matrices}{Logical. If TRUE palatable matices for each time will be returned.}
+\item{palatable_matrices}{Logical. If TRUE palatable matices for each time
+will be returned.}
 
 \item{nsteps}{Number of steps to run the simulation}
 
@@ -46,19 +50,22 @@ bam_ssim: Simulate dispersal dynamics using the set B of the BAM framework.
 }
 \examples{
 \dontrun{
-ura <- raster::raster(system.file("extdata/urania_omph/urania_guanahacabibes.tif",
-                                  package = "bamm"))
-omp <- raster::raster(system.file("extdata/urania_omph/omphalea_guanahacabibes.tif",
-                                  package = "bamm"))
+urap <- system.file("extdata/urania_omph/urania_guanahacabibes.tif",
+                                  package = "bamm")
+ura <- raster::raster(urap)
+ompp <- system.file("extdata/urania_omph/omphalea_guanahacabibes.tif",
+                                  package = "bamm")
+omp <- raster::raster(ompp)
 msparse <- bamm::model2sparse(ura)
 init_coordsdf <- data.frame(x=-84.38751, y= 22.02932)
 initial_points <- bamm::occs2sparse(modelsparse = msparse,init_coordsdf)
 set_M <- bamm::adj_mat(modelsparse = msparse,ngbs = 1)
-ura_sim <- bamm::bam_sim(sp1=ura, sp2=omp, set_M=set_M,
-                        initial_points=initial_points,
-                        periods_toxic=3,
-                        periods_suitable=3,
-                        nsteps=40)
+ura_sim <- bamm::bam_ssim(sp1=ura, sp2=omp, set_M=set_M,
+                          dispersal_prob = 0.5,
+                          initial_points=initial_points,
+                          periods_toxic=3,
+                          periods_suitable=1,
+                          nsteps=40)
 # Animation example
 anp <-"C:/Users/l916o895/Dropbox/TeoriadeBAM/articulo_bam/ura_omp_sim.gif"
 new_sim <- bamm::sim2Animation(sdm_simul = ura_sim,

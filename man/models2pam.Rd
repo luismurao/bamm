@@ -4,10 +4,11 @@
 \alias{models2pam}
 \title{models2pam: Converts binary rasters to a PAM}
 \usage{
-models2pam(mods_stack, sparse = TRUE, parallel = FALSE, ncores = 4)
+models2pam(mods_stack, sparse = TRUE, parallel = FALSE, ncores = 2)
 }
 \arguments{
-\item{mods_stack}{A raster stack containing binay models of each species in the community.}
+\item{mods_stack}{A raster stack containing binay models of each
+species in the community.}
 
 \item{sparse}{Logical. If TRUE the PAM will be returned as a sparse matrix.}
 
@@ -19,7 +20,8 @@ models2pam(mods_stack, sparse = TRUE, parallel = FALSE, ncores = 4)
 A PAM.
 }
 \description{
-Function to convert binary raster models to a Presence Absences Matrix.
+Function to convert binary raster models to a
+Presence Absences Matrix.
 }
 \examples{
 \dontrun{
@@ -29,6 +31,6 @@ enm_path <- list.files(lagos_path,
                        pattern = ".tif",
                        full.names = TRUE)
 en_models <- raster::stack(enm_path) >0.01
-pam <- bamm::models2pam(en_models,sparse=FALSE,parallel=T,ncores=10)
+pam <- bamm::models2pam(en_models,sparse=FALSE,parallel=T,ncores=2)
 }
 }

@@ -24,7 +24,7 @@ model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                           package = "bamm")
 model <- raster::raster(model_path)
 sparse_mod <- bamm::model2sparse(model)
-adj_mod <- bamm::adj_mat(sparse_mod,nbgs=1)
+adj_mod <- bamm::adj_mat(sparse_mod,ngbs = 1)
 occs_lep_cal <- data.frame(longitude = c(-115.10417,
                                          -104.90417),
                            latitude = c(29.61846,
