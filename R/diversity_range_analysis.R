@@ -45,7 +45,8 @@
 
 diversity_range_analysis <- function(pam,xy_mat=NULL,lower_interval=0.05,
                                      upper_interval=0.95, raster_templete=NULL,
-                                     niter=100,return_null_dfield=FALSE,parallel=TRUE,
+                                     niter=100,return_null_dfield=FALSE,
+                                     parallel=TRUE,
                                      n_cores=2){
 
 
@@ -124,13 +125,17 @@ diversity_range_analysis <- function(pam,xy_mat=NULL,lower_interval=0.05,
   levels(range_div_cols) <- codifi[codifi %in% levels(range_div_cols)]
   vals <- as.numeric(as.character(range_div_cols))
   #levels(range_div_cols) <- cols[codifi %in% levels(range_div_cols)]
-  results@diversity_range_colors <- ifelse(vals == 0,"#000000",
-                                           ifelse(vals ==1, "#F6BDC0",
-                                                  ifelse(vals==2,"#F1A13A",
-                                                         ifelse(vals==3,"#BBDFFA",
-                                                                ifelse(vals==4,"#DC1C13",
-                                                                       ifelse(vals==6,"#6987D5",
-                                                                              ifelse(vals==12,"#1727AE",NA)))))))
+  cl <- function(vals){
+    ifelse(vals == 0,"#000000",
+           ifelse(vals ==1, "#F6BDC0",
+                  ifelse(vals==2,"#F1A13A",
+                         ifelse(vals==3,"#BBDFFA",
+                                ifelse(vals==4,"#DC1C13",
+                                       ifelse(vals==6,"#6987D5",
+                                              ifelse(vals==12,"#1727AE",
+                                                     NA)))))))
+  }
+  results@diversity_range_colors <- cl(vals = vals)
   if(is.matrix(xy_mat) || is.data.frame(xy_mat)){
 
 
