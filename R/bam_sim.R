@@ -3,7 +3,7 @@
 #' @param sp1 Niche model of the focal species (the one that disperses).
 #' @param sp2 Niche model of the species with whom sp1 interacts
 #' (currently no dispersal dynamics for this species).
-#' @param set_M A setM object cointaining the adjacency matrix for sp1.
+#' @param set_M A setM object containing the adjacency matrix for sp1.
 #' See \code{\link[bamm]{adj_mat}}
 #' @param periods_toxic  Time periods that sps2 takes to develop defense
 #' mechanisms (i.e. toxic).

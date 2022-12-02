@@ -18,7 +18,7 @@ pam2bioindex estimates various biodiversity indices for a
 certain PAM.
 }
 \details{
-The biodiversty indices can be found in
+The biodiversity indices can be found in
 \insertCite{Soberon2015;textual}{bamm}
 }
 \examples{

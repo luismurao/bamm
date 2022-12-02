@@ -5,7 +5,7 @@
 #' @param xy_mat A two dimensional matrix with longitude and latitude data.
 #' @param lower_interval Lower interval.
 #' @param upper_interval Upper interval.
-#' @param raster_templete Araster templete.
+#' @param raster_templete A raster templete.
 #' @param niter Number of iterations to obtain the distribution.
 #' @param return_null_dfield If TRUE the null distribution of dispersal field
 #' will be returned.

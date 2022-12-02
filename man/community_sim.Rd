@@ -13,9 +13,9 @@ each species in the community.}
 \item{ngbs_vect}{A vector}
 
 \item{init_coords}{A data.frame with 3 columns: sp_name, x and
-y; x is the longitude and y is the latitude of initial disperal points}
+y; x is the longitude and y is the latitude of initial dispersal points}
 
-\item{nsteps}{Number of iteration steps for the simuation.}
+\item{nsteps}{Number of iteration steps for the simulation.}
 
 \item{parallel}{TRUE if the simulation should be run in parallel.
 Default FALSE}

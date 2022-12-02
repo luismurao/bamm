@@ -12,9 +12,9 @@ Class  \code{diversity_range}
 \section{Slots}{
 
 \describe{
-\item{\code{alpha}}{A coulmn vector with species richness per site}
+\item{\code{alpha}}{A column vector with species richness per site}
 
-\item{\code{omega}}{A coulmn vector with the size of the area of distribution per
+\item{\code{omega}}{A column vector with the size of the area of distribution per
 species.}
 
 \item{\code{alpha_raster}}{Species richness in raster format.}
@@ -29,7 +29,7 @@ dispersion field.}
 
 \item{\code{diversity_range_colors}}{Colors to plot endemism levels.}
 
-\item{\code{null_dispersion_field_dist}}{A matrix whith dispersion field null
+\item{\code{null_dispersion_field_dist}}{A matrix with dispersion field null
 distribution.}
 
 \item{\code{xy_coordinates}}{A matrix of geographical coordinates}

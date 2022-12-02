@@ -12,8 +12,8 @@ csim2pam(community_sim, which_steps)
 \item{which_steps}{Steps in the simulation object to be converted into a PAM}
 }
 \description{
-Converts community simultion object into a
-Presence Absence Matrices (PAM) for a given simultation steps.
+Converts community simulation object into a
+Presence Absence Matrices (PAM) for a given simulation steps.
 }
 \examples{
 

@@ -19,7 +19,7 @@ sdm_sim(
 \item{set_A}{A setA object returned by the function
 \code{\link[bamm]{model2sparse}}}
 
-\item{set_M}{A setM object cointaining the adjacency matrix of the
+\item{set_M}{A setM object containing the adjacency matrix of the
 study area.
 See \code{\link[bamm]{adj_mat}}}
 

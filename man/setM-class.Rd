@@ -5,9 +5,9 @@
 \alias{setM-class}
 \alias{setM}
 \alias{M-class}
-\title{Class for the M set of the \code{bamm} digram}
+\title{Class for the M set of the \code{bamm} diagram}
 \description{
-Class for the M set of the \code{bamm} digram
+Class for the M set of the \code{bamm} diagram
 }
 \section{Slots}{
 

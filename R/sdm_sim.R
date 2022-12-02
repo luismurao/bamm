@@ -2,7 +2,7 @@
 
 #' @param set_A A setA object returned by the function
 #' \code{\link[bamm]{model2sparse}}
-#' @param set_M A setM object cointaining the adjacency matrix of the
+#' @param set_M A setM object containing the adjacency matrix of the
 #' study area.
 #' See \code{\link[bamm]{adj_mat}}
 #' @param initial_points A sparse vector returned by the function

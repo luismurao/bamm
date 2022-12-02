@@ -1,5 +1,5 @@
 ---
-title: "The `bamm` package"
+title: "bamm"
 output: rmarkdown::html_vignette
 author: "Luis Osorio-Olvera and Jorge Soberon"
 vignette: >
@@ -60,9 +60,9 @@ sparse_mod
 
 ### Connectivity matrix 
 
-The function to estimate connecivity between pixels of a given raster is `adj_mat`,
+The function to estimate connectivity between pixels of a given raster is `adj_mat`,
 (generally is the M area but can be any matrix); 
-it uses  sparse adjancency matrices.  
+it uses  sparse adjacency matrices.  
 
 
 ```{r}
@@ -76,7 +76,7 @@ adj_mod
 The map of the connectivity matrix `adj_mod` is
 
 
-```{r fig.cap="Fig. 1 Connectivity map of `adj_mod` object. Here green color means more coneected."}
+```{r fig.cap="Fig. 1 Connectivity map of `adj_mod` object. Here green color means more connected."}
 model_eig <- model
 model_eig[sparse_mod@cellIDs] <- abs(adj_mod@eigen_vec)
 raster::plot(model_eig)
@@ -102,7 +102,7 @@ The function returns the following slots
 ```{r}
 clustersin
 ```
-Lets see the geogrpahic clusters as function of suitability and dispersal
+Lets see the geographic clusters as function of suitability and dispersal
 
 ```{r fig.cap="Figure 2. An interative map showing the geographic clusters for a species that can travel two steps per unit time"}
 clustersin@interactive_map
@@ -116,7 +116,7 @@ raster::plot(clustersin@raster_map)
 ### The CSD diagram
 
 The CSD diagram is a simple but useful tool to estimate the number of dispersal
-steps that a species needs to travel per unit time in order to occupay its potential
+steps that a species needs to travel per unit time in order to occupy its potential
 area of distribution. In this example the approximate number of dispersal steps to
 archive all suitable patches is 30.
 

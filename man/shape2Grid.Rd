@@ -20,7 +20,7 @@ Returns a raster object with the shape of 'shpolygon' of a given
  resolution.
 }
 \description{
-shapeToGrid creates a raster grid given a spatial polygon and
+shape2Grid creates a raster grid given a spatial polygon and
 a grid resolution.
 }
 \examples{

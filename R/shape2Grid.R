@@ -1,6 +1,6 @@
 #' shape2Grid: Function to create a grid given a spatial polygon
 #'
-#' @description shapeToGrid creates a raster grid given a spatial polygon and
+#' @description shape2Grid creates a raster grid given a spatial polygon and
 #' a grid resolution.
 #' @param shpolygon A SpatialPolygon, SpatialPolygonDataFrame representing
 #' the desired shape of the grid.

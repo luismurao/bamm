@@ -21,7 +21,7 @@ vector of the product AM.}
 A table
 }
 \description{
-Calucultates the Eigen values and Eigen vectors of bam objects
+Calculates the Eigen values and Eigen vectors of bam objects
 }
 \examples{
 \dontrun{

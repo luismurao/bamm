@@ -5,7 +5,7 @@
 #' @param biodiv_index Possible values are alpha, omega, dispersion_field, all.
 #' @param as_sparse Return indices as sparse objects
 #' @importFrom Rdpack reprompt
-#' @details The biodiversty indices can be found in
+#' @details The biodiversity indices can be found in
 #' \insertCite{Soberon2015;textual}{bamm}
 #' @references
 #' \insertRef{Soberon2015}{bamm}

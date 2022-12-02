@@ -10,13 +10,13 @@ permute_pam(m, niter = NULL, as_sparse = FALSE)
 \item{m}{Presence-Absence-Matrix (PAM) or a binary matrix with columns
 representing species and rows sites.}
 
-\item{niter}{Number of itereations to permute the PAM.}
+\item{niter}{Number of iterations to permute the PAM.}
 
 \item{as_sparse}{If TRUE the PAM will be returned as a sparse matrix}
 }
 \value{
 Returns a list of length equal to the number of sites
-in the PAM (n=nrows(m)). Each entrie of the list has the permuted
+in the PAM (n=nrows(m)). Each entry of the list has the permuted
 species.
 }
 \description{

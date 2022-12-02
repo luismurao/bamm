@@ -12,7 +12,7 @@ Class  \code{pam} Presence-Absence Matrix
 \section{Slots}{
 
 \describe{
-\item{\code{pams}}{A list of sparse matices representing Presence-Absecen Matrix for
+\item{\code{pams}}{A list of sparse matrices representing Presence-Absence Matrix for
 each simulation time}
 
 \item{\code{which_steps}}{Simulation steps}

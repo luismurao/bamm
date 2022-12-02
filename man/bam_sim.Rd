@@ -21,7 +21,7 @@ bam_sim(
 \item{sp2}{Niche model of the species with whom sp1 interacts
 (currently no dispersal dynamics for this species).}
 
-\item{set_M}{A setM object cointaining the adjacency matrix for sp1.
+\item{set_M}{A setM object containing the adjacency matrix for sp1.
 See \code{\link[bamm]{adj_mat}}}
 
 \item{initial_points}{A sparse vector returned by the function

@@ -1,6 +1,6 @@
 #' csim2pam: Converts community simulation to a Presence Absence Matrix (PAM)
-#' @description Converts community simultion object into a
-#' Presence Absence Matrices (PAM) for a given simultation steps.
+#' @description Converts community simulation object into a
+#' Presence Absence Matrices (PAM) for a given simulation steps.
 #'
 #' @param community_sim An object of class community_bam.
 #' @param which_steps Steps in the simulation object to be converted into a PAM

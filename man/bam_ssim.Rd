@@ -23,7 +23,7 @@ bam_ssim(
 \item{sp2}{Niche model of the species with whom sp1 interacts
 (currently no dispersal dynamics for this species).}
 
-\item{set_M}{A setM object cointaining the adjacency matrix for sp1.
+\item{set_M}{A setM object containing the adjacency matrix for sp1.
 See \code{\link[bamm]{adj_mat}}}
 
 \item{initial_points}{A sparse vector returned by the function
@@ -38,7 +38,7 @@ mechanisms (i.e. toxic).}
 to neighboring cells.
 This probability is assumed to be binomially distributed}
 
-\item{palatable_matrices}{Logical. If TRUE palatable matices for each time
+\item{palatable_matrices}{Logical. If TRUE palatable matrices for each time
 will be returned.}
 
 \item{nsteps}{Number of steps to run the simulation}

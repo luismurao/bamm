@@ -1,7 +1,7 @@
 #' models2pam: Converts binary rasters to a PAM
 #' @description Function to convert binary raster models to a
 #' Presence Absences Matrix.
-#' @param mods_stack A raster stack containing binay models of each
+#' @param mods_stack A raster stack containing binary models of each
 #' species in the community.
 #' @param sparse Logical. If TRUE the PAM will be returned as a sparse matrix.
 #' @param parallel Logical. If TRUE computations will be done in parallel

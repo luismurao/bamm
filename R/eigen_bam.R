@@ -1,5 +1,5 @@
 #' eigen_bam: Compute the Eigen system of two bam objects
-#' @description Calucultates the Eigen values and Eigen vectors of bam objects
+#' @description Calculates the Eigen values and Eigen vectors of bam objects
 #'
 #' @param A A bam object of class setA.
 #' @param M A bam object of class setM.

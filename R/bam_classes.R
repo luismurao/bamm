@@ -64,7 +64,7 @@ setA <- methods::setClass(Class = "setA",
                             }
                             })
 
-#' Class for the M set of the \code{bamm} digram
+#' Class for the M set of the \code{bamm} diagram
 #' @aliases M-class
 #' @slot adj_matix An adjacency matrix
 #' @slot adj_list An adjacency list
@@ -120,7 +120,7 @@ community_bam <- methods::setClass(Class = "community_sim",
 #' Class  \code{pam} Presence-Absence Matrix
 #' @aliases PAM
 #' @author Luis Osorio-Olvera & Jorge Soberón
-#' @slot pams A list of sparse matices representing Presence-Absecen Matrix for
+#' @slot pams A list of sparse matrices representing Presence-Absence Matrix for
 #' each simulation time
 #' @slot which_steps Simulation steps
 #' @slot sp_names Names of species in the PAM
@@ -203,8 +203,8 @@ bioindex <- methods::setClass(Class = "bioindex",
 #' Class  \code{diversity_range}
 #' @aliases diversityrange
 #' @author Luis Osorio-Olvera & Jorge Soberón
-#' @slot alpha A coulmn vector with species richness per site
-#' @slot omega A coulmn vector with the size of the area of distribution per
+#' @slot alpha A column vector with species richness per site
+#' @slot omega A column vector with the size of the area of distribution per
 #' species.
 #' @slot alpha_raster Species richness in raster format.
 #' @slot dispersion_field A matrix with the set of ranges of all species that
@@ -213,7 +213,7 @@ bioindex <- methods::setClass(Class = "bioindex",
 #' dispersion field.
 #' @slot diversity_range_raster Raster object of diversity range.
 #' @slot diversity_range_colors Colors to plot endemism levels.
-#' @slot null_dispersion_field_dist A matrix whith dispersion field null
+#' @slot null_dispersion_field_dist A matrix with dispersion field null
 #' distribution.
 #' @slot xy_coordinates A matrix of geographical coordinates
 #' @slot n_iterations Number of iterations used to estimate the dispersion

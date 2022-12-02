@@ -1,10 +1,10 @@
 #' permute_pam: Function to permute a Presence-Absence-Matrix.
 #' @param m Presence-Absence-Matrix (PAM) or a binary matrix with columns
 #'          representing species and rows sites.
-#' @param niter Number of itereations to permute the PAM.
+#' @param niter Number of iterations to permute the PAM.
 #' @param as_sparse If TRUE the PAM will be returned as a sparse matrix
 #' @return Returns a list of length equal to the number of sites
-#' in the PAM (n=nrows(m)). Each entrie of the list has the permuted
+#' in the PAM (n=nrows(m)). Each entry of the list has the permuted
 #' species.
 #' @details This function is an implementation of the curve ball algorithm
 #'           following \insertRef{Strona2014}{bamm}.

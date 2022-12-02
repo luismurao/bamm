@@ -7,7 +7,7 @@
 models2pam(mods_stack, sparse = TRUE, parallel = FALSE, ncores = 2)
 }
 \arguments{
-\item{mods_stack}{A raster stack containing binay models of each
+\item{mods_stack}{A raster stack containing binary models of each
 species in the community.}
 
 \item{sparse}{Logical. If TRUE the PAM will be returned as a sparse matrix.}

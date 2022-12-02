@@ -5,8 +5,8 @@
 #' each species in the community.
 #' @param ngbs_vect A vector
 #' @param init_coords A data.frame with 3 columns: sp_name, x and
-#' y; x is the longitude and y is the latitude of initial disperal points
-#' @param nsteps Number of iteration steps for the simuation.
+#' y; x is the longitude and y is the latitude of initial dispersal points
+#' @param nsteps Number of iteration steps for the simulation.
 #' @param parallel TRUE if the simulation should be run in parallel.
 #' Default FALSE
 #' @param ... Parameters of the functions of the \code{bamm} class
