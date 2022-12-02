@@ -1,35 +1,42 @@
 #' bam_ssim: Simulate dispersal dynamics using the set B of the BAM framework.
 
 #' @param sp1 Niche model of the focal species (the one that disperses).
-#' @param sp2 Niche model of the species with whom sp1 interacts (currently no dispersal dynamics for this species).
+#' @param sp2 Niche model of the species with whom sp1 interacts
+#' (currently no dispersal dynamics for this species).
 #' @param set_M A setM object cointaining the adjacency matrix for sp1.
 #' See \code{\link[bamm]{adj_mat}}
-#' @param periods_toxic  Time periods that sps2 takes to develop defense mechanisms (i.e. toxic).
+#' @param periods_toxic  Time periods that sps2 takes to develop defense
+#' mechanisms (i.e. toxic).
 #' @param periods_suitable This is the time that sp2 takes to become non-toxic
 #' @param initial_points A sparse vector returned by the function
 #' \code{\link[bamm]{occs2sparse}}
-#' @param dispersal_prob A numeric value indicating the probability to disperse to neighboring cells.
+#' @param dispersal_prob A numeric value indicating the probability to disperse
+#' to neighboring cells.
 #' This probability is assumed to be binomially distributed
-#' @param palatable_matrices Logical. If TRUE palatable matices for each time will be returned.
+#' @param palatable_matrices Logical. If TRUE palatable matices for each time
+#' will be returned.
 #' @param nsteps Number of steps to run the simulation
 #' @param progress_bar Show progress bar
 #' @importFrom magrittr %>%
 #'
 #' @examples
 #' \dontrun{
-#' ura <- raster::raster(system.file("extdata/urania_omph/urania_guanahacabibes.tif",
-#'                                   package = "bamm"))
-#' omp <- raster::raster(system.file("extdata/urania_omph/omphalea_guanahacabibes.tif",
-#'                                   package = "bamm"))
+#' urap <- system.file("extdata/urania_omph/urania_guanahacabibes.tif",
+#'                                   package = "bamm")
+#' ura <- raster::raster(urap)
+#' ompp <- system.file("extdata/urania_omph/omphalea_guanahacabibes.tif",
+#'                                   package = "bamm")
+#' omp <- raster::raster(ompp)
 #' msparse <- bamm::model2sparse(ura)
 #' init_coordsdf <- data.frame(x=-84.38751, y= 22.02932)
 #' initial_points <- bamm::occs2sparse(modelsparse = msparse,init_coordsdf)
 #' set_M <- bamm::adj_mat(modelsparse = msparse,ngbs = 1)
-#' ura_sim <- bamm::bam_sim(sp1=ura, sp2=omp, set_M=set_M,
-#'                         initial_points=initial_points,
-#'                         periods_toxic=3,
-#'                         periods_suitable=3,
-#'                         nsteps=40)
+#' ura_sim <- bamm::bam_ssim(sp1=ura, sp2=omp, set_M=set_M,
+#'                           dispersal_prob = 0.5,
+#'                           initial_points=initial_points,
+#'                           periods_toxic=3,
+#'                           periods_suitable=1,
+#'                           nsteps=40)
 #' # Animation example
 #' anp <-"C:/Users/l916o895/Dropbox/TeoriadeBAM/articulo_bam/ura_omp_sim.gif"
 #' new_sim <- bamm::sim2Animation(sdm_simul = ura_sim,
@@ -45,7 +52,7 @@ bam_ssim <- function(sp1,sp2,set_M,
                      initial_points,
                      periods_toxic,
                      periods_suitable,
-                     dispersal_prob=0.2,
+                     dispersal_prob=0.85,
                      palatable_matrices =FALSE,
                      nsteps,progress_bar=TRUE){
 
@@ -80,23 +87,40 @@ bam_ssim <- function(sp1,sp2,set_M,
   }
 
   mat_palatables <- list(bin_model)
-
+  #extintion <- FALSE
 
   for(i in 1:nsteps){
+    #print(i)
     pix_occ <- .nonzero(g0)[,2]
-    invadible <- stats::rbinom(n = sum(nvecinos[pix_occ]),1,
-                               prob = dispersal_prob)
+    if(length(pix_occ) == 0L) {
+      sdm[[i+1]] <- g0
+      mat_palatables[[i+1]] <- bin_model
+      #extintion <- TRUE
+      if(progress_bar){
+        utils::setTxtProgressBar(pb, i)
+      }
+      next
+    }
+
     adj_listC <- rd_adlist[pix_occ]
-    id_col <- rep(pix_occ,nvecinos[pix_occ])
-    value <- unlist(adj_listC)
-    to_ch <- matrix(c(id_col,value),ncol = 2)
-    M_mat[to_ch] <- invadible
+    nbgmat <- do.call(rbind,adj_listC)
+    nbgmat <- nbgmat[!duplicated(nbgmat[,2]),]
+    cellIDs <- nbgmat[,2]
+    n_vec <- length(cellIDs )
+    #id_col <- rep(pix_occ,nvecinos[pix_occ])
+    #value <- unlist(adj_listC)
+    #to_ch <- unique(matrix(c(id_col,value),ncol = 2))
+    invadible <- stats::rbinom(n = n_vec,1,
+                               prob = dispersal_prob)
+
+
+    M_mat[nbgmat[,3:4]] <- invadible
     AMA <- bin_model %*% M_mat %*% bin_model
     g0 <- g0 %*% AMA
     g0[g0>1] <- 1
 
     time_counter_off[pix_occ, ] <- time_counter_off[pix_occ, ] + 1
-    to_off_vec <- pix_occ[which( time_counter_off[pix_occ, ] >=   periods_toxic)]
+    to_off_vec <- pix_occ[which( time_counter_off[pix_occ,]>= periods_toxic)]
     time_onID <- .nonzero(time_counter_on)[,1]
 
     if(length(to_off_vec)>0L){
@@ -106,7 +130,7 @@ bam_ssim <- function(sp1,sp2,set_M,
       time_onID <- c(time_onID,to_off_vec)
     }
     time_counter_on[time_onID, ] <- time_counter_on[time_onID, ]  + 1
-    to_on_vec <- time_onID[which( time_counter_on[time_onID, ] >= periods_suitable)]
+    to_on_vec <- time_onID[which(time_counter_on[time_onID,]>=periods_suitable)]
     if(length(to_on_vec)>0L){
       Matrix::diag(bin_model)[to_on_vec] <- 1
       time_counter_on[to_on_vec,] <- 0
