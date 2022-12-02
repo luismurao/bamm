@@ -1,12 +1,16 @@
 #' jaccard: Estimates the Jaccard index for comparing two binary maps
 #'
 #' @description Estimates the Jaccard index for comparing two binary maps
-#' @param m1 A binary raster A or an object of class setA returned by the function \code{\link[bamm]{model2sparse}}.
-#' @param m2 A binary raster A or an object of class setA returned by the function \code{\link[bamm]{model2sparse}}.
+#' @param m1 A binary raster A or an object of class setA returned by
+#' the function \code{\link[bamm]{model2sparse}}.
+#' @param m2 A binary raster A or an object of class setA returned by
+#' the function \code{\link[bamm]{model2sparse}}.
 #' @return Returns a data.frame with three values: 1) jaccard (Jaccard index),
-#' 2) percentage_m1 (the percentage of m1 that the intersection \eqn{|A \cap B|} represents), and 3) percentage_m2
+#' 2) percentage_m1 (the percentage of m1 that the
+#' intersection \eqn{|A \cap B|} represents), and 3) percentage_m2
 #' @details The Jaccard index is computed as follows
-#' \deqn{J(A,B) = {{|A \cap B|}\over{|A \cup B|}} = {{|A \cap B|}\over{|A| + |B| - |A \cap B|}}.}
+#' \deqn{J(A,B)={{|A\cap B|}\over{|A\cup B|}}={{|A\cap B|}\over{|A|+|B|-|A\cap B|}}.
+#' }
 #' @export
 #' @examples
 #' m1_path <- system.file("extdata/conejos/Lepus_othus_cont.tif",

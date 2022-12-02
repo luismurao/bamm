@@ -1,8 +1,11 @@
 #' model2sparse: Converts a niche model into a diagonal sparse matrix
-#' @param model A raster object representing the geographic projection of a niche model.
-#' @param threshold A threshold to convert a continuous model into a binary model.
+#' @param model A raster object representing the geographic projection
+#' of a niche model.
+#' @param threshold A threshold to convert a continuous model into a
+#' binary model.
 #' @import Matrix
-#' @return A diagonal sparse matrix representing the geographic projection of a niche model.
+#' @return A diagonal sparse matrix representing the geographic projection
+#' of a niche model.
 #' @export
 #' @examples
 #' \dontrun{
