@@ -1,6 +1,8 @@
 #' occs2sparse: Converts occurrence data into a sparse matrix object
-#' @param modelsparse A setA object returned by the function \code{\link[bamm]{model2sparse}}
-#' @param occs A matrix or a data.frame containing two columns. The first one is the longitude and the second is the latitude.
+#' @param modelsparse A setA object returned by the function
+#' \code{\link[bamm]{model2sparse}}
+#' @param occs A matrix or a data.frame containing two columns.
+#' The first one is the longitude and the second is the latitude.
 #' @return A sparse vector of zeros and ones.
 #' @export
 #' @examples

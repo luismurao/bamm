@@ -1,5 +1,7 @@
-#' null_dispersion_field_distribution: Null distribution of the dispersion field
-#' @description null_dispersion_field_distribution estimates a random distribution
+#' null_dispersion_field_distribution: Null distribution of the
+#' dispersion field
+#' @description null_dispersion_field_distribution estimates a
+#' random distribution
 #' of the dispersion field values.
 #' @param pam A Presence-Absence-Matrix of matrix class or sparse matrix.
 #' @param n_iter Number of iterations to obtain the distribution.
@@ -8,7 +10,8 @@
 #' @importFrom Rdpack reprompt
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib bamm
-#' @return A data matrix of size nrow(pam) X n_iter with dispersion field values.
+#' @return A data matrix of size nrow(pam) X n_iter with dispersion
+#' field values.
 #' @details
 #'  Estimates a random distribution of the dispersion field values. To obtein
 #'          random values it uses the function code{\link[bamm]{permute_pam}}
@@ -24,7 +27,8 @@
 #'                                                        n_cores = 2)
 #' @export
 
-null_dispersion_field_distribution <- function(pam,n_iter=10,parallel=TRUE,n_cores=2){
+null_dispersion_field_distribution <- function(pam,n_iter=10,
+                                               parallel=TRUE,n_cores=2){
 
   if(is.data.frame(pam))
     pam <- data.matrix(pam)
@@ -44,7 +48,7 @@ null_dispersion_field_distribution <- function(pam,n_iter=10,parallel=TRUE,n_cor
                                   biodiv_index = "dispersion_field",
                                   as_sparse = F)
 
-    y=data.frame(dfield =distfield@dispersion_field)
+    y <- data.frame(dfield =distfield@dispersion_field)
     return(y)
   },.progress = T,.options = furrr::furrr_options(seed = NULL))
   plan(sequential)
