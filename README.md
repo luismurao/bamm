@@ -1,6 +1,5 @@
 <!-- badges: start -->
   [![Travis build status](https://travis-ci.com/luismurao/bamm.svg?branch=master)](https://travis-ci.com/luismurao/bamm)
-  [![codecov](https://codecov.io/gh/luismurao/bamm/branch/master/graph/badge.svg)](https://codecov.io/gh/luismurao/bamm)
 [![R-CMD-check](https://github.com/luismurao/bamm/workflows/R-CMD-check/badge.svg)](https://github.com/luismurao/bamm/actions)
 [![CRAN status](https://www.r-pkg.org/badges/version/bamm)](https://CRAN.R-project.org/package=bamm)
 [![Codecov test coverage](https://codecov.io/gh/luismurao/bamm/branch/master/graph/badge.svg)](https://app.codecov.io/gh/luismurao/bamm?branch=master)
