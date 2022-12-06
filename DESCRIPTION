@@ -34,8 +34,6 @@ Imports:
     furrr (>= 0.1.0),
     Rcpp (>= 0.12.18),
     sp(>= 1.3.0)
-Suggest: 
-    maptools(>= 0.9.4)
 RdMacros: Rdpack
 RoxygenNote: 7.2.2
 Suggests: 
