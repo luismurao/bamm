@@ -3,7 +3,9 @@
   [![codecov](https://codecov.io/gh/luismurao/bamm/branch/master/graph/badge.svg)](https://codecov.io/gh/luismurao/bamm)
 [![R-CMD-check](https://github.com/luismurao/bamm/workflows/R-CMD-check/badge.svg)](https://github.com/luismurao/bamm/actions)
 [![CRAN status](https://www.r-pkg.org/badges/version/bamm)](https://CRAN.R-project.org/package=bamm)
+[![Codecov test coverage](https://codecov.io/gh/luismurao/bamm/branch/master/graph/badge.svg)](https://app.codecov.io/gh/luismurao/bamm?branch=master)
 <!-- badges: end -->
+
 # The BAM package <a href='https://luismurao.github.io/'><img src='inst/figures/bam_logo.png' align="right" height="139" /></a>
 
 **Authors: Luis Osorio-Olvera & Jorge Soberon**
