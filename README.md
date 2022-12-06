@@ -1,8 +1,9 @@
 <!-- badges: start -->
-  [![Travis build status](https://travis-ci.com/luismurao/bamm.svg?branch=master)](https://travis-ci.com/luismurao/bamm)
-[![R-CMD-check](https://github.com/luismurao/bamm/workflows/R-CMD-check/badge.svg)](https://github.com/luismurao/bamm/actions)
+[![Travis build status](https://travis-ci.com/luismurao/bamm.svg?branch=master)](https://travis-ci.com/luismurao/bamm)
+[![R-CMD-check](https://github.com/luismurao/bamm/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/luismurao/bamm/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/bamm)](https://CRAN.R-project.org/package=bamm)
-[![Codecov test coverage](https://codecov.io/gh/luismurao/bamm/branch/master/graph/badge.svg)](https://app.codecov.io/gh/luismurao/bamm?branch=master)
+[![test-coverage](https://github.com/luismurao/bamm/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/luismurao/bamm/actions/workflows/test-coverage.yaml)
+
 <!-- badges: end -->
 
 # The BAM package <a href='https://luismurao.github.io/'><img src='inst/figures/bam_logo.png' align="right" height="139" /></a>
