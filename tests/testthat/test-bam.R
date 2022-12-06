@@ -557,7 +557,7 @@ test_that("diversity_range_analysis returns an object of class diversity_range",
                                            return_null_dfield=TRUE)
   expect_error(bamm::plot(rdivan,plot_type="diversity_range1"))
   bamm::plot(rdivan,plot_type="diversity_range_map")
-  bamm::plot(rdivan,plot_type="diversity_range_interactive")
+  #bamm::plot(rdivan,plot_type="diversity_range_interactive")
   bamm::plot(rdivan,plot_type="alpha")
   bamm::plot(rdivan,plot_type="dispersion_field")
   bamm::plot(rdivan,plot_type="dispersion_field_map")
@@ -670,5 +670,39 @@ test_that("predict retuns a prediction",{
                        filename=fname,
                        fmt="GIF")
 
+
+})
+# Test for sim2Animation
+testthat::test_that("sim2Animation",{
+  model_path <- system.file("extdata/Lepus_californicus_cont.tif",
+                            package = "bamm")
+  model <- raster::raster(model_path)
+  sparse_mod <- bamm::model2sparse(model,0.1)
+  adj_mod <- bamm::adj_mat(sparse_mod,ngbs=2)
+  occs_lep_cal <- data.frame(longitude = c(-115.10417,
+                                           -104.90417),
+                             latitude = c(29.61846,
+                                          29.81846))
+  occs_sparse <- bamm::occs2sparse(modelsparse = sparse_mod,
+                                   occs = occs_lep_cal)
+  sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+                               set_M = adj_mod,
+                               initial_points = occs_sparse,
+                               nsteps = 20)
+  ani_name <- tempfile(pattern = "anima_",fileext = ".html")
+  sdm_lep_cal_st <- bamm::sim2Animation(sdm_simul = sdm_lep_cal,
+                                        which_steps = seq(1,20,by=1),
+                                        fmt = "HTML",ani.width = 1200,
+                                        ani.height = 1200,
+                                        filename = ani_name)
+  expect_s4_class(sdm_lep_cal_st,"RasterLayer")
+  ani_name <- tempfile(pattern = "anima_",fileext = ".gif")
+  sdm_lep_cal_st <- bamm::sim2Animation(sdm_simul = sdm_lep_cal,
+                                        which_steps = seq(1,20,by=1),
+                                        fmt = "GIF",ani.width = 1200,
+                                        ani.height = 1200,
+                                        filename = ani_name)
+
+  expect_s4_class(sdm_lep_cal_st,"RasterLayer")
 
 })
