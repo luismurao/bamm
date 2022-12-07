@@ -3,8 +3,5 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   bam: bam.html
-last_built: 2022-12-07T00:52Z
-urls:
-  reference: https://luismurao.github.io/bamm/reference
-  article: https://luismurao.github.io/bamm/articles
+last_built: 2022-12-07T22:26Z
 
