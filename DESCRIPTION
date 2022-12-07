@@ -22,7 +22,7 @@ Depends:
  R (>= 3.5.0)
 LazyData: true
 Imports: 
-    raster,
+    raster (>= 3.4-13),
     Matrix (>= 1.2.14),
     RSpectra (>= 0.13.1),
     methods (>= 3.3),
