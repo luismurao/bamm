@@ -1,6 +1,6 @@
 Package: bamm
 Type: Package
-Title: Species Distribution Models in the light of the BAM theory
+Title: Species Distribution Models in the Light of the BAM Theory
 Version: 0.4.2.1
 Date: 2022-11-11
 Authors@R: c(person("Luis", "Osorio-Olvera", 
@@ -13,6 +13,8 @@ Authors@R: c(person("Luis", "Osorio-Olvera",
                 comment = c(ORCID = "0000-0003-2160-4148")))
 Maintainer: Luis Osorio-Olvera <luismurao@gmail.com>
 Description: Species Distribution models as a function of Biotic, Abiotic and Movement factors. 
+SystemRequirements: C++11, GDAL (>= 2.2.3), GEOS (>= 3.4.0), PROJ (>= 4.9.3), sqlite3
+NeedsCompilation: yes
 License: GPL (>= 3)
 Encoding: UTF-8
 Depends:
