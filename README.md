@@ -6,7 +6,7 @@
 
 <!-- badges: end -->
 
-# The BAM package <a href='https://luismurao.github.io/'><img src='inst/figures/bam_logo.png' align="right" height="139" /></a>
+# bamm <a href="https://luismurao.github.io/bamm/"><img src="man/figures/logo.png" align="right" height="139" /></a>
 
 **Authors: Luis Osorio-Olvera & Jorge Soberon**
 
