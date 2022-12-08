@@ -1,4 +1,4 @@
-# bamm 0.4.2.1
+# bamm 0.4.2.6
 
 * Added a `NEWS.md` file to track changes to the package.
 
@@ -12,3 +12,5 @@
     - ubuntu-latest (older-1; on GitHub Actions), R 4.2.2
     - local ubuntu 20.04.5, install, R 4.1.2
     - local OS X 12.4 install, R 4.2.2
+* Package website build using pkgdown:
+    - https://luismurao.github.io/bamm
