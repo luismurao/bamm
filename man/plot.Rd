@@ -33,7 +33,7 @@
 \item{legend}{Logical. If TRUE the legend of the categorical diversity
 range values will appear.}
 
-\item{legend_position}{Lengend position.}
+\item{legend_position}{Legend position.}
 
 \item{ylab}{y label}
 

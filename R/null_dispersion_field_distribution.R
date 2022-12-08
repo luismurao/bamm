@@ -13,7 +13,7 @@
 #' @return A data matrix of size nrow(pam) X n_iter with dispersion
 #' field values.
 #' @details
-#'  Estimates a random distribution of the dispersion field values. To obtein
+#'  Estimates a random distribution of the dispersion field values. To obtain
 #'          random values it uses the function code{\link[bamm]{permute_pam}}
 #'          at each step of the iterations.
 #'

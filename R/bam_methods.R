@@ -239,7 +239,7 @@ methods::setMethod(f = "show",
 #'                  "dispersion_field" (a raster with dispersion field)
 #' @param legend Logical. If TRUE the legend of the categorical diversity
 #' range values will appear.
-#' @param legend_position Lengend position.
+#' @param legend_position Legend position.
 #' @param xlab x label
 #' @param ylab y label
 #' @param col Plot colors.

@@ -4,7 +4,7 @@
 
 * Tested in:
     - R-hub windows-x86_64-devel (r-devel)
-    - R-hub  macOS 10.13.6 High Sierra, R-release, CRAN's setup
+    - R-hub  macOS 10.13.6 High Sierra, R-release, CRAN setup
     - windows-latest (release; on GitHub Actions), R 4.2.2
     - macOS-latest (release; on GitHub Actions), R 4.2.2
     - ubuntu-latest (release; on GitHub Actions), R 4.2.2

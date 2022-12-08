@@ -139,7 +139,8 @@ pam <- methods::setClass(Class = "pam",
 
 
 
-
+#' Class  \code{leaflet} leaflet
+#' @author Luis Osorio-Olvera & Jorge Soberón
 leaflet <- methods::setClass(Class = "leaflet")
 
 #' Class  \code{csd}
