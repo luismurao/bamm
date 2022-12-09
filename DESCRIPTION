@@ -14,7 +14,7 @@ Authors@R: c(person("Luis", "Osorio-Olvera",
 Maintainer: Luis Osorio-Olvera <luismurao@gmail.com>
 BugReports: https://github.com/luismurao/bamm/issues
 Description: Species Distribution models as a function of Biotic, Abiotic and Movement factors. 
-SystemRequirements: C++11, GDAL (>= 2.5): libgdal-dev (deb) or gdal-devel (rmp), 
+SystemRequirements: C++11, GDAL (>= 2.2.3): libgdal-dev (deb) or gdal-devel (rmp), 
                     GEOS (>= 3.4.0), PROJ (>= 4.9.3), sqlite3, 
                     ImageMagick++: ImageMagick-c++-devel (rpm) or libmagick++-dev (deb)
 NeedsCompilation: yes
