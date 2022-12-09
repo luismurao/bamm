@@ -27,7 +27,7 @@
 (range-diversity plot),
                  "diversity_range_map" (a raster map with
                  diversity_range categories),
-                 "alpha" (a raster mapa with alpha diversity values),
+                 "alpha" (a raster map with alpha diversity values),
                  "dispersion_field" (a raster with dispersion field)}
 
 \item{legend}{Logical. If TRUE the legend of the categorical diversity

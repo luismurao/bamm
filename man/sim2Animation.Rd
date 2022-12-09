@@ -26,7 +26,7 @@ sim2Animation(
 \item{which_steps}{A numeric vector indicating the simulation steps that
 are going to be converted into raster layers.}
 
-\item{fmt}{Animation format. Posible values are GIF and HTML}
+\item{fmt}{Animation format. Possible values are GIF and HTML}
 
 \item{filename}{File name.}
 
