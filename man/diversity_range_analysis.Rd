@@ -25,7 +25,7 @@ diversity_range_analysis(
 
 \item{upper_interval}{Upper interval.}
 
-\item{raster_templete}{A raster templete.}
+\item{raster_templete}{A raster template.}
 
 \item{niter}{Number of iterations to obtain the distribution.}
 

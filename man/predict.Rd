@@ -55,7 +55,7 @@ scenarios will be created}
 \item{period_names}{Character vector with the names of periods that will
 be animated. Default NULL.}
 
-\item{fmt}{Animation format. Posible values are GIF and HTML}
+\item{fmt}{Animation format. Possible values are GIF and HTML}
 
 \item{filename}{File name.}
 
