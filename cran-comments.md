@@ -15,3 +15,7 @@
 0 errors | 0 warnings | 1 note
 
 * This is a new release.
+
+
+- Added single to some words in the description to avoid a NOTE:
+    - Possibly misspelled words in DESCRIPTION: 'Abiotic', 'Biotic' and 'BAM'
