@@ -118,11 +118,14 @@ raster::plot(clustersin@raster_map)
 The CSD diagram is a simple but useful tool to estimate the number of dispersal
 steps that a species needs to travel per unit time in order to occupy its potential
 area of distribution. In this example the approximate number of dispersal steps to
-archive all suitable patches is 30.
+archive all suitable patches is 30 (not shown here).
 
 ```{r fig.width=4,fig.height=4,fig.cap="Figure 4. Connectivity Sutitability Dispersal plot (CSD plot).\nThe mean number of connected cells (MNCC) is showed in the legend."}
 csd_plot <- bamm::csd_estimate(sparse_mod,
-                              dispersal_steps=c(2,4,8,16,32,40))
+                              dispersal_steps=c(2,4,8))
+plot(csd_plot$csd$`dispersal_step:_4`@raster_map,
+     main="CSD clusters")
+
 ```
 
 
