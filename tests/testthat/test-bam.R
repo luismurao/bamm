@@ -92,29 +92,34 @@ test_that("occs2sparse()  returns a sparse vector of zeros and ones", {
 })
 
 
-test_that("shape2Grid()  converts a shapefile to a raster of a given resolution", {
+test_that("shape2Grid()  converts a shapefile to a raster of a given resolution"
+          , {
   x_coord <- c(16.48438,  17.49512,  24.74609, 22.59277, 16.48438)
-  y_coord <- c(59.736328125, 55.1220703125, 55.0341796875, 61.142578125, 59.736328125)
+  y_coord <- c(59.736328125, 55.1220703125, 55.0341796875,
+               61.142578125, 59.736328125)
   xy <- cbind(x_coord, y_coord)
   p <- sp::Polygon(xy)
   ps <- sp::Polygons(list(p),1)
   sps <- sp::SpatialPolygons(list(ps))
-  r1 <- bamm::shape2Grid(sps,resolution = 0.5,ones = T)
+  r1 <- bamm::shape2Grid(sps,resolution = 0.5,ones = TRUE)
   expect_s4_class(r1,class = "RasterLayer")
 })
 
-test_that("shape2Grid()  converts a shapefile to a raster of a given resolution", {
+test_that("shape2Grid()  converts a shapefile to a raster of a given resolution"
+          , {
   x_coord <- c(16.48438,  17.49512,  24.74609, 22.59277, 16.48438)
-  y_coord <- c(59.736328125, 55.1220703125, 55.0341796875, 61.142578125, 59.736328125)
+  y_coord <- c(59.736328125, 55.1220703125, 55.0341796875,
+               61.142578125, 59.736328125)
   xy <- cbind(x_coord, y_coord)
   p <- sp::Polygon(xy)
   ps <- sp::Polygons(list(p),1)
   sps <- sp::SpatialPolygons(list(ps))
-  r1 <- bamm::shape2Grid(sps,resolution = 0.5,ones = F)
+  r1 <- bamm::shape2Grid(sps,resolution = 0.5,ones = FALSE)
   expect_s4_class(r1,class = "RasterLayer")
 })
 
-test_that("permute_pam()  returns a permuted matrix with row sums and colum sums fixed", {
+test_that("permute_pam()  returns a permuted matrix with row
+          sums and colum sums fixed", {
   set.seed(111)
   pam <- matrix(rbinom(100,1,0.3),nrow = 10,ncol = 10)
   ppam <- bamm::permute_pam(m = pam,niter = NULL,as_sparse = FALSE)
@@ -164,14 +169,14 @@ test_that("bam_clusters() returns an object of class csd", {
   model <- raster::raster(model_path)
   model <- model > 0.7
   #raster::crs(model) <- "+proj=longlat +datum=WGS84 +no_defs"
-  clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=F)
+  clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=FALSE)
   expect_s4_class(clusterin, "csd")
 })
 
 test_that("bam_clusters() expects a RasterLayer or a sparse model", {
   model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                             package = "bamm")
-  expect_error(bamm::bam_clusters(model_path,ngbs=1,plot_model=F))
+  expect_error(bamm::bam_clusters(model_path,ngbs=1,plot_model=FALSE))
 })
 
 test_that("bam_clusters() expects a RasterLayer or a sparse model", {
@@ -180,7 +185,7 @@ test_that("bam_clusters() expects a RasterLayer or a sparse model", {
   model <- raster::raster(model_path)
   model <- bamm::model2sparse(model,threshold = 0.7)
   #raster::crs(model) <- "+proj=longlat +datum=WGS84 +no_defs"
-  clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=F)
+  clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=FALSE)
   print(clusterin)
   expect_s4_class(clusterin, "csd")
 })
@@ -192,7 +197,7 @@ test_that("bam_clusters() returns leaflet plot with model", {
   model <- raster::raster(model_path)
   model <- model > 0.7
   raster::crs(model) <- "+proj=longlat"
-  clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=T)
+  clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=TRUE)
   expect_s3_class(clusterin@interactive_map, "leaflet")
 })
 
@@ -203,10 +208,13 @@ test_that("eigen_bam returns a list",{
                             package = "bamm")
   model <- raster::raster(model_path)
   sparse_mod <- bamm::model2sparse(model = model,threshold = 0.2)
-  adj_mod <- bamm::adj_mat(sparse_mod,ngbs = 1,eigen_sys = T)
-  eig_bam <- bamm::eigen_bam(A=sparse_mod,M=adj_mod,which_eigen = 1,rmap = T)
-  expect_error(bamm::eigen_bam(A="sparse_mod",M=adj_mod,which_eigen = 1,rmap = T))
-  expect_error(bamm::eigen_bam(A=sparse_mod,M="adj_mod",which_eigen = 1,rmap = T))
+  adj_mod <- bamm::adj_mat(sparse_mod,ngbs = 1,eigen_sys = TRUE)
+  eig_bam <- bamm::eigen_bam(A=sparse_mod,M=adj_mod,
+                             which_eigen = 1,rmap = TRUE)
+  expect_error(bamm::eigen_bam(A="sparse_mod",
+                               M=adj_mod,which_eigen = 1,rmap = TRUE))
+  expect_error(bamm::eigen_bam(A=sparse_mod,M="adj_mod",
+                               which_eigen = 1,rmap = TRUE))
 
   expect_match(class(eig_bam),"list")
 })
@@ -226,7 +234,8 @@ test_that("csd_estimate returns a list",{
 
 # Tests for sdm_sim function
 
-test_that("sdm_sim returns an object of class bam with results from simulation",{
+test_that("sdm_sim returns an object of class bam with results from simulation"
+          ,{
   ## Not run:
   model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                             package = "bamm")
@@ -291,10 +300,13 @@ test_that("sdm_sim returns an object of class bam with results from simulation",
 
 # Tests for bam_sim
 
-test_that("bam_sim A simple simultation of predator-prey interaction. Returns an object of class",{
-  ura <- raster::raster(system.file("extdata/urania_omph/urania_guanahacabibes.tif",
+test_that("bam_sim A simple simultation of predator-prey interaction.
+          Returns an object of class",{
+  upa <- "extdata/urania_omph/urania_guanahacabibes.tif"
+  ura <- raster::raster(system.file(upa,
                                     package = "bamm"))
-  omp <- raster::raster(system.file("extdata/urania_omph/omphalea_guanahacabibes.tif",
+  opa <- "extdata/urania_omph/omphalea_guanahacabibes.tif"
+  omp <- raster::raster(system.file(opa,
                                     package = "bamm"))
   msparse <- bamm::model2sparse(ura)
   init_coordsdf <- data.frame(x=-84.38751, y= 22.02932)
@@ -321,10 +333,13 @@ test_that("bam_sim A simple simultation of predator-prey interaction. Returns an
 
 # Tests for bam_ssim
 
-test_that("bam_ssim A simple simultation of predator-prey interaction. Returns an object of class",{
-  ura <- raster::raster(system.file("extdata/urania_omph/urania_guanahacabibes.tif",
+test_that("bam_ssim A simple simultation of predator-prey interaction.
+          Returns an object of class",{
+            upa <- "extdata/urania_omph/urania_guanahacabibes.tif"
+  ura <- raster::raster(system.file(upa,
                                     package = "bamm"))
-  omp <- raster::raster(system.file("extdata/urania_omph/omphalea_guanahacabibes.tif",
+  opa <- "extdata/urania_omph/omphalea_guanahacabibes.tif"
+  omp <- raster::raster(system.file(opa,
                                     package = "bamm"))
   msparse <- bamm::model2sparse(ura)
   init_coordsdf <- data.frame(x=-84.38751, y= 22.02932)
@@ -366,7 +381,7 @@ test_that("sim2Raster returns a stack of the distribution at time t",{
                             package = "bamm")
   model <- raster::raster(model_path)
   sparse_mod <- bamm::model2sparse(model,0.2)
-  adj_mod <- bamm::adj_mat(sparse_mod,ngbs = 1,eigen_sys = T,1)
+  adj_mod <- bamm::adj_mat(sparse_mod,ngbs = 1,eigen_sys = TRUE,1)
   print(adj_mod)
   occs_lep_cal <- data.frame(longitude = c(-115.10417,
                                            -104.90417),
@@ -394,7 +409,8 @@ test_that("sim2Raster returns a stack of the distribution at time t",{
 
 # Tests for community_sim
 
-test_that("community_sim simulates community dynamics and returns an object of class ",{
+test_that("community_sim simulates community dynamics and returns an
+          object of class ",{
   ## Not run:
   lagos_path <- system.file("extdata/conejos",
                             package = "bamm")
@@ -435,7 +451,7 @@ test_that("pam2richness returns a raster of richness",{
                          pattern = ".tif",
                          full.names = TRUE)
   en_models <- raster::stack(enm_path)
-  ngbs_vect <- sample(1:2,replace = T,
+  ngbs_vect <- sample(1:2,replace = TRUE,
                       size = raster::nlayers(en_models))
   init_coords <- read.csv(file.path(lagos_path,
                                     "lagos_initit.csv"))
@@ -519,20 +535,27 @@ test_that("models2pam returns a PAM as a sparsematrix",{
                          pattern = ".tif",
                          full.names = TRUE)
   en_models <- raster::stack(enm_path) >0.01
-  expect_error(bamm::models2pam(mods_stack = "en_models",sparse=F,parallel=F,ncores=2))
-  pam <- bamm::models2pam(mods_stack = en_models,sparse=T,parallel=T,ncores=2)
+  expect_error(bamm::models2pam(mods_stack = "en_models",
+                                sparse=FALSE,parallel=FALSE,
+                                ncores=2))
+  pam <- bamm::models2pam(mods_stack = en_models,sparse=TRUE,
+                          parallel=TRUE,ncores=2)
   expect_s4_class(pam,"dgCMatrix")
-  pam <- bamm::models2pam(mods_stack = en_models,sparse=T,parallel=F,ncores=2)
+  pam <- bamm::models2pam(mods_stack = en_models,sparse=TRUE,
+                          parallel=FALSE,ncores=2)
   expect_s4_class(pam,"dgCMatrix")
-  pam <- bamm::models2pam(mods_stack = en_models,sparse=F,parallel=T,ncores=2)
+  pam <- bamm::models2pam(mods_stack = en_models,
+                          sparse=FALSE,parallel=TRUE,ncores=2)
   expect_match(class(pam)[1],"matrix")
-  pam <- bamm::models2pam(mods_stack = en_models,sparse=F,parallel=F,ncores=2)
+  pam <- bamm::models2pam(mods_stack = en_models,sparse=FALSE,
+                          parallel=FALSE,ncores=2)
   expect_match(class(pam)[1],"matrix")
 })
 
 # Test for diversity_range_analysis
 
-test_that("diversity_range_analysis returns an object of class diversity_range",{
+test_that("diversity_range_analysis returns an object of class diversity_range",
+          {
   set.seed(111)
   pam <- matrix(rbinom(10000,1,0.5),nrow = 100,ncol = 1000)
   rdivan <- bamm::diversity_range_analysis(pam=pam,parallel = FALSE,
@@ -658,9 +681,9 @@ test_that("predict retuns a prediction",{
   new_preds <- predict(object = smd_lep_cal,
                        niche_layers = niche_mods_stack,
                        nsteps_vec = c(1),
-                       stochastic_dispersal=T,
+                       stochastic_dispersal=TRUE,
                        nbgs_vec=c(1,2),
-                       disp_prop2_suitability	=T,
+                       disp_prop2_suitability	=TRUE,
                        disper_prop= 0.5,
                        period_names	=c("P1","P2"),
                        bg_color	="gray97",
