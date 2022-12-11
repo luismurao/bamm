@@ -228,7 +228,7 @@ test_that("csd_estimate returns a list",{
   model <- raster::raster(model_path)
   model <- model > 0.7
   csd_plot <- bamm::csd_estimate(model,
-                                 dispersal_steps=c(1,2,4))
+                                 dispersal_steps=c(1,2))
   expect_equal(class(csd_plot),"list")
 })
 
@@ -317,17 +317,17 @@ test_that("bam_sim A simple simultation of predator-prey interaction.
                              initial_points=initial_points,
                              periods_toxic=3,
                              periods_suitable=3,
-                             nsteps=40))
+                             nsteps=10))
   expect_error(bamm::bam_sim(sp1=ura, sp2=omp, set_M="set_M",
                              initial_points=initial_points,
                              periods_toxic=3,
                              periods_suitable=3,
-                             nsteps=40))
+                             nsteps=10))
   ura_sim <- bamm::bam_sim(sp1=ura, sp2=omp, set_M=set_M,
                            initial_points=initial_points,
                            periods_toxic=3,
                            periods_suitable=3,
-                           nsteps=40)
+                           nsteps=10)
   expect_s4_class(ura_sim,"bam")
 })
 
@@ -350,26 +350,26 @@ test_that("bam_ssim A simple simultation of predator-prey interaction.
                              initial_points=initial_points,
                              periods_toxic=1,
                              periods_suitable=3,
-                             nsteps=40))
+                             nsteps=10))
   expect_error(bamm::bam_ssim(sp1=ura, sp2=omp, set_M="set_M",
                              initial_points=initial_points,
                              periods_toxic=1,
                              periods_suitable=3,
-                             nsteps=40))
+                             nsteps=10))
   ura_sim <- bamm::bam_ssim(sp1=ura, sp2=omp, set_M=set_M,
                             dispersal_prob = 0.1,
                             initial_points=initial_points,
                             periods_toxic=2,
                             periods_suitable=3,
                             palatable_matrices = TRUE,
-                            nsteps=40)
+                            nsteps=10)
   ura_sim <- bamm::bam_ssim(sp1=ura, sp2=omp, set_M=set_M,
                             dispersal_prob = 0.25,
                             initial_points=initial_points,
                             periods_toxic=1,
                             periods_suitable=3,
                             palatable_matrices = TRUE,
-                            nsteps=40)
+                            nsteps=10)
   expect_s4_class(ura_sim,"bam")
 })
 
@@ -416,8 +416,8 @@ test_that("community_sim simulates community dynamics and returns an
                             package = "bamm")
   enm_path <- list.files(lagos_path,
                          pattern = ".tif",
-                         full.names = TRUE)
-  en_models <- raster::stack(enm_path)
+                         full.names = TRUE)[1:5]
+  en_models <- raster::stack(enm_path) >0.1
   ngbs_vect <- sample(1:2,replace = TRUE,
                       size = raster::nlayers(en_models))
   init_coords <- read.csv(file.path(lagos_path,
@@ -425,42 +425,23 @@ test_that("community_sim simulates community dynamics and returns an
   nsteps <- 10
   sdm_comm <- bamm::community_sim(en_models = enm_path,
                                   ngbs_vect = ngbs_vect,
-                                  init_coords = init_coords,
+                                  init_coords = init_coords[1:5,],
                                   nsteps = nsteps,
                                   threshold = 0.1)
   expect_error(bamm::community_sim(en_models = enm_path,
                                    ngbs_vect = 1,
-                                   init_coords = init_coords,
+                                   init_coords = init_coords[1:5,],
                                    nsteps = nsteps,
                                    threshold = 0.1))
   expect_error(bamm::community_sim(en_models = enm_path,
                                    ngbs_vect = ngbs_vect,
-                                   init_coords = init_coords[-1,],
+                                   init_coords = init_coords[c(-1,2,3,4,5),],
                                    nsteps = nsteps,
                                    threshold = 0.1))
   expect_s4_class(sdm_comm,"community_sim")
 
-})
+  # Tests for pam2richness function
 
-# Tests for pam2richness function
-
-test_that("pam2richness returns a raster of richness",{
-  lagos_path <- system.file("extdata/conejos",
-                            package = "bamm")
-  enm_path <- list.files(lagos_path,
-                         pattern = ".tif",
-                         full.names = TRUE)
-  en_models <- raster::stack(enm_path)
-  ngbs_vect <- sample(1:2,replace = TRUE,
-                      size = raster::nlayers(en_models))
-  init_coords <- read.csv(file.path(lagos_path,
-                                    "lagos_initit.csv"))
-  nsteps <- 10
-  sdm_comm <- bamm::community_sim(en_models = enm_path,
-                                  ngbs_vect = ngbs_vect,
-                                  init_coords = init_coords,
-                                  nsteps = nsteps,
-                                  threshold = 0.3)
   expect_s4_class(sdm_comm,"community_sim")
   pams <-bamm::csim2pam(community_sim = sdm_comm ,
                         which_steps = c(1:10))
@@ -475,7 +456,83 @@ test_that("pam2richness returns a raster of richness",{
 
   expect_s4_class(richness_stack,"RasterStack")
 
+  # Tests for models2pam
+
+  expect_error(bamm::models2pam(mods_stack = "en_models",
+                                sparse=FALSE,parallel=FALSE,
+                                ncores=2))
+  pam <- bamm::models2pam(mods_stack = en_models,sparse=TRUE,
+                          parallel=TRUE,ncores=2)
+  expect_s4_class(pam,"dgCMatrix")
+  pam <- bamm::models2pam(mods_stack = en_models,sparse=TRUE,
+                          parallel=FALSE,ncores=2)
+  expect_s4_class(pam,"dgCMatrix")
+  pam <- bamm::models2pam(mods_stack = en_models,
+                          sparse=FALSE,parallel=TRUE,ncores=2)
+  expect_match(class(pam)[1],"matrix")
+  pam <- bamm::models2pam(mods_stack = en_models,sparse=FALSE,
+                          parallel=FALSE,ncores=2)
+  expect_match(class(pam)[1],"matrix")
+
+  # Test for diversity_range_analysis
+
+  nonas <- which(!is.na(en_models[[1]][]))
+  xy_mat <- sp::coordinates(en_models[[1]])[ nonas,]
+  pam <- bamm::models2pam(en_models,sparse=FALSE)
+  rdivan <- bamm::diversity_range_analysis(pam=pam,parallel = TRUE,
+                                           xy_mat=xy_mat,
+                                           raster_templete = en_models[[1]],
+                                           return_null_dfield=TRUE)
+  expect_error(bamm::plot(rdivan,plot_type="diversity_range1"))
+  bamm::plot(rdivan,plot_type="diversity_range_map")
+  #bamm::plot(rdivan,plot_type="diversity_range_interactive")
+  bamm::plot(rdivan,plot_type="alpha")
+  bamm::plot(rdivan,plot_type="dispersion_field")
+  bamm::plot(rdivan,plot_type="dispersion_field_map")
+  expect_s4_class(rdivan,"diversity_range")
+  rdivan <- bamm::diversity_range_analysis(pam=pam,parallel = TRUE,
+                                           xy_mat=xy_mat,
+                                           raster_templete = NULL,
+                                           return_null_dfield=TRUE)
+  bamm::plot(rdivan,plot_type="diversity_range_map")
+
 })
+
+# Tests for pam2richness function
+
+#test_that("pam2richness returns a raster of richness",{
+#  lagos_path <- system.file("extdata/conejos",
+#                            package = "bamm")
+#  enm_path <- list.files(lagos_path,
+#                         pattern = ".tif",
+#                         full.names = TRUE)
+#  en_models <- raster::stack(enm_path)
+#  ngbs_vect <- sample(1:2,replace = TRUE,
+#                      size = raster::nlayers(en_models))
+#  init_coords <- read.csv(file.path(lagos_path,
+#                                    "lagos_initit.csv"))
+#  nsteps <- 10
+#  sdm_comm <- bamm::community_sim(en_models = enm_path,
+#                                  ngbs_vect = ngbs_vect,
+#                                  init_coords = init_coords,
+#                                  nsteps = nsteps,
+#                                  threshold = 0.3)
+#  expect_s4_class(sdm_comm,"community_sim")
+#  pams <-bamm::csim2pam(community_sim = sdm_comm ,
+#                        which_steps = c(1:10))
+
+#  expect_error(bamm::csim2pam(community_sim = "a" ,
+#                              which_steps = c(1:10)))
+
+#  expect_s4_class(pams,"pam")
+#  print(pams)
+#  richness_stack <- bamm::pam2richness(pams,which_steps=pams@which_steps)
+#  expect_error(bamm::pam2richness(pamobj = "a",which_steps=pams@which_steps))
+
+#  expect_s4_class(richness_stack,"RasterStack")
+
+#})
+
 # Test for null_distribution_field_distribution
 
 test_that("null_distribution_field_distribution expects a matrix",{
@@ -528,69 +585,69 @@ test_that("pam2bioindex returns an object of class bioindex",{
 })
 
 # Tests for models2pam
-test_that("models2pam returns a PAM as a sparsematrix",{
-  lagos_path <- system.file("extdata/conejos",
-                            package = "bamm")
-  enm_path <- list.files(lagos_path,
-                         pattern = ".tif",
-                         full.names = TRUE)
-  en_models <- raster::stack(enm_path) >0.01
-  expect_error(bamm::models2pam(mods_stack = "en_models",
-                                sparse=FALSE,parallel=FALSE,
-                                ncores=2))
-  pam <- bamm::models2pam(mods_stack = en_models,sparse=TRUE,
-                          parallel=TRUE,ncores=2)
-  expect_s4_class(pam,"dgCMatrix")
-  pam <- bamm::models2pam(mods_stack = en_models,sparse=TRUE,
-                          parallel=FALSE,ncores=2)
-  expect_s4_class(pam,"dgCMatrix")
-  pam <- bamm::models2pam(mods_stack = en_models,
-                          sparse=FALSE,parallel=TRUE,ncores=2)
-  expect_match(class(pam)[1],"matrix")
-  pam <- bamm::models2pam(mods_stack = en_models,sparse=FALSE,
-                          parallel=FALSE,ncores=2)
-  expect_match(class(pam)[1],"matrix")
-})
+#test_that("models2pam returns a PAM as a sparsematrix",{
+#  lagos_path <- system.file("extdata/conejos",
+#                            package = "bamm")
+#  enm_path <- list.files(lagos_path,
+#                         pattern = ".tif",
+#                         full.names = TRUE)
+#  en_models <- raster::stack(enm_path) >0.01
+#  expect_error(bamm::models2pam(mods_stack = "en_models",
+#                                sparse=FALSE,parallel=FALSE,
+#                                ncores=2))
+#  pam <- bamm::models2pam(mods_stack = en_models,sparse=TRUE,
+#                          parallel=TRUE,ncores=2)
+#  expect_s4_class(pam,"dgCMatrix")
+#  pam <- bamm::models2pam(mods_stack = en_models,sparse=TRUE,
+#                          parallel=FALSE,ncores=2)
+#  expect_s4_class(pam,"dgCMatrix")
+#  pam <- bamm::models2pam(mods_stack = en_models,
+#                          sparse=FALSE,parallel=TRUE,ncores=2)
+#  expect_match(class(pam)[1],"matrix")
+#  pam <- bamm::models2pam(mods_stack = en_models,sparse=FALSE,
+#                          parallel=FALSE,ncores=2)
+#  expect_match(class(pam)[1],"matrix")
+#})
 
 # Test for diversity_range_analysis
 
-test_that("diversity_range_analysis returns an object of class diversity_range",
-          {
-  set.seed(111)
-  pam <- matrix(rbinom(10000,1,0.5),nrow = 100,ncol = 1000)
-  rdivan <- bamm::diversity_range_analysis(pam=pam,parallel = FALSE,
-                                           return_null_dfield=TRUE)
-  print(rdivan)
-  expect_s4_class(rdivan,"diversity_range")
+#test_that("diversity_range_analysis returns an object of class diversity_range",
+#          {
+#  set.seed(111)
+#  pam <- matrix(rbinom(10000,1,0.5),nrow = 100,ncol = 1000)
+#  rdivan <- bamm::diversity_range_analysis(pam=pam,parallel = FALSE,
+#                                           return_null_dfield=TRUE)
+#  print(rdivan)
+#  expect_s4_class(rdivan,"diversity_range")
 
-  bamm::plot(rdivan,plot_type="diversity_range")
+#  bamm::plot(rdivan,plot_type="diversity_range")
   # Lagomorphos
-  lagos_path <- system.file("extdata/conejos",
-                            package = "bamm")
-  enm_path <- list.files(lagos_path,
-                         pattern = ".tif",
-                         full.names = TRUE)
-  en_models <- raster::stack(enm_path) >0.01
-  nonas <- which(!is.na(en_models[[1]][]))
-  xy_mat <- sp::coordinates(en_models[[1]])[ nonas,]
-  pam <- bamm::models2pam(en_models,sparse=FALSE)
-  rdivan <- bamm::diversity_range_analysis(pam=pam,parallel = TRUE,
-                                           xy_mat=xy_mat,
-                                           raster_templete = en_models[[1]],
-                                           return_null_dfield=TRUE)
-  expect_error(bamm::plot(rdivan,plot_type="diversity_range1"))
-  bamm::plot(rdivan,plot_type="diversity_range_map")
+#  lagos_path <- system.file("extdata/conejos",
+#                            package = "bamm")
+#  enm_path <- list.files(lagos_path,
+#                         pattern = ".tif",
+#                         full.names = TRUE)
+#  en_models <- raster::stack(enm_path) >0.01
+#  nonas <- which(!is.na(en_models[[1]][]))
+#  xy_mat <- sp::coordinates(en_models[[1]])[ nonas,]
+#  pam <- bamm::models2pam(en_models,sparse=FALSE)
+#  rdivan <- bamm::diversity_range_analysis(pam=pam,parallel = TRUE,
+#                                           xy_mat=xy_mat,
+#                                           raster_templete = en_models[[1]],
+#                                           return_null_dfield=TRUE)
+#  expect_error(bamm::plot(rdivan,plot_type="diversity_range1"))
+#  bamm::plot(rdivan,plot_type="diversity_range_map")
   #bamm::plot(rdivan,plot_type="diversity_range_interactive")
-  bamm::plot(rdivan,plot_type="alpha")
-  bamm::plot(rdivan,plot_type="dispersion_field")
-  bamm::plot(rdivan,plot_type="dispersion_field_map")
-  expect_s4_class(rdivan,"diversity_range")
-  rdivan <- bamm::diversity_range_analysis(pam=pam,parallel = TRUE,
-                                           xy_mat=xy_mat,
-                                           raster_templete = NULL,
-                                           return_null_dfield=TRUE)
-  bamm::plot(rdivan,plot_type="diversity_range_map")
-})
+#  bamm::plot(rdivan,plot_type="alpha")
+#  bamm::plot(rdivan,plot_type="dispersion_field")
+#  bamm::plot(rdivan,plot_type="dispersion_field_map")
+#  expect_s4_class(rdivan,"diversity_range")
+#  rdivan <- bamm::diversity_range_analysis(pam=pam,parallel = TRUE,
+#                                           xy_mat=xy_mat,
+#                                           raster_templete = NULL,
+#                                           return_null_dfield=TRUE)
+#  bamm::plot(rdivan,plot_type="diversity_range_map")
+#})
 
 # Testing predic method
 
