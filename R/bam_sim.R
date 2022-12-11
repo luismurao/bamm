@@ -60,8 +60,8 @@ bam_sim <- function(sp1,sp2,set_M,initial_points,
   g0 <- initial_points
   nonzerosL <- list()
   time_mat <- matrix(numeric(length(A@cellIDs)),ncol  = 1)
-  time_counter_off <- Matrix::Matrix(data = time_mat,sparse=T)
-  time_counter_on <- Matrix::Matrix(data = time_mat,sparse=T)
+  time_counter_off <- Matrix::Matrix(data = time_mat,sparse=TRUE)
+  time_counter_on <- Matrix::Matrix(data = time_mat,sparse=TRUE)
 
   sdm <- list(g0)
   if(progress_bar){

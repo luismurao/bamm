@@ -10,7 +10,12 @@
 #' @return Returns a raster object with the shape of 'shpolygon' of a given
 #'  resolution.
 #' @export
-#' @import sp raster
+#' @importFrom raster raster
+#' @importFrom raster extent
+#' @importFrom raster res
+#' @importFrom raster crop
+#' @importFrom raster mask
+#' @importFrom sp Polygon
 #' @examples
 #' \dontrun{
 #' x_coord <- c(16.48438,  17.49512,  24.74609, 22.59277, 16.48438)

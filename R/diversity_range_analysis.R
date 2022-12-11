@@ -65,7 +65,7 @@ diversity_range_analysis <- function(pam,xy_mat=NULL,lower_interval=0.05,
   bioind <- bamm::pam2bioindex(pam=pam,
                              biodiv_index = c("alpha",
                                               "dispersion_field"),
-                             as_sparse = F)
+                             as_sparse = FALSE)
 
   results@alpha <- bioind@alpha
   results@omega <- bioind@omega

@@ -38,7 +38,7 @@ model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                           package = "bamm")
 model <- raster::raster(model_path)
 model <- model > 0.7
-clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=T)
+clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=TRUE)
 clusterin@interactive_map
 }
 }

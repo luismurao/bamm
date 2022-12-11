@@ -153,7 +153,7 @@ leaflet <- methods::setClass(Class = "leaflet")
 #' @slot raster_map A raster map with cluster IDs as values.
 #' @exportClass csd
 #' @export
-#' @import leaflet
+#' @importFrom leaflet leaflet
 csd <- methods::setClass(Class = "csd",
                          representation(connections="data.frame",
                                         interactive_map = "leaflet",

@@ -98,7 +98,7 @@ csd_estimate <- function(model,dispersal_steps=c(2,4,8,16,32,64)){
                    cex = 1,
                    title="MNCC",
                    text.col = "black",
-                   horiz = F ,
+                   horiz = FALSE,
                    inset = c(0.1, 0.1))
 
   p <- grDevices::recordPlot()

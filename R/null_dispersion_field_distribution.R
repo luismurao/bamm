@@ -43,14 +43,14 @@ null_dispersion_field_distribution <- function(pam,n_iter=10,
 
   nms <-paste0("dfrand_",sniter)
   distfield_rand <- sniter %>% furrr::future_map_dfc(function(x){
-    ppam <- bamm::permute_pam(m=pam,as_sparse=T)
+    ppam <- bamm::permute_pam(m=pam,as_sparse=TRUE)
     distfield <-bamm::pam2bioindex(pam=ppam,
                                   biodiv_index = "dispersion_field",
-                                  as_sparse = F)
+                                  as_sparse = FALSE)
 
     y <- data.frame(dfield =distfield@dispersion_field)
     return(y)
-  },.progress = T,.options = furrr::furrr_options(seed = NULL))
+  },.progress = TRUE,.options = furrr::furrr_options(seed = NULL))
   plan(sequential)
 
   distfield_rand <- data.matrix(distfield_rand)

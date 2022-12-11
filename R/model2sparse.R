@@ -3,7 +3,7 @@
 #' of a niche model.
 #' @param threshold A threshold to convert a continuous model into a
 #' binary model.
-#' @import Matrix
+#' @importFrom Matrix sparseMatrix
 #' @return A diagonal sparse matrix representing the geographic projection
 #' of a niche model.
 #' @export
@@ -39,8 +39,8 @@ model2sparse <- function(model, threshold=NULL){
   model_vals <- raster::getValues(model)*1
   in_calArea <- which(!is.na(model_vals))
   ncols <- nrows <- length(in_calArea)
-  mod_sparse <- Matrix::sparseMatrix(i=1:length(in_calArea),
-                                     j=1:length(in_calArea),
+  mod_sparse <- Matrix::sparseMatrix(i=seq_along(in_calArea),
+                                     j=seq_along(in_calArea),
                                      x=model_vals[in_calArea],
                                      dims = c(nrows,ncols))*1
   mod_coords <- raster::coordinates(model)[in_calArea,]

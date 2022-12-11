@@ -32,7 +32,7 @@ occs2sparse <- function(modelsparse,occs){
   occsIDsSparese <-  which(modelsparse@cellIDs %in% occsIDs)
   pres_abs <- numeric(nrow(modelsparse@sparse_model))
   pres_abs[occsIDsSparese] <- 1
-  pres_abs <- Matrix::Matrix(data = pres_abs,sparse=T)
+  pres_abs <- Matrix::Matrix(data = pres_abs,sparse=TRUE)
 
   #mod_atts <- setA(niche_model = modelsparse@niche_model,
   #                 cellIDs = modelsparse@cellIDs,

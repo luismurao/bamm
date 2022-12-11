@@ -50,7 +50,7 @@ adj_mat <- function(modelsparse,ngbs=1,eigen_sys=FALSE,which_eigs=1){
 
   nbase <- 2*ngbs+1
   ngMat <- base::matrix(rep(1,nbase*nbase),
-                        ncol =nbase,byrow = T )
+                        ncol =nbase,byrow = TRUE )
   ngMat[ngbs+1,ngbs+1] <- 0
 
   no_na <- modelsparse@cellIDs
@@ -62,20 +62,20 @@ adj_mat <- function(modelsparse,ngbs=1,eigen_sys=FALSE,which_eigs=1){
   m_ad1 <- Matrix::sparseMatrix( i=match(r_ad[,1],no_na),
                                  j=match(r_ad[,2],no_na),
                                  x=1.0 )
-  id_nona <- 1:length(no_na)
+  id_nona <- seq_along(no_na)
   newff <- as.factor(c(r_ad[,1],r_ad[,2]))
   newff2 <- newff
   connected_cells <- as.numeric(as.character(levels(newff)))
   connected_ids <- id_nona[which(no_na %in% connected_cells)]
   levels(newff2) <- connected_ids
   newnu <- as.numeric(as.character(newff2))
-  idc <- 1:nrow(r_ad)
+  idc <- seq_len(nrow(r_ad))
   from <- as.numeric(as.character(newff[idc]))
   to <- as.numeric(as.character(newff[-idc]))
   from_nu <- newnu[idc]
   to_nu <- newnu[-idc]
   big_vec <- c(from,to, from_nu,to_nu)
-  r_ad_b <- matrix(big_vec,ncol = 4,byrow = F)
+  r_ad_b <- matrix(big_vec,ncol = 4,byrow = FALSE)
   rd_adlist <- split.data.frame(r_ad_b, r_ad_b[,3])
 
   g_set0 <- setM(adj_matrix = m_ad1,

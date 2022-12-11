@@ -1,7 +1,9 @@
 
 #' Show information in setA class \pkg{bamm}.
 #' @importFrom methods new
+#' @importFrom utils head
 #' @param object An object of class setA
+#' @importFrom methods show
 #' @rdname show
 #' @export
 
@@ -150,7 +152,7 @@ methods::setMethod(f = "show",
                          "values of each cell of the raster area\n\n")
                      print(head(object@coordinates))
 
-                     #cat("@initial_points: A list of inital coordinates where the",
+                #cat("@initial_points: A list of inital coordinates where the",
                     #      "invasion process starts\n\n")
                      #if(length(object@initial_points)>0L)
                     #   print(head(object@initial_points))
@@ -209,7 +211,8 @@ methods::setMethod(f = "show",
                          "used to generate random values of dispersion field" ,
                          "\n\n")
                      if(ncol(object@null_dispersion_field_dist)>=2){
-                       print(head(object@null_dispersion_field_dist[1:2,1:2]))
+                       print(head(object@null_dispersion_field_dist[c(1,2),
+                                                                    c(1,2)]))
                      }
 
                      cat("@diversity_range_raster: Raster with diversity range",
@@ -315,11 +318,11 @@ methods::setMethod(f = "plot",
                            rho  <-alpha_st*(fistprom-1/betty)
                            am <- min(alpha_st)
                            aM <- max(alpha_st)
-                           fm <- min(x@dispersion_field,na.rm = T)/nsites
-                           fM <- max(x@dispersion_field,na.rm =T)/nsites
+                           fm <- min(x@dispersion_field,na.rm = TRUE)/nsites
+                           fM <- max(x@dispersion_field,na.rm =TRUE)/nsites
 
-                           rhom  <- min(rho,na.rm = T)
-                           rhoM <- max(rho,na.rm = T)
+                           rhom  <- min(rho,na.rm = TRUE)
+                           rhoM <- max(rho,na.rm = TRUE)
 
                            vx <- c(am,aM,aM,am)
 
@@ -344,7 +347,7 @@ methods::setMethod(f = "plot",
                                   xlim=c(xmin1,xmax1),
                                   ylim=c(ymin1,ymax1),
                                   xlab=xlab,ylab=ylab,pch=pch,col=col,...)
-                             graphics::lines(graphics::polygon(vx,vy));
+                             graphics::lines(graphics::polygon(vx,vy))
                              if(legend){
                                graphics::legend(legend_position,
                                                 legend = names(COLORES),
@@ -416,11 +419,11 @@ methods::setMethod(f = "plot",
                                     #split = ~labs,
                                     color = ~labs,
                                     colors = COLORES,
-                                    inherit = T
+                                    inherit = TRUE
                                   )  %>%
                                 plotly::add_polygons(x=c(vx,vx[1]),
                                                      y=c(vy,vy[1]),
-                                                     #name = paste0("Cluster ",1),
+                                                  #name = paste0("Cluster ",1),
                                                      line=list(width=2,
                                                                color="black"),
                                                      fillcolor='transparent',
@@ -429,7 +432,8 @@ methods::setMethod(f = "plot",
                                                      inherit = FALSE) %>%
                                   plotly::highlight('plotly_selected',
                                                     off = 'plotly_deselect',
-                                                    dynamic = F,persistent = F),
+                                                    dynamic = FALSE,
+                                                    persistent = FALSE),
                               leaflet::leaflet(diversity,height = 900,...) %>%
                                 leaflet::addTiles() %>%
                                 leaflet::addCircleMarkers(
@@ -438,9 +442,10 @@ methods::setMethod(f = "plot",
                                   lat = ~Latitude,
                                   fillColor = ~col,
                                   color = ~col,opacity = 0.9,...) %>%
-                                plotly::highlight('plotly_click',selectize=F,
+                                plotly::highlight('plotly_click',
+                                                  selectize=FALSE,
                                           off = 'plotly_deselect',
-                                          dynamic = F,persistent = F)
+                                          dynamic = FALSE,persistent = FALSE)
                             )
                              print(p1)
                            }
@@ -642,13 +647,13 @@ methods::setMethod(f = "predict",
                          stop(paste("nbgs_vec should have the same",
                                     "length as the number of niche_layers"))
                        }
-                       ad_mat <- lapply(1:n_nbgs_each, function(x){
+                       ad_mat <- lapply(seq_len(n_nbgs_each), function(x){
                          ad <- bamm::adj_mat(modelsparse = object,
                                              ngbs = nbgs_vec[x])
                        })
                      }
                      else{
-                       ad_mat <- lapply(1:n_enm, function(x){
+                       ad_mat <- lapply(seq_len(n_enm), function(x){
                          methods::new("setM",
                                       adj_matrix=object@adj_matrix)
                        })
@@ -692,7 +697,7 @@ methods::setMethod(f = "predict",
                      }
 
                      names(sim_results) <- paste0("time_period_",
-                                                  1:length(sim_results))
+                                                  seq_along(sim_results))
 
                      if(animate){
 
@@ -703,10 +708,10 @@ methods::setMethod(f = "predict",
 
                          #contri <- nsteps/length(sim_results)
                          which_steps <- round(seq(1,nsteps,
-                                                  along.with = 1:80))
+                                                  along.with = seq_len(80)))
                          step <- max(diff(which_steps))
 
-                        which_stepsL <-  lapply(1:length(nsteps_vec),
+                        which_stepsL <-  lapply(seq_along(nsteps_vec),
                                                 function(x){
                           unique(c(seq(1,nsteps_vec[x],step),
                                    nsteps_vec[x]))
@@ -714,13 +719,13 @@ methods::setMethod(f = "predict",
 
                        }
                        else{
-                         which_stepsL <-  lapply(1:length(nsteps_vec),
+                         which_stepsL <-  lapply(seq_along(nsteps_vec),
                                                  function(x){
                                                    seq(1,nsteps_vec[x])
                                                  })
                        }
 
-                       titles <- lapply(1:length(which_stepsL),
+                       titles <- lapply(seq_along(which_stepsL),
                                         function(x) {
                                           if(!is.null(period_names) &&
                                              length(period_names) ==
@@ -738,7 +743,7 @@ methods::setMethod(f = "predict",
                        titles <- unlist(titles)
 
 
-                       sdm_st <- 1:length(sim_results) %>%
+                       sdm_st <- seq_along(sim_results) %>%
                          purrr::map(function(x){
                            #nsims <-length(sim_results[[x]]@sdm_sim) -1
                            sdm_ani <- bamm::sim2Raster(
@@ -757,7 +762,8 @@ methods::setMethod(f = "predict",
 
                        dir1 <- unlist(strsplit(filename,split = "[/]|[\\]"))
                        filename <- paste0(dir1,collapse = "/")
-                       dir2 <- paste0(dir1[1:(length(dir1)-1)],collapse = '/')
+                       dir2 <- paste0(dir1[seq_len(length(dir1)-1)],
+                                      collapse = '/')
                        dir2 <- normalizePath(dir2)
                        if(fmt == "GIF"){
                          animation::ani.options(ani.width = ani.width,
@@ -765,7 +771,7 @@ methods::setMethod(f = "predict",
                                                 ani.res = ani.res)
 
                          animation::saveGIF({
-                           for (i in 1:raster::nlayers(sdm_st)) {
+                           for (i in seq_len(raster::nlayers(sdm_st))) {
                              maxv <- raster::maxValue(sdm_st[[i]])
                              if(maxv<1.5) colores <- c(bg_color,suit_color)
                              else colores <- c(bg_color,suit_color,
@@ -804,7 +810,7 @@ methods::setMethod(f = "predict",
                          dir3 <- gsub("[.]","_",dir3)
 
                          animation::saveHTML({
-                           for (i in 1:raster::nlayers(sdm_st)) {
+                           for (i in seq_len(raster::nlayers(sdm_st))) {
                              maxv <- raster::maxValue(sdm_st[[i]])
                              if(maxv<1.5) colores <- c(bg_color,suit_color)
                              else colores <- c(bg_color,suit_color,

@@ -15,7 +15,7 @@
 #' more than 1 km^2 per day, so the idea is to give an approximate number of
 #' moving neighbors (pixels) per unit of time.
 #' @importFrom methods as
-#' @import raster
+#' @importFrom raster as.factor
 #' @return A list with a data.frame of the coordinates of each cluster and a
 #' leaflet map.
 #'
@@ -27,7 +27,7 @@
 #'                           package = "bamm")
 #' model <- raster::raster(model_path)
 #' model <- model > 0.7
-#' clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=T)
+#' clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=TRUE)
 #' clusterin@interactive_map
 #' }
 #' @export
@@ -68,7 +68,7 @@ bam_clusters <- function(model,ngbs=1,plot_model=FALSE){
     cols = factor(ama@Dimnames[[2]][cls],
                   levels=unique(ama@Dimnames[[2]])),
     value = vals)
-  net <- igraph::graph.data.frame(my_df, directed = F)
+  net <- igraph::graph.data.frame(my_df, directed = FALSE)
   cl <- igraph::clusters(net)
 
   to_find <- seq_along(cl$csize)[cl$csize > 1]
