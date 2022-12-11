@@ -2,7 +2,6 @@ Package: bamm
 Type: Package
 Title: Species Distribution Models in the Light of the BAM Theory
 Version: 0.4.3
-Date: 2022-7-12
 Authors@R: c(person("Luis", "Osorio-Olvera", 
                  email = "luismurao@gmail.com", 
                  role = c("aut", "cre"),
@@ -15,9 +14,16 @@ Maintainer: Luis Osorio-Olvera <luismurao@gmail.com>
 URL: https://luismurao.github.io/bamm/
 BugReports: https://github.com/luismurao/bamm/issues
 Description: Species Distribution models as a function of Biotic, Abiotic and Movement factors. 
-SystemRequirements: C++11, GDAL (>= 2.2.3): libgdal-dev (deb) or gdal-devel (rmp), 
-                    GEOS (>= 3.4.0), PROJ (>= 4.9.3), sqlite3, 
-                    ImageMagick++: ImageMagick-c++-devel (rpm) or libmagick++-dev (deb)
+SystemRequirements: C++11, GDAL (>= 2.2.3): gdal-bin (deb), libgdal-dev (deb) or
+                    gdal-devel (rmp), GEOS (>= 3.4.0), PROJ (>= 4.9.3): 
+                    libproj-dev (deb), sqlite3, 
+                    ImageMagick++: imagemagick (deb), libmagic-dev (deb), 
+                    libmagick++-dev (deb) or ImageMagick-c++-devel (rpm)
+                    ImageMagick (http://imagemagick.org) or GraphicsMagick 
+                    (http://www.graphicsmagick.org) or LyX (http://www.lyx.org) 
+                    for saveGIF(); (PDF)LaTeX for saveLatex();
+                    SWF Tools (http://swftools.org) for saveSWF(); FFmpeg (http://ffmpeg.org) 
+                    or avconv (https://libav.org/avconv.html) for saveVideo()
 NeedsCompilation: yes
 License: GPL (>= 3)
 Encoding: UTF-8
