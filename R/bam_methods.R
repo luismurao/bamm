@@ -671,6 +671,11 @@ methods::setMethod(f = "predict",
                      sdm <- bamm::sdm_sim(set_A = sparse_mod,
                                          set_M = ad_mat[[1]],
                                          initial_points = initial_points,
+                                         stochastic_dispersal =
+                                           stochastic_dispersal,
+                                         disp_prop2_suitability =
+                                           disp_prop2_suitability,
+                                         progress_bar = TRUE,
                                          nsteps = nsteps)
 
 
@@ -691,6 +696,10 @@ methods::setMethod(f = "predict",
                          sdm <- bamm::sdm_sim(set_A = sparse_mod,
                                              set_M = ad_mat[[x]],
                                              initial_points = initial_points,
+                                             disp_prop2_suitability =
+                                               disp_prop2_suitability,
+                                             stochastic_dispersal =
+                                               stochastic_dispersal,
                                              nsteps = nsteps)
                          sim_results[[x+1]] <- sdm
                        }
@@ -700,7 +709,8 @@ methods::setMethod(f = "predict",
                                                   seq_along(sim_results))
 
                      if(animate){
-
+                       oldpar <- graphics::par(no.readonly = TRUE)
+                       on.exit(graphics::par(oldpar),add=TRUE)
                        nsteps_vec <- c(object@sim_steps,nsteps_vec)
                        nsteps <- sum(nsteps_vec)
 
