@@ -91,39 +91,80 @@ be returned.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Returns an adjacency matrix of class sparseMatrix of n+2 x n
-columns (n number of the non-NA cells of grid_base) with the coordinates
-of the non-NA cells of grid_base.</p>
+<p>Returns an object of class <code><a href="setM-class.html">setM</a></code> with 7 slots.
+The first contains the adjacency matrix. A n x n sparse matrix (n=number of
+non-NA cells of the niche model) where connected cells are represented by 1.
+The second slot has the adjacency list. It is a list of matrices with four
+columns (FromRasCell -from cell ID of the raster-, -to cell ID of the
+raster-, -from non-NA cell-, -to non-NA cell-). Other slots contain
+information about initial coordinates where dispersal occurs
+(initial_points), number of cells used to define the neighborhood (ngbs),
+non-NA coordinates (coordinates), and a matrix of eigen vectors (eigen_vec).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The grid_base raster object is the area where the dispersal
+    <p>The model is a raster object of the area where the dispersal
 process will occur.
 The number of neighbors depends on the dispersal abilities of the species
-and the spatial resolution
-of the grid_base; for example, a species's with big dispersal abilities
-will move throughout more
-than 1 km^2 per day, so the idea is to give an approximate number of moving
-neighbors (pixels) per
-unit of time.</p>
+and the spatial resolution of the niche model; for example, a species's
+with big dispersal abilities will move throughout more than 1 km^2 per day,
+so the idea is to give an approximate number of moving neighbors (pixels)
+per unit of time.
+For more information about see adjacency matrices in the context of
+the theory of area of distribution (Soberon and Osorio-Olvera, 2022).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Soberón J, Osorio-Olvera L (2022).
+“A Dynamic Theory of the Area of Distribution.”
+<a href="https://doi.org/10.48550/ARXIV.2212.06308" class="external-link">doi:10.48550/ARXIV.2212.06308</a>
+, <a href="https://arxiv.org/abs/2212.06308" class="external-link">https://arxiv.org/abs/2212.06308</a>.
+.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"wrld_simpl"</span>, package <span class="op">=</span> <span class="st">"maptools"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mx</span> <span class="op">&lt;-</span> <span class="va">wrld_simpl</span><span class="op">[</span><span class="va">wrld_simpl</span><span class="op">$</span><span class="va">NAME</span><span class="op">==</span><span class="st">"Mexico"</span>,<span class="op">]</span></span></span>
-<span class="r-in"><span><span class="va">mx_grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="shape2Grid.html">shape2Grid</a></span><span class="op">(</span><span class="va">mx</span>,<span class="fl">0.5</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mx_sparse</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu"><a href="model2sparse.html">model2sparse</a></span><span class="op">(</span><span class="va">mx_grid</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">adj_mx</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu">adj_mat</span><span class="op">(</span><span class="va">mx_sparse</span>,ngbs<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># Adjacency matrix from a niche model</span></span></span>
-<span class="r-in"><span><span class="va">model_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/Lepus_californicus_cont.tif"</span>,</span></span>
-<span class="r-in"><span>                          package <span class="op">=</span> <span class="st">"bamm"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster</a></span><span class="op">(</span><span class="va">model_path</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x_coord</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">106.5699</span>, <span class="op">-</span><span class="fl">111.3737</span>,<span class="op">-</span><span class="fl">113.9332</span>,</span></span>
+<span class="r-in"><span>             <span class="op">-</span><span class="fl">110.8913</span>, <span class="op">-</span><span class="fl">106.4262</span>, <span class="op">-</span><span class="fl">106.5699</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y_coord</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">16.62661</span>, <span class="fl">17.72373</span>, <span class="fl">19.87618</span>,</span></span>
+<span class="r-in"><span>             <span class="fl">22.50763</span>, <span class="fl">21.37728</span>, <span class="fl">16.62661</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">x_coord</span>, <span class="va">y_coord</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">Polygon</a></span><span class="op">(</span><span class="va">xy</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">Polygons</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span>,<span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sps</span> <span class="op">&lt;-</span> <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">SpatialPolygons</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ps</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mx_grid</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu"><a href="shape2Grid.html">shape2Grid</a></span><span class="op">(</span><span class="va">sps</span>,resolution <span class="op">=</span> <span class="fl">0.25</span>,ones <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mx_sparse</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu"><a href="model2sparse.html">model2sparse</a></span><span class="op">(</span>model<span class="op">=</span><span class="va">mx_grid</span>, threshold <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">adj_mx</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu">adj_mat</span><span class="op">(</span>modelsparse<span class="op">=</span><span class="va">mx_sparse</span>,</span></span>
+<span class="r-in"><span>                        ngbs<span class="op">=</span><span class="fl">1</span>,eigen_sys<span class="op">=</span><span class="cn">TRUE</span>,which_eigs<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">adj_mx</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set M of the BAM digram it contains 7 slots </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @coordinates: A matrix with longitude and latitude values of each cell of the raster area</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              x        y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -110.8082 22.38263</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -110.5582 22.38263</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] -111.3082 22.13263</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] -111.0582 22.13263</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] -110.8082 22.13263</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] -110.5582 22.13263</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @eigen_val: Eigen values of the connectivity matrix M</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 7.879909</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @eigen_vec: Eigen vector of the connectivity matrix M</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              [,1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.005016999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.005372111</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] -0.006135915</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] -0.009435098</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] -0.011856916</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] -0.012869369</span>
+<span class="r-in"><span><span class="va">mx_grid_eigen</span> <span class="op">&lt;-</span> <span class="va">mx_grid</span></span></span>
+<span class="r-in"><span><span class="va">mx_grid_eigen</span><span class="op">[</span><span class="va">mx_sparse</span><span class="op">@</span><span class="va">cellIDs</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">adj_mx</span><span class="op">@</span><span class="va">eigen_vec</span></span></span>
+<span class="r-in"><span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mx_grid_eigen</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="adj_mat-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">sparse_mod</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu"><a href="model2sparse.html">model2sparse</a></span><span class="op">(</span><span class="va">model</span>,threshold<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">adj_mod</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu">adj_mat</span><span class="op">(</span><span class="va">sparse_mod</span>,ngbs<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
