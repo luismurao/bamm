@@ -10,35 +10,46 @@
 #' adjacency matrix will be returned.
 #' @param which_eigs Numeric. Which eigen value and eigen vector will
 #' be returned.
-#' @return Returns an adjacency matrix of class sparseMatrix of n+2 x n
-#' columns (n number of the non-NA cells of grid_base) with the coordinates
-#' of the non-NA cells of grid_base.
+#' @return Returns an object of class \code{\link[bamm]{setM}} with 7 slots.
+#' The first contains the adjacency matrix. A n x n sparse matrix (n=number of
+#' non-NA cells of the niche model) where connected cells are represented by 1.
+#' The second slot has the adjacency list. It is a list of matrices with four
+#' columns (FromRasCell -from cell ID of the raster-, -to cell ID of the
+#' raster-, -from non-NA cell-, -to non-NA cell-). Other slots contain
+#' information about initial coordinates where dispersal occurs
+#' (initial_points), number of cells used to define the neighborhood (ngbs),
+#' non-NA coordinates (coordinates), and a matrix of eigen vectors (eigen_vec).
 #' @export
-#' @details The grid_base raster object is the area where the dispersal
+#' @details The model is a raster object of the area where the dispersal
 #' process will occur.
 #' The number of neighbors depends on the dispersal abilities of the species
-#' and the spatial resolution
-#' of the grid_base; for example, a species's with big dispersal abilities
-#' will move throughout more
-#' than 1 km^2 per day, so the idea is to give an approximate number of moving
-#' neighbors (pixels) per
-#' unit of time.
+#' and the spatial resolution of the niche model; for example, a species's
+#' with big dispersal abilities will move throughout more than 1 km^2 per day,
+#' so the idea is to give an approximate number of moving neighbors (pixels)
+#' per unit of time.
+#' For more information about see adjacency matrices in the context of
+#' the theory of area of distribution (Soberon and Osorio-Olvera, 2022).
+#' @references
+#' \insertRef{SoberonOsorio}{bamm}.
 #'
 #' @examples
-#' \dontrun{
-#' data("wrld_simpl", package = "maptools")
-#' mx <- wrld_simpl[wrld_simpl$NAME=="Mexico",]
-#' mx_grid <- shape2Grid(mx,0.5)
-#' mx_sparse <- bamm::model2sparse(mx_grid)
-#' adj_mx <- bamm::adj_mat(mx_sparse,ngbs=1)
-#' # Adjacency matrix from a niche model
-#' model_path <- system.file("extdata/Lepus_californicus_cont.tif",
-#'                           package = "bamm")
-#' model <- raster::raster(model_path)
+#' x_coord <- c(-106.5699, -111.3737,-113.9332,
+#'              -110.8913, -106.4262, -106.5699)
+#' y_coord <- c(16.62661, 17.72373, 19.87618,
+#'              22.50763, 21.37728, 16.62661)
+#' xy <- cbind(x_coord, y_coord)
+#' p <- sp::Polygon(xy)
+#' ps <- sp::Polygons(list(p),1)
+#' sps <- sp::SpatialPolygons(list(ps))
+#' mx_grid <- bamm::shape2Grid(sps,resolution = 0.25,ones = TRUE)
+#' mx_sparse <- bamm::model2sparse(model=mx_grid, threshold = 0.1)
+#' adj_mx <- bamm::adj_mat(modelsparse=mx_sparse,
+#'                         ngbs=1,eigen_sys=TRUE,which_eigs=1)
+#' print(adj_mx)
+#' mx_grid_eigen <- mx_grid
+#' mx_grid_eigen[mx_sparse@cellIDs] <- adj_mx@eigen_vec
+#' raster::plot(mx_grid_eigen)
 #'
-#' sparse_mod <- bamm::model2sparse(model,threshold=0.05)
-#' adj_mod <- bamm::adj_mat(sparse_mod,ngbs=1)
-#' }
 
 
 adj_mat <- function(modelsparse,ngbs=1,eigen_sys=FALSE,which_eigs=1){
@@ -50,7 +61,7 @@ adj_mat <- function(modelsparse,ngbs=1,eigen_sys=FALSE,which_eigs=1){
 
   nbase <- 2*ngbs+1
   ngMat <- base::matrix(rep(1,nbase*nbase),
-                        ncol =nbase,byrow = TRUE )
+                        ncol =nbase,byrow = TRUE)
   ngMat[ngbs+1,ngbs+1] <- 0
 
   no_na <- modelsparse@cellIDs
@@ -76,6 +87,8 @@ adj_mat <- function(modelsparse,ngbs=1,eigen_sys=FALSE,which_eigs=1){
   to_nu <- newnu[-idc]
   big_vec <- c(from,to, from_nu,to_nu)
   r_ad_b <- matrix(big_vec,ncol = 4,byrow = FALSE)
+  colnames(r_ad_b) <- c("FromRasCell","ToRasCell",
+                        "FromNonNaCell","ToNonNaCell")
   rd_adlist <- split.data.frame(r_ad_b, r_ad_b[,3])
 
   g_set0 <- setM(adj_matrix = m_ad1,
@@ -87,6 +100,8 @@ adj_mat <- function(modelsparse,ngbs=1,eigen_sys=FALSE,which_eigs=1){
     eigSys <- RSpectra::eigs(A = m_ad1,k=which_eigs)
     g_set0 <- setM(adj_matrix = m_ad1,
                    coordinates = modelsparse@coordinates,
+                   adj_list = rd_adlist,
+                   ngbs =ngbs,
                    eigen_vec = eigSys$vectors,
                    eigen_val = eigSys$values)
   }
