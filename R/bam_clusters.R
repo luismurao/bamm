@@ -2,34 +2,34 @@
 #'
 #' @description Function to estimate the connectivity of suitable areas given
 #' an adjacency matrix.
-#' @param model A niche model in raster format
+#' @param model A niche model in raster format or a \code{\link[bamm]{setA}}
+#' object (see \code{\link[bamm]{model2sparse}}).
 #' @param ngbs Numeric. Number of neighbors (see details).
-#' @param plot_model Logical. Indicates whether to plot the model in the
-#' cluster map.
+#' @param plot_model Logical. Indicates whether to plot the niche model using a
+#' leaflet map, connected suitable cells shown in the same color.
 #' @details
-#' The grid_base raster object is the area where the dispersal process will
-#' occur.
-#' The number of neighbors depends on the dispersal abilities of the species
-#' and the spatial resolution of the grid_base;
-#' for example, a species's with big dispersal abilities will move throughout
-#' more than 1 km^2 per day, so the idea is to give an approximate number of
-#' moving neighbors (pixels) per unit of time.
+#' The main result of the function is the Connectivity-Suitability-Diagram
+#' (CSD). In this diagram connected suitable cells make clusters of pixels.
+#' For more details about the CSD see (Soberon and Osorio-Olvera, 2022).
+#' @references
+#' \insertRef{SoberonOsorio}{bamm}.
 #' @importFrom methods as
 #' @importFrom raster as.factor
-#' @return A list with a data.frame of the coordinates of each cluster and a
-#' leaflet map.
+#' @return An object of class \code{\link[bamm]{csd}}. It contains three slots.
+#' 1) connections: a data.frame with three columns where first and the second
+#' represent (x and y) centroid coordinates of the niche model
+#' and the third column with the cluster ID where they belong.
+#' 2) interactive_map: a leaflet map of connected suitable pixels shown in
+#' the same color. 3) A RasterLayer of connected suitable pixels.
 #'
 #' @examples
-
-#'
-#' \dontrun{
+#' set.seed(891)
 #' model_path <- system.file("extdata/Lepus_californicus_cont.tif",
 #'                           package = "bamm")
 #' model <- raster::raster(model_path)
 #' model <- model > 0.7
 #' clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=TRUE)
 #' clusterin@interactive_map
-#' }
 #' @export
 #'
 #'
@@ -139,3 +139,4 @@ bam_clusters <- function(model,ngbs=1,plot_model=FALSE){
   return(csd_res)
 
 }
+
