@@ -1,6 +1,7 @@
 Package: bamm
 Type: Package
-Title: Species Distribution Models in the Light of the 'BAM' Theory
+Title: Species Distribution models as a function of Biotic, Abiotic and 
+       Movement factors (BAM)
 Version: 0.4.3
 Authors@R: c(person("Luis", "Osorio-Olvera", 
                  email = "luismurao@gmail.com", 
@@ -13,7 +14,24 @@ Authors@R: c(person("Luis", "Osorio-Olvera",
 Maintainer: Luis Osorio-Olvera <luismurao@gmail.com>
 URL: https://luismurao.github.io/bamm/
 BugReports: https://github.com/luismurao/bamm/issues
-Description: Species Distribution models as a function of 'Biotic', 'Abiotic' and Movement factors. 
+Description: Species Distribution Modeling (SDM) is a practical methodology 
+ that aims to estimate the area of distribution of a species. However, 
+ most of the work has focused on estimating static expressions of the 
+ correlation between environmental variables. The outputs of
+ correlative species distribution models can be interpreted 
+ as maps of the suitable environment for a species but not generally as maps
+ of its actual distribution. 
+ Soberon and Peterson (2005) <doi.org/10.17161/bi.v2i0.4 > presented
+ the BAM scheme, a heuristic framework that states that the occupied area of 
+ a species occurs on sites that have been accessible through dispersal (M) and 
+ have both favorable biotic (B) and abiotic conditions (A). 
+ The 'bamm' package implements classes and functions to operate on each element 
+ of the BAM and by using a cellular automata model where the occupied area 
+ of a species at time t is estimated by the multiplication of three 
+ binary matrices: one matrix represents movements (M), another 
+ abiotic -niche- tolerances (A), and a third, biotic interactions (A). 
+ The theoretical background of the package can be found in 
+ Soberon and Osorio-Olvera (2022) <arXiv:2212.06308>.
 SystemRequirements: C++11, GDAL (>= 2.2.3): gdal-bin (deb), libgdal-dev (deb) or
                     gdal-devel (rmp), GEOS (>= 3.4.0), PROJ (>= 4.9.3): 
                     libproj-dev (deb), sqlite3, 
