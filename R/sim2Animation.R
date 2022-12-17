@@ -83,6 +83,8 @@ sim2Animation <- function(sdm_simul,which_steps,
                               max = length(which_steps),
                               style = 3)
   which_steps <- which_steps + 1
+  oldpar <- graphics::par(no.readonly = TRUE)
+  on.exit(graphics::par(oldpar),add=TRUE)
   if(fmt == "GIF"){
     animation::ani.options(ani.width = ani.width,
                            ani.height = ani.height,
