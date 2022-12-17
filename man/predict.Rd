@@ -74,6 +74,10 @@ the function}
 
 \item{ani.res}{Animation resolution unit in px}
 }
+\value{
+A RasterStack of predictions of dispersal dynamics as a function
+of environmental change scenarios.
+}
 \description{
 predicts species' distribution under suitability changes
 }

@@ -49,6 +49,9 @@ range values will appear.}
 base::plot, such as axes=FALSE, main='title', ylab='latitude' 2)
 leaflet::leaflet or 3) leaflet::addCircleMarkers.}
 }
+\value{
+plot results of the diversity_range analysis
+}
 \description{
 Plot method for objects of class diversity_range \pkg{bamm}.
 }

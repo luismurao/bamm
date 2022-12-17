@@ -5,6 +5,7 @@
 #' @param object An object of class setA
 #' @importFrom methods show
 #' @rdname show
+#' @return Display information about the setA object
 #' @export
 
 methods::setMethod(f = "show",
@@ -63,6 +64,7 @@ methods::setMethod(f = "show",
 #' @importFrom methods new
 #' @param object An object of class setA
 #' @rdname show
+#' @return Display information about the csd object
 #' @export
 
 methods::setMethod(f = "show",
@@ -81,7 +83,8 @@ methods::setMethod(f = "show",
 
 #' Show information in pam class \pkg{bamm}.
 #' @importFrom methods new
-#' @param object An object of class setA
+#' @param object An object of class pam
+#' @return Display information about the pam object
 #' @rdname show
 #' @export
 
@@ -110,6 +113,7 @@ methods::setMethod(f = "show",
 #' @importFrom methods new
 #' @param object An object of class bioindiex_sparse
 #' @rdname show
+#' @return Display information about the bioindex_spars object
 #' @export
 
 methods::setMethod(f = "show",
@@ -135,7 +139,8 @@ methods::setMethod(f = "show",
 
 #' Show information in setA class \pkg{bamm}.
 #' @importFrom methods new
-#' @param object An object of class setA
+#' @param object An object of class setM
+#' @return Display information about the setM object
 #' @rdname show
 #' @export
 
@@ -173,6 +178,7 @@ methods::setMethod(f = "show",
 #' @importFrom methods new
 #' @param object An object of class diversity_range
 #' @rdname show
+#' @return Display information about the diversity_range object
 #' @export
 
 methods::setMethod(f = "show",
@@ -252,6 +258,7 @@ methods::setMethod(f = "show",
 #' @param ... Graphical parameters. Any argument that can be passed to 1)
 #' base::plot, such as axes=FALSE, main='title', ylab='latitude' 2)
 #' leaflet::leaflet or 3) leaflet::addCircleMarkers.
+#' @return plot results of the diversity_range analysis
 #' @rdname plot
 #' @export
 
@@ -554,6 +561,8 @@ methods::setMethod(f = "plot",
 #' the function
 #' @export
 #' @rdname predict
+#' @return A RasterStack of predictions of dispersal dynamics as a function
+#' of environmental change scenarios.
 #' @examples
 #' \dontrun{
 #' # rm(list = ls())

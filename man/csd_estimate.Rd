@@ -11,24 +11,37 @@ csd_estimate(model, dispersal_steps = c(2, 4, 8, 16, 32, 64))
 suitability model}
 
 \item{dispersal_steps}{A numeric vector with elements representing
-the dispersal
-hypothesis to test.}
+the dispersal hypothesis to test.}
+}
+\value{
+A list of length three. The first element contains the Connectivity-
+Suitability-Diagram information estimated for each element in the vector
+of dispersal_steps. The second is tbl_df object with a summary of the number
+of cluster of each dispersal step and the mean number of connected clusters.
+The last element is base plot showing the information cointained in
+the tbl_df object.
 }
 \description{
 csd_plot gives an estimate of the number of geographic clusters
 given a set of dispersal hypothesis and a suitability raster
 }
+\details{
+For more information about the Connectivity-Suitability-Diagram
+see \code{\link[bamm]{bam_clusters}}
+}
 \examples{
-\dontrun{
+\donttest{
 model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                           package = "bamm")
 model <- raster::raster(model_path)
 model <- model > 0.7
 csd_plot <- bamm::csd_estimate(model,
-                         dispersal_steps=c(2,4,8,16,32,45))
-
-
+                         dispersal_steps=c(2,4,8))
+csd_plot$plot
 }
+}
+\references{
+\insertRef{SoberonOsorio}{bamm}.
 }
 \author{
 Luis Osorio-Olvera & Jorge Soberon

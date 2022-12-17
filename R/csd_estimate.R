@@ -5,19 +5,27 @@
 #' @param model A raster model or a setA object representing the
 #' suitability model
 #' @param dispersal_steps A numeric vector with elements representing
-#' the dispersal
-#' hypothesis to test.
+#' the dispersal hypothesis to test.
+#' @return A list of length three. The first element contains the Connectivity-
+#' Suitability-Diagram information estimated for each element in the vector
+#' of dispersal_steps. The second is tbl_df object with a summary of the number
+#' of cluster of each dispersal step and the mean number of connected clusters.
+#' The last element is base plot showing the information cointained in
+#' the tbl_df object.
+#' @details For more information about the Connectivity-Suitability-Diagram
+#' see \code{\link[bamm]{bam_clusters}}
+#' @references
+#' \insertRef{SoberonOsorio}{bamm}.
 #' @author Luis Osorio-Olvera & Jorge Soberon
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' model_path <- system.file("extdata/Lepus_californicus_cont.tif",
 #'                           package = "bamm")
 #' model <- raster::raster(model_path)
 #' model <- model > 0.7
 #' csd_plot <- bamm::csd_estimate(model,
-#'                          dispersal_steps=c(2,4,8,16,32,45))
-#'
-#'
+#'                          dispersal_steps=c(2,4,8))
+#' csd_plot$plot
 #' }
 #' @export
 

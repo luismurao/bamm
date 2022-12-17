@@ -24,6 +24,19 @@
 \arguments{
 \item{object}{An object of class diversity_range}
 }
+\value{
+Display information about the setA object
+
+Display information about the csd object
+
+Display information about the pam object
+
+Display information about the bioindex_spars object
+
+Display information about the setM object
+
+Display information about the diversity_range object
+}
 \description{
 Show information in setA class \pkg{bamm}.
 
