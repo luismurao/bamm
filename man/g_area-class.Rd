@@ -6,6 +6,9 @@
 \alias{g_area}
 \alias{coordinates-class}
 \title{S4 classes to organize data and results of \code{bamm} objects}
+\value{
+An object of class g_area
+}
 \description{
 S4 classes to organize data and results of \code{bamm} objects
 }

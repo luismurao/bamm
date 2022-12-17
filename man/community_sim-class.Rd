@@ -6,6 +6,9 @@
 \alias{community_bam}
 \alias{community-class}
 \title{Class  \code{community_sim} digram}
+\value{
+An object of class community_sim
+}
 \description{
 Class  \code{community_sim} digram
 }

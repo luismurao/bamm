@@ -258,7 +258,9 @@ methods::setMethod(f = "show",
 #' @param ... Graphical parameters. Any argument that can be passed to 1)
 #' base::plot, such as axes=FALSE, main='title', ylab='latitude' 2)
 #' leaflet::leaflet or 3) leaflet::addCircleMarkers.
-#' @return plot results of the diversity_range analysis
+#' @return Plot of the results of the diversity_range analysis
+#' @details To show interactive diversity_range plots install the 'plotly' R
+#' package.
 #' @rdname plot
 #' @export
 

@@ -6,6 +6,9 @@
 \alias{bioindex_sparse}
 \alias{biodiversity_index_sparse}
 \title{Class  \code{bioindex_sparse}}
+\value{
+An object of class bioindex_sparse
+}
 \description{
 Class  \code{bioindex_sparse}
 }

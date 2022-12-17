@@ -6,6 +6,9 @@
 \alias{setM}
 \alias{M-class}
 \title{Class for the M set of the \code{bamm} diagram}
+\value{
+An object of class setM
+}
 \description{
 Class for the M set of the \code{bamm} diagram
 }

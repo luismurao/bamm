@@ -13,9 +13,18 @@
 #' @param nsteps Number of steps to run the simulation
 #' @param progress_bar Show progress bar
 #' @importFrom magrittr %>%
+#' @return An object of class bam. The object contains 12 slots of information
+#' (see details) from which simulation results are stored in sdm_sim object,
+#' a list of sparse matrices with results of each simulation step.
+#' @details The returned object inherits from \code{\link[bamm]{setA}},
+#' \code{\link[bamm]{setM}} classes. Details about the dynamic model
+#' can be found in Soberon and Osorio-Olvera (2022).
+#' @references
+#' \insertRef{SoberonOsorio}{bamm}.
 #'
 #' @examples
-#' \dontrun{
+#' # Compute dispersal dynamics of Urania boisduvalii as a function of
+#' # palatable Omphalea
 #' urap <- system.file("extdata/urania_omph/urania_guanahacabibes.tif",
 #'                                   package = "bamm")
 #' ura <- raster::raster(urap)
@@ -27,12 +36,15 @@
 #' initial_points <- bamm::occs2sparse(modelsparse = msparse,init_coordsdf)
 #' set_M <- bamm::adj_mat(modelsparse = msparse,ngbs = 1)
 #' ura_sim <- bamm::bam_sim(sp1=ura, sp2=omp, set_M=set_M,
-#'                         initial_points=initial_points,
-#'                         periods_toxic=3,
-#'                         periods_suitable=3,
-#'                         nsteps=40)
+#'                          initial_points=initial_points,
+#'                          periods_toxic=1,
+#'                          periods_suitable=5,
+#'                          nsteps=100)
+#' ura_omp <- bamm::sim2Raster(ura_sim)
+#' plot(ura_omp[[c(1,5,10,15,20,30,35,100)]])
+#' \dontrun{
 #' # Animation example
-#' anp <-"C:/Users/l916o895/Dropbox/TeoriadeBAM/articulo_bam/ura_omp_sim.gif"
+#' anp <-tempfile(pattern = "simulation_results_",fileext = ".gif")
 #' new_sim <- bamm::sim2Animation(sdm_simul = ura_sim,
 #'                               which_steps = 1:ura_sim@sim_steps,
 #'                               fmt = "GIF",

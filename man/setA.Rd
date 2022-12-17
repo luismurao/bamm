@@ -5,8 +5,11 @@
 \alias{setA-class}
 \alias{setA}
 \alias{A-class}
-\alias{showClass("setA")}
 \title{Class for the A set of the BAM diagram}
+\value{
+An object of class setA
+showClass("setA")
+}
 \description{
 A class for the A set of the BAM diagram. It contains raster models and
 IDs of pixels with values different than NA.

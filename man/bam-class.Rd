@@ -5,6 +5,9 @@
 \alias{bam-class}
 \alias{bam}
 \title{Class \code{bam} digram}
+\value{
+An object of class bam
+}
 \description{
 Class \code{bam} digram
 }

@@ -6,6 +6,9 @@
 \alias{bioindex}
 \alias{biodiversity_index}
 \title{Class  \code{bioindex}}
+\value{
+An object of class bioindex
+}
 \description{
 Class  \code{bioindex}
 }

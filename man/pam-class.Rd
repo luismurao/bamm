@@ -6,6 +6,9 @@
 \alias{pam}
 \alias{PAM}
 \title{Class  \code{pam} Presence-Absence Matrix}
+\value{
+An object of class pam
+}
 \description{
 Class  \code{pam} Presence-Absence Matrix
 }

@@ -5,6 +5,9 @@
 \alias{leaflet-class}
 \alias{leaflet}
 \title{Class  \code{leaflet} leaflet}
+\value{
+An object of class leaflet
+}
 \description{
 Class  \code{leaflet} leaflet
 }

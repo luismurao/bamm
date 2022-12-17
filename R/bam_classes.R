@@ -12,6 +12,7 @@
 #' slot g_model A raster representing the geographic area
 #' slot g_sparse A sparse matrix of the geographic area
 #' @author Luis Osorio-Olvera & Jorge Soberón
+#' @return An object of class g_area
 #' @exportClass g_area
 #' @export
 #'
@@ -42,6 +43,7 @@ g_area <- methods::setClass(Class = "g_area",
 #' @importClassesFrom Matrix dgCMatrix
 #' @importFrom methods new
 #' @aliases A-class
+#' @return An object of class setA
 #' showClass("setA")
 #' @rdname setA
 #' @author Luis Osorio-Olvera & Jorge Soberón
@@ -76,6 +78,7 @@ setA <- methods::setClass(Class = "setA",
 #' @importClassesFrom raster RasterStack
 #' @importClassesFrom Matrix dgCMatrix
 #' @author Luis Osorio-Olvera & Jorge Soberón
+#' @return An object of class setM
 #' @examples
 #' showClass("setM")
 #' @exportClass setM
@@ -95,6 +98,7 @@ setM <- methods::setClass(Class = "setM",
 #' sites.
 #' @slot sim_steps Number of simulation steps
 #' by the species
+#' @return An object of class bam
 #' @exportClass bam
 #' @author Luis Osorio-Olvera & Jorge Soberón
 
@@ -110,6 +114,7 @@ bam <- methods::setClass(Class = "bam",
 #' @author Luis Osorio-Olvera & Jorge Soberón
 #' @slot community_sim A list of sparse vectors representing the area occupied
 #' by the species
+#' @return An object of class community_sim
 #' @exportClass community_sim
 
 community_bam <- methods::setClass(Class = "community_sim",
@@ -127,6 +132,7 @@ community_bam <- methods::setClass(Class = "community_sim",
 #' @slot grid Raster grid of the studied area
 #' @slot cellIDs Cells with ids of the PAM sites
 #' @exportClass pam
+#' @return An object of class pam
 #' @export
 #'
 pam <- methods::setClass(Class = "pam",
@@ -141,6 +147,7 @@ pam <- methods::setClass(Class = "pam",
 
 #' Class  \code{leaflet} leaflet
 #' @author Luis Osorio-Olvera & Jorge Soberón
+#' @return An object of class leaflet
 leaflet <- methods::setClass(Class = "leaflet")
 
 #' Class  \code{csd}
@@ -153,6 +160,7 @@ leaflet <- methods::setClass(Class = "leaflet")
 #' @slot raster_map A raster map with cluster IDs as values.
 #' @exportClass csd
 #' @export
+#' @return An object of class csd
 #' @importFrom leaflet leaflet
 csd <- methods::setClass(Class = "csd",
                          representation(connections="data.frame",
@@ -172,7 +180,8 @@ csd <- methods::setClass(Class = "csd",
 #' @slot omega A sparse matrix with the range size of every species
 #' @slot dispersion_field A sparse matrix with the set of ranges of all species
 #' that occur in at each locality
-#' @exportClass bioindex
+#' @exportClass bioindex_sparse
+#' @return An object of class bioindex_sparse
 #' @export
 
 bioindex_sparse <- methods::setClass(Class = "bioindex_sparse",
@@ -191,6 +200,7 @@ bioindex_sparse <- methods::setClass(Class = "bioindex_sparse",
 #' @slot dispersion_field A matrix with the set of ranges of all species that
 #' occur in at each locality
 #' @exportClass bioindex
+#' @return An object of class bioindex
 #' @export
 
 bioindex <- methods::setClass(Class = "bioindex",
@@ -221,6 +231,7 @@ bioindex <- methods::setClass(Class = "bioindex",
 #' field null distribution.
 #' @slot nsps Number of species in the PAM.
 #' @slot nsites Number of sites in the PAM.
+#' @return An object of class diversity_range
 #' @exportClass diversity_range
 #' @export
 

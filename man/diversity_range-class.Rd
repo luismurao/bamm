@@ -6,6 +6,9 @@
 \alias{diversity_range}
 \alias{diversityrange}
 \title{Class  \code{diversity_range}}
+\value{
+An object of class diversity_range
+}
 \description{
 Class  \code{diversity_range}
 }

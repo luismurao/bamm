@@ -5,6 +5,9 @@
 \alias{csd-class}
 \alias{csd}
 \title{Class  \code{csd}}
+\value{
+An object of class csd
+}
 \description{
 Class  \code{csd}
 }
