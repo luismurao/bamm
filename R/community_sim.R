@@ -9,7 +9,7 @@
 #' @param nsteps Number of iteration steps for the simulation.
 #' @param parallel TRUE if the simulation should be run in parallel.
 #' Default FALSE
-#' @param ... Parameters of the functions of the \code{bamm} class
+#' @param ... Parameters of the function \code{\link[bamm]{model2sparse}}
 #' @export
 #' @examples
 #' \dontrun{
@@ -17,16 +17,14 @@
 #'                           package = "bamm")
 #' enm_path <- list.files(lagos_path,
 #'                        pattern = ".tif",
-#'                        full.names = TRUE)
-
+#'                        full.names = TRUE)[seq(1,10)]
 #' en_models <- raster::stack(enm_path)
-
 #' ngbs_vect <- sample(1:2,replace = TRUE,
 #'                     size = raster::nlayers(en_models))
 
 #' init_coords <- read.csv(file.path(lagos_path,
-#'                                   "lagos_initit.csv"))
-#' nsteps <- 30
+#'                                   "lagos_initit.csv"))[seq(1,10),]
+#' nsteps <- 12
 
 #' sdm_comm <- bamm::community_sim(en_models = enm_path,
 #'                                ngbs_vect = ngbs_vect,
@@ -34,6 +32,9 @@
 #'                                nsteps = nsteps,
 #'                                threshold = 0.1)
 #'
+#' com_pam <- bamm::csim2pam(sdm_comm,which_steps = seq(1,nsteps))
+#' rich_pam <- pam2richness(com_pam,which_steps = c(1,5,10))
+#' raster::plot(rich_pam)
 #'}
 
 community_sim <- function(en_models,ngbs_vect,init_coords,nsteps,
@@ -60,10 +61,10 @@ community_sim <- function(en_models,ngbs_vect,init_coords,nsteps,
                               style = 3)
   sdmsimL <- 1:n_models %>% purrr::map(function(x){
 
-    #sparse_mod <- bamm::model2sparse(model = models[[x]],
-    #                                ...)
     sparse_mod <- bamm::model2sparse(model = models[[x]],
-                                    threshold = 0.1)
+                                    ...)
+    #sparse_mod <- bamm::model2sparse(model = models[[x]],
+    #                                threshold = 0.1)
     # Compute adjacency matrix
     adj_mod <- bamm::adj_mat(sparse_mod,ngbs=ngbs_vect[[x]])
 
@@ -87,3 +88,4 @@ community_sim <- function(en_models,ngbs_vect,init_coords,nsteps,
 
   return(res1)
 }
+

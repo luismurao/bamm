@@ -20,7 +20,7 @@ y; x is the longitude and y is the latitude of initial dispersal points}
 \item{parallel}{TRUE if the simulation should be run in parallel.
 Default FALSE}
 
-\item{...}{Parameters of the functions of the \code{bamm} class}
+\item{...}{Parameters of the function \code{\link[bamm]{model2sparse}}}
 }
 \description{
 Estimate community dynamics using the \code{bamm} framework
@@ -31,18 +31,21 @@ lagos_path <- system.file("extdata/conejos",
                           package = "bamm")
 enm_path <- list.files(lagos_path,
                        pattern = ".tif",
-                       full.names = TRUE)
+                       full.names = TRUE)[seq(1,10)]
 en_models <- raster::stack(enm_path)
 ngbs_vect <- sample(1:2,replace = TRUE,
                     size = raster::nlayers(en_models))
 init_coords <- read.csv(file.path(lagos_path,
-                                  "lagos_initit.csv"))
-nsteps <- 30
+                                  "lagos_initit.csv"))[seq(1,10),]
+nsteps <- 12
 sdm_comm <- bamm::community_sim(en_models = enm_path,
                                ngbs_vect = ngbs_vect,
                                init_coords = init_coords,
                                nsteps = nsteps,
                                threshold = 0.1)
 
+com_pam <- bamm::csim2pam(sdm_comm,which_steps = seq(1,nsteps))
+rich_pam <- pam2richness(com_pam,which_steps = c(1,5,10))
+raster::plot(rich_pam)
 }
 }

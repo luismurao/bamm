@@ -45,11 +45,23 @@ will be returned.}
 
 \item{progress_bar}{Show progress bar}
 }
+\value{
+An object of class bam. The object contains 12 slots of information
+(see details) from which simulation results are stored in sdm_sim object,
+a list of sparse matrices with results of each simulation step. Palatable
+matrices are returned as a list of sparse matrices with information about
+palatable pixels for each step of the simulation.
+}
 \description{
 bam_ssim: Simulate dispersal dynamics using the set B of the BAM framework.
 }
+\details{
+The returned object inherits from \code{\link[bamm]{setA}},
+\code{\link[bamm]{setM}} classes. Details about the dynamic model
+can be found in Soberon and Osorio-Olvera (2022).
+}
 \examples{
-\dontrun{
+
 urap <- system.file("extdata/urania_omph/urania_guanahacabibes.tif",
                                   package = "bamm")
 ura <- raster::raster(urap)
@@ -60,17 +72,23 @@ msparse <- bamm::model2sparse(ura)
 init_coordsdf <- data.frame(x=-84.38751, y= 22.02932)
 initial_points <- bamm::occs2sparse(modelsparse = msparse,init_coordsdf)
 set_M <- bamm::adj_mat(modelsparse = msparse,ngbs = 1)
-ura_sim <- bamm::bam_ssim(sp1=ura, sp2=omp, set_M=set_M,
-                          dispersal_prob = 0.5,
-                          initial_points=initial_points,
-                          periods_toxic=3,
-                          periods_suitable=1,
-                          nsteps=40)
+ura_ssim <- bamm::bam_ssim(sp1=ura, sp2=omp, set_M=set_M,
+                           dispersal_prob = 0.75,
+                           initial_points=initial_points,
+                           periods_toxic=5,
+                           periods_suitable=1,
+                           nsteps=40)
+ura_omp <- bamm::sim2Raster(ura_ssim)
+raster::plot(ura_omp[[c(1,2,5,10,15,20,30,35,40)]])
+\dontrun{
 # Animation example
-anp <-"C:/Users/l916o895/Dropbox/TeoriadeBAM/articulo_bam/ura_omp_sim.gif"
-new_sim <- bamm::sim2Animation(sdm_simul = ura_sim,
-                              which_steps = 1:ura_sim@sim_steps,
+anp <-tempfile(pattern = "simulation_results_",fileext = ".gif")
+new_sim <- bamm::sim2Animation(sdm_simul = ura_ssim,
+                              which_steps = seq_len(ura_sim@sim_steps),
                               fmt = "GIF",
                               filename = anp)
 }
+}
+\references{
+\insertRef{SoberonOsorio}{bamm}.
 }

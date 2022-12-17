@@ -37,16 +37,16 @@
 #' set_M <- bamm::adj_mat(modelsparse = msparse,ngbs = 1)
 #' ura_sim <- bamm::bam_sim(sp1=ura, sp2=omp, set_M=set_M,
 #'                          initial_points=initial_points,
-#'                          periods_toxic=1,
-#'                          periods_suitable=5,
-#'                          nsteps=100)
+#'                          periods_toxic=5,
+#'                          periods_suitable=1,
+#'                          nsteps=40)
 #' ura_omp <- bamm::sim2Raster(ura_sim)
-#' plot(ura_omp[[c(1,5,10,15,20,30,35,100)]])
+#' raster::plot(ura_omp[[c(1,5,10,15,20,30,35,40)]])
 #' \dontrun{
 #' # Animation example
 #' anp <-tempfile(pattern = "simulation_results_",fileext = ".gif")
 #' new_sim <- bamm::sim2Animation(sdm_simul = ura_sim,
-#'                               which_steps = 1:ura_sim@sim_steps,
+#'                               which_steps = seq_len(ura_sim@sim_steps),
 #'                               fmt = "GIF",
 #'                               filename = anp)
 #'}
@@ -67,7 +67,7 @@ bam_sim <- function(sp1,sp2,set_M,initial_points,
   A <- bamm::model2sparse(sp1_sp2)
   bin_model <- A@sparse_model
   Matrix::diag(set_M@adj_matrix) <- 1
-  AMA <- A@sparse_model %*% set_M@adj_matrix #%*%  A@sparse_model
+  AMA <- A@sparse_model %*% set_M@adj_matrix %*%  A@sparse_model
   AMA2 <- AMA
   g0 <- initial_points
   nonzerosL <- list()
