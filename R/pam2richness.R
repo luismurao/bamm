@@ -5,27 +5,28 @@
 #'
 #' @param pamobj An object of class pam see \code{\link[bamm]{csim2pam}}
 #' @param which_steps Time steps in the pam to convert
+#' @return A RasterStack of richness for each simulation step.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' lagos_path <- system.file("extdata/conejos",
 #'                           package = "bamm")
 #' enm_path <- list.files(lagos_path,
 #'                        pattern = ".tif",
-#'                     full.names = TRUE)
+#'                     full.names = TRUE)[seq(1,10)]
 #' en_models <- raster::stack(enm_path)
-#' ngbs_vect <- sample(1:2,replace = T,
+#' ngbs_vect <- sample(2,replace = TRUE,
 #'                     size = raster::nlayers(en_models))
 #' init_coords <- read.csv(file.path(lagos_path,
-#'                                   "lagos_initit.csv"))
-#' nsteps <- 30
-#' sdm_comm <- bamm::community_sim(en_models = enm_path,
-#'                           ngbs_vect = ngbs_vect,
-#'                           init_coords = init_coords,
-#'                           nsteps = nsteps,
-#'                           threshold = 0.1)
+#'                                   "lagos_initit.csv"))[seq(1,10),]
+#' nsteps <- 10
+#' sdm_comm <- bamm::community_sim(en_models = en_models,
+#'                                 ngbs_vect = ngbs_vect,
+#'                                 init_coords = init_coords,
+#'                                 nsteps = nsteps,
+#'                                 threshold = 0.1)
 #'
 #' pams <-bamm::csim2pam(community_sim = sdm_comm ,
-#'                 which_steps = c(1:20))
+#'                       which_steps = seq_len(nsteps))
 #' richness_stack <- bamm::pam2richness(pams,which_steps=pams@which_steps)
 #' raster::plot(richness_stack)
 #' }

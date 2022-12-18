@@ -13,6 +13,11 @@ pam2bioindex(pam, biodiv_index = "dispersion_field", as_sparse = FALSE)
 
 \item{as_sparse}{Return indices as sparse objects}
 }
+\value{
+An object of class \code{\link[bamm]{bioindex}} with three slots
+each represents a matrix of diversity indices: alpha, omega, and
+dispersion field.
+}
 \description{
 pam2bioindex estimates various biodiversity indices for a
 certain PAM.
@@ -27,6 +32,9 @@ pam <- matrix(rbinom(100,1,0.3),nrow = 10,ncol = 10)
 bioindices <- bamm::pam2bioindex(pam=pam,biodiv_index="all")
 # Return results as sparse models
 bioindices <- bamm::pam2bioindex(pam=pam,biodiv_index="all",as_sparse=TRUE)
+bioindices@alpha
+bioindices@omega
+bioindices@dispersion_field
 }
 \references{
 \insertRef{Soberon2015}{bamm}

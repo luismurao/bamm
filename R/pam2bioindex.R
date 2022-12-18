@@ -5,6 +5,9 @@
 #' @param biodiv_index Possible values are alpha, omega, dispersion_field, all.
 #' @param as_sparse Return indices as sparse objects
 #' @importFrom Rdpack reprompt
+#' @return An object of class \code{\link[bamm]{bioindex}} with three slots
+#' each represents a matrix of diversity indices: alpha, omega, and
+#' dispersion field.
 #' @details The biodiversity indices can be found in
 #' \insertCite{Soberon2015;textual}{bamm}
 #' @references
@@ -17,6 +20,9 @@
 #' bioindices <- bamm::pam2bioindex(pam=pam,biodiv_index="all")
 #' # Return results as sparse models
 #' bioindices <- bamm::pam2bioindex(pam=pam,biodiv_index="all",as_sparse=TRUE)
+#' bioindices@alpha
+#' bioindices@omega
+#' bioindices@dispersion_field
 #' @useDynLib bamm
 
 pam2bioindex <- function(pam,biodiv_index="dispersion_field",as_sparse=FALSE) {

@@ -2,33 +2,44 @@
 #' @description Converts community simulation object into a
 #' Presence Absence Matrices (PAM) for a given simulation steps.
 #'
-#' @param community_sim An object of class community_bam.
+#' @param community_sim An object of class \code{\link[bamm]{community_bam}}.
 #' @param which_steps Steps in the simulation object to be converted into a PAM
+#' @return An object of class \code{\link[bamm]{pam}}; it contains five slots.
+#' 1) pams: a list of sparse matrices with Presence-Absence information (PAMs).
+#' 2) which_steps: time steps corresponding to each PAM. 3) sp_names: a
+#' vector of species names. 4) the grid area used in the simulation. 5) Non NA
+#' cell (pixel) IDs.
+#' @details For details about the object community_sim see
+#' \code{\link[bamm]{community_sim}}
+#' @references
+#' \insertRef{SoberonOsorio}{bamm}.
+#' @author Luis Osorio-Olvera & Jorge Soberon
 #' @export
 #' @examples
-#'
-#' \dontrun{
+#' \donttest{
 #' lagos_path <- system.file("extdata/conejos",
 #'                           package = "bamm")
 #' enm_path <- list.files(lagos_path,
 #'                        pattern = ".tif",
 #'                     full.names = TRUE)
 #' en_models <- raster::stack(enm_path)
-#' ngbs_vect <- sample(1:2,replace = T,
+#' ngbs_vect <- sample(1:2,replace = TRUE,
 #'                     size = raster::nlayers(en_models))
 #' init_coords <- read.csv(file.path(lagos_path,
 #'                                   "lagos_initit.csv"))
-#' nsteps <- 30
-#' sdm_comm <- bamm::community_sim(en_models = enm_path,
+#' nsteps <- 10
+#' sdm_comm <- bamm::community_sim(en_models = en_models,
 #'                                ngbs_vect = ngbs_vect,
 #'                                init_coords = init_coords,
 #'                                nsteps = nsteps,
 #'                                threshold = 0.1)
 #'
 #' pamt10 <- bamm::csim2pam(community_sim = sdm_comm ,
-#'                        which_steps = 10)
+#'                         which_steps = 10)
 #' pams <- bamm::csim2pam(community_sim = sdm_comm ,
-#'                       which_steps = c(1:10))
+#'                        which_steps = seq_len(10))
+#' rich_pam <- bamm::pam2richness(pams,which_steps = c(1,5))
+#' # plot(rich_pam[[c(1,2)]])
 #' }
 #'
 csim2pam <- function(community_sim, which_steps){
@@ -42,13 +53,8 @@ csim2pam <- function(community_sim, which_steps){
     for (sps in 2:n_sps) {
       sim_tm <- community_sim@community_sim[[sps]]@sdm_sim[[t_step]]
       sim_t <- Matrix::cbind2(sim_t,Matrix::t(sim_tm))
-      #dimnames(sim_t) <- list(sps_names)
     }
-    #rows=paste0("s",1:nrow(sim_t))
-    #columns <- paste0(sps_names,1:ncol(sim_t))
-    #dimnames(sim_t ) = list(rows,columns)
     return(sim_t)
-
   })
 
   names(pamL) <- paste0("time_step_",which_steps)

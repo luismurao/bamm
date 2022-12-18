@@ -32,10 +32,8 @@ See \code{\link[bamm]{adj_mat}}}
 visiting neighbor cells (Moore neighborhood).}
 
 \item{disp_prop2_suitability}{Logical. If probability of dispersal
-is proportional
-to the suitability of reachable cells. The proportional value
-must be declared
-in the parameter `disper_prop`.}
+is proportional to the suitability of reachable cells. The proportional
+value must be declared in the parameter `disper_prop`.}
 
 \item{disper_prop}{Probability of dispersal to reachable cells.}
 

@@ -36,18 +36,39 @@ will be returned.}
 
 \item{n_cores}{Number of cores for the parallel computation.}
 }
+\value{
+An object of class  \code{\link[bamm]{diversity_range}}. The main
+result is the diversity range analysis which shows jointly two indices
+describing the community composition of every cell in the grid:
+(1) the relative number of species, and (2) the mean dispersion field
+(see plot method for \code{\link[bamm]{plot}} (Soberon et al. 2022).
+The contains 12 slots with different measurements of biodiversity such
+as alpha diversity (species richness in each site or pixel),
+omega (size of the area of distribution of each species),
+dispersion field (the standardized size of the area of distribution of
+all species occurring in each pixel).
+}
 \description{
 diversity_range_analysis biodiversity indices related to
 diversity-range plots
 }
+\details{
+For more information about the biodiversity indices
+see Soberon and Cavner (2015). For detail about the diversity range analysis
+see Soberon et al. (2022). To plot diversity range results use
+\code{\link[bamm]{plot}} method for objects of class
+\code{\link[bamm]{diversity_range}}.
+}
 \examples{
-\dontrun{
 set.seed(111)
 pam <- matrix(rbinom(10000,1,0.5),nrow = 100,ncol = 1000)
-rdivan <- bamm::diversity_range_analysis(pam=pam,parallel = FALSE,
-                                   return_null_dfield=TRUE)
+rdivan <- bamm::diversity_range_analysis(pam=pam,
+                                         parallel = FALSE,
+                                         niter = 10,
+                                         return_null_dfield=TRUE)
 bamm::plot(rdivan,plot_type="diversity_range")
 # Lagomorphos
+\dontrun{
 lagos_path <- system.file("extdata/conejos",
                           package = "bamm")
 enm_path <- list.files(lagos_path,
@@ -57,13 +78,21 @@ en_models <- raster::stack(enm_path) >0.01
 nonas <- which(!is.na(en_models[[1]][]))
 xy_mat <- sp::coordinates(en_models[[1]])[ nonas,]
 pam <- bamm::models2pam(en_models,sparse=FALSE)
-rdivan <- bamm::diversity_range_analysis(pam=pam,parallel = FALSE,
-                                   xy_mat=xy_mat,
-                                   raster_templete = en_models[[1]],
-                                   return_null_dfield=TRUE)
+rdivan <- bamm::diversity_range_analysis(pam=pam,
+                                         xy_mat=xy_mat,
+                                         raster_templete = en_models[[1]],
+                                         parallel=TRUE,
+                                         n_cores=2,
+                                         return_null_dfield=TRUE)
 bamm::plot(rdivan,plot_type="diversity_range")
 bamm::plot(rdivan,plot_type="diversity_range_map")
+
 bamm::plot(rdivan,plot_type="diversity_range_interactive")
 
 }
+}
+\references{
+\insertRef{Soberon2022}{bamm}.
+
+\insertRef{Soberon2015}{bamm}.
 }

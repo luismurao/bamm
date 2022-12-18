@@ -17,20 +17,28 @@ species in the community.}
 \item{ncores}{Integer. Number of cores to run the parallel process.}
 }
 \value{
-A PAM.
+A presence-absence matrix (PAM).
 }
 \description{
 Function to convert binary raster models to a
 Presence Absences Matrix.
 }
+\details{
+For more information about PAM see Soberon and Cavner (2015).
+}
 \examples{
-\dontrun{
+\donttest{
 lagos_path <- system.file("extdata/conejos",
                           package = "bamm")
 enm_path <- list.files(lagos_path,
                        pattern = ".tif",
-                       full.names = TRUE)
+                       full.names = TRUE)[1:10]
 en_models <- raster::stack(enm_path) >0.01
-pam <- bamm::models2pam(en_models,sparse=FALSE,parallel=T,ncores=2)
+pam <- bamm::models2pam(en_models,sparse=FALSE,
+                        parallel=FALSE,ncores=2)
+head(pam)
 }
+}
+\references{
+\insertRef{Soberon2015}{bamm}.
 }

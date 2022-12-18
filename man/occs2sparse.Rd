@@ -14,13 +14,17 @@ occs2sparse(modelsparse, occs)
 The first one is the longitude and the second is the latitude.}
 }
 \value{
-A sparse vector of zeros and ones.
+A sparse vector of zeros (presences) and ones (absences).
 }
 \description{
 occs2sparse: Converts occurrence data into a sparse matrix object
 }
+\details{
+Rows of this column vector represent non NA pixels of the
+niche model.
+}
 \examples{
-\dontrun{
+
 model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                           package = "bamm")
 model <- raster::raster(model_path)
@@ -35,5 +39,5 @@ occs_lep_cal <- data.frame(longitude = c(-115.10417,
 occs_sparse <- bamm::occs2sparse(modelsparse = sparse_mod,
                                 occs = occs_lep_cal)
 
-}
+head(occs_sparse)
 }

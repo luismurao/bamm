@@ -4,17 +4,19 @@
 #' @param threshold A threshold to convert a continuous model into a
 #' binary model.
 #' @importFrom Matrix sparseMatrix
-#' @return A diagonal sparse matrix representing the geographic projection
-#' of a niche model.
+#' @return An object of class \code{\link[bamm]{setA}}. The niche model
+#' is stored as diagonal sparse matrix (slot sparse_model).
+#' @details threshold parameter represents the suitability value used to
+#' convert continuous model into a binary model.
 #' @export
 #' @examples
-#' \dontrun{
 #' model_path <- system.file("extdata/Lepus_californicus_cont.tif",
 #'                           package = "bamm")
 #' model <- raster::raster(model_path)
 #'
-#' sparse_mod <- bamm::model2sparse(model, threshold=0.05)
-#' }
+#' sparse_mod <- bamm::model2sparse(model, threshold=0.75)
+#' print(sparse_mod)
+#' raster::plot(sparse_mod@niche_model)
 model2sparse <- function(model, threshold=NULL){
 
   is_continous <- function(model){

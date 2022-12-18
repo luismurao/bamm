@@ -3,10 +3,12 @@
 #' \code{\link[bamm]{model2sparse}}
 #' @param occs A matrix or a data.frame containing two columns.
 #' The first one is the longitude and the second is the latitude.
-#' @return A sparse vector of zeros and ones.
+#' @return A sparse vector of zeros (presences) and ones (absences).
+#' @details  Rows of this column vector represent non NA pixels of the
+#' niche model.
 #' @export
 #' @examples
-#' \dontrun{
+#'
 #' model_path <- system.file("extdata/Lepus_californicus_cont.tif",
 #'                           package = "bamm")
 #' model <- raster::raster(model_path)
@@ -21,10 +23,10 @@
 #' occs_sparse <- bamm::occs2sparse(modelsparse = sparse_mod,
 #'                                 occs = occs_lep_cal)
 #'
-#' }
+#' head(occs_sparse)
 
 occs2sparse <- function(modelsparse,occs){
-  if(!inherits(modelsparse,"setA")){
+  if(!methods::is(modelsparse,"setA")){
     stop("modelsparse should be of class setA")
   }
 

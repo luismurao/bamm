@@ -6,18 +6,22 @@
 #' @param sparse Logical. If TRUE the PAM will be returned as a sparse matrix.
 #' @param parallel Logical. If TRUE computations will be done in parallel
 #' @param ncores Integer. Number of cores to run the parallel process.
-#' @return A PAM.
+#' @return A presence-absence matrix (PAM).
+#' @details For more information about PAM see Soberon and Cavner (2015).
+#' @references
+#' \insertRef{Soberon2015}{bamm}.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' lagos_path <- system.file("extdata/conejos",
 #'                           package = "bamm")
 #' enm_path <- list.files(lagos_path,
 #'                        pattern = ".tif",
-#'                        full.names = TRUE)
-
+#'                        full.names = TRUE)[1:10]
 #' en_models <- raster::stack(enm_path) >0.01
-#' pam <- bamm::models2pam(en_models,sparse=FALSE,parallel=T,ncores=2)
+#' pam <- bamm::models2pam(en_models,sparse=FALSE,
+#'                         parallel=FALSE,ncores=2)
+#' head(pam)
 #' }
 models2pam <- function(mods_stack,sparse=TRUE,parallel=FALSE,ncores=2){
   cmod <-class(mods_stack)

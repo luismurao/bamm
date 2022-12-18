@@ -27,13 +27,13 @@ field values.
 }
 \description{
 null_dispersion_field_distribution estimates a
-random distribution
-of the dispersion field values.
+random distribution of the dispersion field values.
 }
 \details{
 Estimates a random distribution of the dispersion field values. To obtain
          random values it uses the function code{\link[bamm]{permute_pam}}
-         at each step of the iterations.
+         at each step of the iterations. Randomization of the PAM is
+         performed using the Babe Ruth Algorithm see Strona et al. (2014).
 }
 \examples{
 set.seed(111)
@@ -41,7 +41,10 @@ pam <- matrix(rbinom(100,1,0.3),nrow = 10,ncol = 10)
 dfield_rand <- bamm::null_dispersion_field_distribution(pam,n_iter=10,
                                                        parallel=FALSE,
                                                        n_cores = 2)
+head(dfield_rand)
 }
 \references{
 \insertRef{Soberon2015}{bamm}
+
+\insertRef{Strona2014}{bamm}
 }

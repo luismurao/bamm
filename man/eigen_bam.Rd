@@ -18,19 +18,34 @@ vector will be computed.}
 vector of the product AM.}
 }
 \value{
-A table
+A list with four objects. 1) eigen_values (these are indicated in
+which_eigen parameter of the function), 2) eigen_vectors (the corresponding
+eigen vectors of each eigen value), 3) Standardized eigen vectors (0 to 1),
+4) A RasterLayer depicting the information of the first eigen vector of
+the system.
 }
 \description{
 Calculates the Eigen values and Eigen vectors of bam objects
 }
+\details{
+The eigenvector associated with the dominant eigenvalue of an
+adjacency matrix provides information about the number of forms in
+which a cell can be visited from other cells. Details about the
+eigen analysis in the context of the area of distribution can be
+found in Soberon and Osorio-Olvera (2022).
+}
 \examples{
-\dontrun{
+\donttest{
 model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                           package = "bamm")
 model <- raster::raster(model_path)
-sparse_mod <- bamm::model2sparse(model = model)
-adj_mod <- bamm::adj_mat(sparse_mod,ngbs = 1,eigen_sys = T)
+sparse_mod <- bamm::model2sparse(model = model,0.75)
+plot(sparse_mod@niche_model)
+adj_mod <- bamm::adj_mat(sparse_mod,ngbs = 1,eigen_sys = TRUE)
 eig_bam <- bamm::eigen_bam(A=sparse_mod,M=adj_mod)
 raster::plot(eig_bam$map)
 }
+}
+\references{
+\insertRef{SoberonOsorio}{bamm}.
 }

@@ -12,10 +12,8 @@
 #' visiting neighbor cells (Moore neighborhood).
 #' @param disper_prop Probability of dispersal to reachable cells.
 #' @param disp_prop2_suitability Logical. If probability of dispersal
-#' is proportional
-#' to the suitability of reachable cells. The proportional value
-#' must be declared
-#' in the parameter `disper_prop`.
+#' is proportional to the suitability of reachable cells. The proportional
+#' value must be declared in the parameter `disper_prop`.
 #' @param progress_bar Show progress bar
 
 #' @importFrom magrittr %>%

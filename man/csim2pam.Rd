@@ -7,38 +7,56 @@
 csim2pam(community_sim, which_steps)
 }
 \arguments{
-\item{community_sim}{An object of class community_bam.}
+\item{community_sim}{An object of class \code{\link[bamm]{community_bam}}.}
 
 \item{which_steps}{Steps in the simulation object to be converted into a PAM}
+}
+\value{
+An object of class \code{\link[bamm]{pam}}; it contains five slots.
+1) pams: a list of sparse matrices with Presence-Absence information (PAMs).
+2) which_steps: time steps corresponding to each PAM. 3) sp_names: a
+vector of species names. 4) the grid area used in the simulation. 5) Non NA
+cell (pixel) IDs.
 }
 \description{
 Converts community simulation object into a
 Presence Absence Matrices (PAM) for a given simulation steps.
 }
+\details{
+For details about the object community_sim see
+\code{\link[bamm]{community_sim}}
+}
 \examples{
-
-\dontrun{
+\donttest{
 lagos_path <- system.file("extdata/conejos",
                           package = "bamm")
 enm_path <- list.files(lagos_path,
                        pattern = ".tif",
                     full.names = TRUE)
 en_models <- raster::stack(enm_path)
-ngbs_vect <- sample(1:2,replace = T,
+ngbs_vect <- sample(1:2,replace = TRUE,
                     size = raster::nlayers(en_models))
 init_coords <- read.csv(file.path(lagos_path,
                                   "lagos_initit.csv"))
-nsteps <- 30
-sdm_comm <- bamm::community_sim(en_models = enm_path,
+nsteps <- 10
+sdm_comm <- bamm::community_sim(en_models = en_models,
                                ngbs_vect = ngbs_vect,
                                init_coords = init_coords,
                                nsteps = nsteps,
                                threshold = 0.1)
 
 pamt10 <- bamm::csim2pam(community_sim = sdm_comm ,
-                       which_steps = 10)
+                        which_steps = 10)
 pams <- bamm::csim2pam(community_sim = sdm_comm ,
-                      which_steps = c(1:10))
+                       which_steps = seq_len(10))
+rich_pam <- bamm::pam2richness(pams,which_steps = c(1,5))
+# plot(rich_pam[[c(1,2)]])
 }
 
+}
+\references{
+\insertRef{SoberonOsorio}{bamm}.
+}
+\author{
+Luis Osorio-Olvera & Jorge Soberon
 }
