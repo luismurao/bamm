@@ -11,6 +11,8 @@
 #' @details The Jaccard index is computed as follows
 #' \deqn{J(A,B)={{|A\cap B|}\over{|A\cup B|}}={{|A\cap B|}\over{|A|+|B|-|A\cap B|}}.
 #' }
+#'
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @export
 #' @examples
 #' m1_path <- system.file("extdata/conejos/Lepus_othus_cont.tif",

@@ -41,3 +41,6 @@ occs_sparse <- bamm::occs2sparse(modelsparse = sparse_mod,
 
 head(occs_sparse)
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

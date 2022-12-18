@@ -59,3 +59,6 @@ Plot method for objects of class diversity_range \pkg{bamm}.
 To show interactive diversity_range plots install the 'plotly' R
 package.
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

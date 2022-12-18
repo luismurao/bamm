@@ -35,3 +35,6 @@ plot(r1)
 sp::plot(sps,add=TRUE)
 
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

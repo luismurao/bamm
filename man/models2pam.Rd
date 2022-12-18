@@ -42,3 +42,6 @@ head(pam)
 \references{
 \insertRef{Soberon2015}{bamm}.
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

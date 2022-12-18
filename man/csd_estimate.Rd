@@ -44,5 +44,5 @@ csd_plot$plot
 \insertRef{SoberonOsorio}{bamm}.
 }
 \author{
-Luis Osorio-Olvera & Jorge Soberon
+Luis Osorio-Olvera & Jorge Soberón
 }

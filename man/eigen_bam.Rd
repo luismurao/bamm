@@ -49,3 +49,6 @@ raster::plot(eig_bam$map)
 \references{
 \insertRef{SoberonOsorio}{bamm}.
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

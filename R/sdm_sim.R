@@ -33,7 +33,8 @@
 #' from patches that are unsuitable, as defined by \eqn{\mathbf{A}_j(t)}.
 #' @references
 #' \insertRef{SoberonOsorio}{bamm}.
-
+#'
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @examples
 #' \donttest{
 #' model_path <- system.file("extdata/Lepus_californicus_cont.tif",
@@ -147,4 +148,19 @@ sdm_sim <- function(set_A,set_M,initial_points,nsteps,
                  initial_points = initial_points,
                  sim_steps = nsteps-1)
   return(bam_sim)
+}
+#' Helper function to compute the elements in g0
+#' that have no zero values.The function is taken from the
+#' Ringo package
+#' @param x A matrix of class "dgCMatrix"
+
+.nonzero <- function(x){
+  stopifnot(inherits(x, "dgCMatrix"))
+  if (all(x@p == 0))
+    return(matrix(0, nrow=0, ncol=2,
+                  dimnames=list(character(0), c("row","col"))))
+  res <- cbind(x@i+1, rep(seq(dim(x)[2]), diff(x@p)))
+  colnames(res) <- c("row", "col")
+  res <- res[x@x != 0, , drop = FALSE]
+  return(res)
 }

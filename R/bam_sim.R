@@ -28,7 +28,7 @@
 #' \mathbf{G}_j(t)}
 #' @references
 #' \insertRef{SoberonOsorio}{bamm}.
-#'
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @examples
 #' # Compute dispersal dynamics of Urania boisduvalii as a function of
 #' # palatable Omphalea
@@ -130,20 +130,4 @@ bam_sim <- function(sp1,sp2,set_M,initial_points,
 
 }
 
-
-#' Helper function to compute the elements in g0
-#' that have no zero values.The function is taken from the
-#' Ringo package
-#' @param x A matrix of class "dgCMatrix"
-
-.nonzero <- function(x){
-  stopifnot(inherits(x, "dgCMatrix"))
-  if (all(x@p == 0))
-    return(matrix(0, nrow=0, ncol=2,
-                  dimnames=list(character(0), c("row","col"))))
-  res <- cbind(x@i+1, rep(seq(dim(x)[2]), diff(x@p)))
-  colnames(res) <- c("row", "col")
-  res <- res[x@x != 0, , drop = FALSE]
-  return(res)
-}
 

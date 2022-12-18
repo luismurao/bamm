@@ -42,3 +42,6 @@ raster::plot(sdm_lep_cal_st)
 
 }
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

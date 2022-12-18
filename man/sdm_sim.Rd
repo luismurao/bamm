@@ -92,3 +92,6 @@ raster::plot(sim_res)
 \references{
 \insertRef{SoberonOsorio}{bamm}.
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

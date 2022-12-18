@@ -8,6 +8,8 @@
 #' is stored as diagonal sparse matrix (slot sparse_model).
 #' @details threshold parameter represents the suitability value used to
 #' convert continuous model into a binary model.
+#'
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @export
 #' @examples
 #' model_path <- system.file("extdata/Lepus_californicus_cont.tif",

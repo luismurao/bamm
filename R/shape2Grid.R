@@ -16,6 +16,7 @@
 #' @importFrom raster crop
 #' @importFrom raster mask
 #' @importFrom sp Polygon
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @examples
 #' x_coord <- c(-106.5699, -111.3737,-113.9332, -110.8913, -106.4262, -106.5699)
 #' y_coord <- c(16.62661, 17.72373, 19.87618, 22.50763, 21.37728, 16.62661)

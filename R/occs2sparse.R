@@ -6,6 +6,7 @@
 #' @return A sparse vector of zeros (presences) and ones (absences).
 #' @details  Rows of this column vector represent non NA pixels of the
 #' niche model.
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @export
 #' @examples
 #'

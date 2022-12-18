@@ -21,6 +21,8 @@
 #' \insertRef{Soberon2015}{bamm}
 #'
 #' \insertRef{Strona2014}{bamm}
+#'
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @examples
 #' set.seed(111)
 #' pam <- matrix(rbinom(100,1,0.3),nrow = 10,ncol = 10)

@@ -32,12 +32,12 @@ lagos_path <- system.file("extdata/conejos",
                           package = "bamm")
 enm_path <- list.files(lagos_path,
                        pattern = ".tif",
-                    full.names = TRUE)
+                       full.names = TRUE)[seq(1,10)]
 en_models <- raster::stack(enm_path)
 ngbs_vect <- sample(1:2,replace = TRUE,
                     size = raster::nlayers(en_models))
 init_coords <- read.csv(file.path(lagos_path,
-                                  "lagos_initit.csv"))
+                                  "lagos_initit.csv"))[seq(1,10),]
 nsteps <- 10
 sdm_comm <- bamm::community_sim(en_models = en_models,
                                ngbs_vect = ngbs_vect,
@@ -50,7 +50,7 @@ pamt10 <- bamm::csim2pam(community_sim = sdm_comm ,
 pams <- bamm::csim2pam(community_sim = sdm_comm ,
                        which_steps = seq_len(10))
 rich_pam <- bamm::pam2richness(pams,which_steps = c(1,5))
-# plot(rich_pam[[c(1,2)]])
+print(rich_pam)
 }
 
 }
@@ -58,5 +58,5 @@ rich_pam <- bamm::pam2richness(pams,which_steps = c(1,5))
 \insertRef{SoberonOsorio}{bamm}.
 }
 \author{
-Luis Osorio-Olvera & Jorge Soberon
+Luis Osorio-Olvera & Jorge Soberón
 }

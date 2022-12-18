@@ -36,3 +36,6 @@ m2 <- raster::raster(m2_path) >0.01
 jcc <- bamm::jaccard(m1,m2)
 print(jcc)
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

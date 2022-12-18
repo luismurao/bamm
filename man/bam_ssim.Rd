@@ -92,3 +92,6 @@ new_sim <- bamm::sim2Animation(sdm_simul = ura_ssim,
 \references{
 \insertRef{SoberonOsorio}{bamm}.
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

@@ -21,7 +21,7 @@
 #' and the third column with the cluster ID where they belong.
 #' 2) interactive_map: a leaflet map of connected suitable pixels shown in
 #' the same color. 3) A RasterLayer of connected suitable pixels.
-#'
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @examples
 #' set.seed(891)
 #' model_path <- system.file("extdata/Lepus_californicus_cont.tif",
@@ -29,7 +29,10 @@
 #' model <- raster::raster(model_path)
 #' model <- model > 0.7
 #' clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=TRUE)
+#' raster::plot(clusterin@raster_map)
+#' \donttest{
 #' clusterin@interactive_map
+#' }
 #' @export
 #'
 #'

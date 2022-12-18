@@ -96,3 +96,6 @@ bamm::plot(rdivan,plot_type="diversity_range_interactive")
 
 \insertRef{Soberon2015}{bamm}.
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

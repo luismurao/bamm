@@ -136,3 +136,6 @@ new_preds <- predict(object = smd_lep_cal,
 
 }
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

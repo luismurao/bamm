@@ -31,7 +31,7 @@ Description: Species Distribution Modeling (SDM) is a practical methodology
  binary matrices: one matrix represents movements (M), another 
  abiotic -niche- tolerances (A), and a third, biotic interactions (B). 
  The theoretical background of the package can be found in 
- Soberon and Osorio-Olvera (2022) <arXiv:2212.06308>.
+ Soberón and Osorio-Olvera (2022) <arXiv:2212.06308>.
 SystemRequirements: C++11, GDAL (>= 2.2.3): gdal-bin (deb), libgdal-dev (deb) or
                     gdal-devel (rmp), GEOS (>= 3.4.0), PROJ (>= 4.9.3): 
                     libproj-dev (deb), sqlite3, 

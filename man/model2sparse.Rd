@@ -33,3 +33,6 @@ sparse_mod <- bamm::model2sparse(model, threshold=0.75)
 print(sparse_mod)
 raster::plot(sparse_mod@niche_model)
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

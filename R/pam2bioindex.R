@@ -8,11 +8,11 @@
 #' @return An object of class \code{\link[bamm]{bioindex}} with three slots
 #' each represents a matrix of diversity indices: alpha, omega, and
 #' dispersion field.
-#' @details The biodiversity indices can be found in
-#' \insertCite{Soberon2015;textual}{bamm}
+#' @details The biodiversity indices can be found in Soberón and Cavner (2015).
 #' @references
 #' \insertRef{Soberon2015}{bamm}
 #'
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @export
 #' @examples
 #' set.seed(111)

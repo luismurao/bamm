@@ -67,3 +67,6 @@ raster::plot(mx_grid_eigen)
 \references{
 \insertRef{SoberonOsorio}{bamm}.
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

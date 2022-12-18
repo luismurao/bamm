@@ -100,7 +100,6 @@ setM <- methods::setClass(Class = "setM",
 #' by the species
 #' @return An object of class bam
 #' @exportClass bam
-#' @author Luis Osorio-Olvera & Jorge Soberón
 
 bam <- methods::setClass(Class = "bam",
                          contains = c("setA","setM"),

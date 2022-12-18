@@ -48,3 +48,6 @@ head(dfield_rand)
 
 \insertRef{Strona2014}{bamm}
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

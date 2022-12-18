@@ -5,6 +5,7 @@
 #' @param which_steps A numeric vector indicating the simulation steps that
 #'  are going to be converted into raster layers.
 #' @return A RasterStack of species' distribution at each simulation step
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @export
 #' @examples
 #' \donttest{

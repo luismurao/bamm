@@ -13,7 +13,7 @@ pam2richness(pamobj, which_steps)
 \item{which_steps}{Time steps in the pam to convert}
 }
 \value{
-A RasterStack richness for each simulation step.
+A RasterStack richness for each simulation step
 }
 \description{
 Converts Presence Absence Matrix (pam object) to
@@ -43,4 +43,7 @@ pams <-bamm::csim2pam(community_sim = sdm_comm ,
 richness_stack <- bamm::pam2richness(pams,which_steps=pams@which_steps)
 raster::plot(richness_stack)
 }
+}
+\author{
+Luis Osorio-Olvera & Jorge Soberón.
 }

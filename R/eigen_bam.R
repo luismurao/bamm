@@ -19,6 +19,8 @@
 #' found in Soberon and Osorio-Olvera (2022).
 #' @references
 #' \insertRef{SoberonOsorio}{bamm}.
+#'
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @examples
 #' \donttest{
 #' model_path <- system.file("extdata/Lepus_californicus_cont.tif",

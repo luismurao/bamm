@@ -10,6 +10,8 @@
 #' @details For more information about PAM see Soberon and Cavner (2015).
 #' @references
 #' \insertRef{Soberon2015}{bamm}.
+#'
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @export
 #' @examples
 #' \donttest{

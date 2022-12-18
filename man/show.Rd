@@ -50,3 +50,6 @@ Show information in setA class \pkg{bamm}.
 
 Show information in diversity_range class \pkg{bamm}.
 }
+\author{
+Luis Osorio-Olvera & Jorge Soberón
+}

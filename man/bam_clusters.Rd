@@ -39,8 +39,14 @@ model_path <- system.file("extdata/Lepus_californicus_cont.tif",
 model <- raster::raster(model_path)
 model <- model > 0.7
 clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=TRUE)
+raster::plot(clusterin@raster_map)
+\donttest{
 clusterin@interactive_map
+}
 }
 \references{
 \insertRef{SoberonOsorio}{bamm}.
+}
+\author{
+Luis Osorio-Olvera & Jorge Soberón
 }

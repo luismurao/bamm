@@ -16,7 +16,7 @@
 #' see \code{\link[bamm]{bam_clusters}}
 #' @references
 #' \insertRef{SoberonOsorio}{bamm}.
-#' @author Luis Osorio-Olvera & Jorge Soberon
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @examples
 #' \donttest{
 #' model_path <- system.file("extdata/Lepus_californicus_cont.tif",

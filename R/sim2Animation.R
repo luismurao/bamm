@@ -25,9 +25,11 @@
 #' @details The animation can be saved in a GIF or HTML format. Note that
 #' the generation of the GIF can be time consuming for large simulation
 #' (simulations with more than 60 time steps).
+#'
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @export
 #' @examples
-#' \dontrun{
+
 #' model_path <- system.file("extdata/Lepus_californicus_cont.tif",
 #'                           package = "bamm")
 #' model <- raster::raster(model_path)
@@ -46,6 +48,7 @@
 #'                             set_M = adj_mod,
 #'                             initial_points = occs_sparse,
 #'                             nsteps = 50)
+#' \dontrun{
 #' ani_name <- tempfile(pattern = "simulation_",fileext = ".html")
 #' sdm_lep_cal_st <- bamm::sim2Animation(sdm_simul = sdm_lep_cal,
 #'                                      which_steps = seq(1,50,by=1),

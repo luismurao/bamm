@@ -31,6 +31,8 @@
 #' \insertRef{Soberon2022}{bamm}.
 #'
 #' \insertRef{Soberon2015}{bamm}.
+#'
+#' @author Luis Osorio-Olvera & Jorge Soberón
 #' @importFrom future plan tweak multisession sequential
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib bamm

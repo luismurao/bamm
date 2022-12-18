@@ -23,8 +23,7 @@ pam2bioindex estimates various biodiversity indices for a
 certain PAM.
 }
 \details{
-The biodiversity indices can be found in
-\insertCite{Soberon2015;textual}{bamm}
+The biodiversity indices can be found in Soberón and Cavner (2015).
 }
 \examples{
 set.seed(111)
@@ -38,4 +37,7 @@ bioindices@dispersion_field
 }
 \references{
 \insertRef{Soberon2015}{bamm}
+}
+\author{
+Luis Osorio-Olvera & Jorge Soberón
 }
