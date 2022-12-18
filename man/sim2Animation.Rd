@@ -57,6 +57,11 @@ A RasterStack of species' distribution at each simulation step
 \description{
 Animates BAM simulation object.
 }
+\details{
+The animation can be saved in a GIF or HTML format. Note that
+the generation of the GIF can be time consuming for large simulation
+(simulations with more than 60 time steps).
+}
 \examples{
 \dontrun{
 model_path <- system.file("extdata/Lepus_californicus_cont.tif",
@@ -74,7 +79,7 @@ sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
                             set_M = adj_mod,
                             initial_points = occs_sparse,
                             nsteps = 50)
-ani_name <- "C:/Users/l916o895/Dropbox/TeoriadeBAM/ani_test.html"
+ani_name <- tempfile(pattern = "simulation_",fileext = ".html")
 sdm_lep_cal_st <- bamm::sim2Animation(sdm_simul = sdm_lep_cal,
                                      which_steps = seq(1,50,by=1),
                                      fmt = "HTML",ani.width = 1200,

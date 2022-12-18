@@ -119,7 +119,14 @@ a list of sparse matrices with results of each simulation step.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The returned object inherits from <code><a href="setA.html">setA</a></code>,
 <code><a href="setM-class.html">setM</a></code> classes. Details about the dynamic model
-can be found in Soberon and Osorio-Olvera (2022).</p>
+can be found in Soberon and Osorio-Olvera (2022). The model is cellular
+automata where the occupied area of a species at time \(t+1\) is
+estimated by the multiplication of three
+binary matrices: one matrix represents movements (M), another
+abiotic -niche- tolerances (A), and a third, biotic interactions (B)
+(Soberon and Osorio-Olvera, 2022).
+$$\mathbf{G}_j(t+1) =\mathbf{B}_j(t)\mathbf{A}_j(t)\mathbf{M}_j
+\mathbf{G}_j(t)$$</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

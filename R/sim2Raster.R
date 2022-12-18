@@ -7,12 +7,12 @@
 #' @return A RasterStack of species' distribution at each simulation step
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' model_path <- system.file("extdata/Lepus_californicus_cont.tif",
 #'                           package = "bamm")
 #' model <- raster::raster(model_path)
 
-#' sparse_mod <- bamm::model2sparse(model)
+#' sparse_mod <- bamm::model2sparse(model,threshold=0.1)
 #' adj_mod <- bamm::adj_mat(sparse_mod,ngbs = 1)
 
 #' occs_lep_cal <- data.frame(longitude = c(-115.10417,
@@ -25,9 +25,12 @@
 #' sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
 #'                             set_M = adj_mod,
 #'                             initial_points = occs_sparse,
-#'                             nsteps = 100)
+#'                             nsteps = 10)
 #' sdm_lep_cal_st <- bamm::sim2Raster(sdm_simul = sdm_lep_cal,
-#'                                   which_steps = seq(1,100,by=5))
+#'                                   which_steps = seq(1,10,by=1))
+#'
+#' raster::plot(sdm_lep_cal_st)
+#'
 #' }
 
 sim2Raster <- function(sdm_simul,which_steps = NULL){

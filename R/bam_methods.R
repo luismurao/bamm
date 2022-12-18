@@ -566,14 +566,13 @@ methods::setMethod(f = "plot",
 #' @return A RasterStack of predictions of dispersal dynamics as a function
 #' of environmental change scenarios.
 #' @examples
-#' \dontrun{
 #' # rm(list = ls())
 #' # Read raster model for Lepus californicus
 #' model_path <- system.file("extdata/Lepus_californicus_cont.tif",
 #'                           package = "bamm")
 #' model <- raster::raster(model_path)
 #' # Convert model to sparse
-#' sparse_mod <- bamm::model2sparse(model = model)
+#' sparse_mod <- bamm::model2sparse(model = model,threshold=0.1)
 #' # Compute adjacency matrix
 #' adj_mod <- bamm::adj_mat(sparse_mod,ngbs=1)
 #'
@@ -589,9 +588,9 @@ methods::setMethod(f = "plot",
 #'
 #' # Run the bam (sdm) simultation for 100 time steps
 #' smd_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
-#'                             set_M = adj_mod,
-#'                             initial_points = occs_sparse,
-#'                             nsteps = 10)
+#'                              set_M = adj_mod,
+#'                              initial_points = occs_sparse,
+#'                              nsteps = 10)
 #' #----------------------------------------------------------------------------
 #' # Predict species' distribution under suitability change
 #' # scenarios (could be climate chage scenarios).
@@ -602,7 +601,7 @@ methods::setMethod(f = "plot",
 #'                            package = "bamm")
 #' niche_mods_stack <- raster::stack(list.files(layers_path,
 #'                                              pattern = ".tif$",
-#'                                              full.names = TRUE)) > 0.1
+#'                                              full.names = TRUE))
 #' raster::plot(niche_mods_stack)
 #' # Predict
 #' new_preds <- predict(object = smd_lep_cal,
@@ -610,13 +609,16 @@ methods::setMethod(f = "plot",
 #'                      nsteps_vec = c(50,100))
 #'
 #' # Generate the dispersal animation for time period 1 and 2
+#' \dontrun{
+#' ani_prd <- tempfile(pattern = "prediction_",fileext = ".gif")
 #' new_preds <- predict(object = smd_lep_cal,
 #'                      niche_layers = niche_mods_stack,
 #'                      nsteps_vec = c(10,10),
 #'                      animate=TRUE,
-#'                      filename="/home/l916o895/Desktop/animacion_01.html",
-#'                      fmt="HTML")
-#' }
+#'                      filename=ani_prd,
+#'                      fmt="GIF")
+#'
+#'}
 
 methods::setMethod(f = "predict",
                    signature = methods::signature(object = "bam"),
@@ -662,8 +664,7 @@ methods::setMethod(f = "predict",
                          ad <- bamm::adj_mat(modelsparse = object,
                                              ngbs = nbgs_vec[x])
                        })
-                     }
-                     else{
+                     } else{
                        ad_mat <- lapply(seq_len(n_enm), function(x){
                          methods::new("setM",
                                       adj_matrix=object@adj_matrix)
@@ -674,7 +675,7 @@ methods::setMethod(f = "predict",
                      sim_results <- list(object)
 
                      initial_points <- Matrix::t(object@sdm_sim[[
-                       object@sim_steps]])
+                       length(object@sdm_sim)]])
                      nsteps <- nsteps_vec[1]
                      niche_mod <- niche_layers[[1]]
                      sparse_mod <- bamm::model2sparse(niche_mod,threshold =

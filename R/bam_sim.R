@@ -18,7 +18,14 @@
 #' a list of sparse matrices with results of each simulation step.
 #' @details The returned object inherits from \code{\link[bamm]{setA}},
 #' \code{\link[bamm]{setM}} classes. Details about the dynamic model
-#' can be found in Soberon and Osorio-Olvera (2022).
+#' can be found in Soberon and Osorio-Olvera (2022). The model is cellular
+#' automata where the occupied area of a species at time \eqn{t+1} is
+#' estimated by the multiplication of three
+#' binary matrices: one matrix represents movements (M), another
+#' abiotic -niche- tolerances (A), and a third, biotic interactions (B)
+#' (Soberon and Osorio-Olvera, 2022).
+#' \deqn{\mathbf{G}_j(t+1) =\mathbf{B}_j(t)\mathbf{A}_j(t)\mathbf{M}_j
+#' \mathbf{G}_j(t)}
 #' @references
 #' \insertRef{SoberonOsorio}{bamm}.
 #'

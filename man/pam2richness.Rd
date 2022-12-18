@@ -13,7 +13,7 @@ pam2richness(pamobj, which_steps)
 \item{which_steps}{Time steps in the pam to convert}
 }
 \value{
-A RasterStack of richness for each simulation step.
+A RasterStack richness for each simulation step.
 }
 \description{
 Converts Presence Absence Matrix (pam object) to

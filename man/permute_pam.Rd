@@ -15,8 +15,9 @@ representing species and rows sites.}
 \item{as_sparse}{If TRUE the PAM will be returned as a sparse matrix}
 }
 \value{
-Returns a list of length equal to the number of sites
-in the PAM (n=nrows(m)). Each entry of the list has the permuted
+Returns a permuted matrix of the same dimensions of m
+(same number of rows and columns). Note that the sum of each row and column
+of this permuted matrix is equal to that of m.
 species.
 }
 \description{
@@ -24,7 +25,7 @@ permute_pam: Function to permute a Presence-Absence-Matrix.
 }
 \details{
 This function is an implementation of the curve ball algorithm
-          following \insertRef{Strona2014}{bamm}.
+          following Strona et al. (2014).
 }
 \examples{
 set.seed(111)
@@ -36,6 +37,9 @@ all(pam == ppam)
 all(Matrix::rowSums(pam) == Matrix::rowSums(ppam))
 # Check if column total are the same
 all(Matrix::colSums(pam) == Matrix::colSums(ppam))
+}
+\references{
+\insertRef{Strona2014}{bamm}.
 }
 \author{
 Luis Osorio-Olvera & Jorge Soberón

@@ -82,14 +82,13 @@ of environmental change scenarios.
 predicts species' distribution under suitability changes
 }
 \examples{
-\dontrun{
 # rm(list = ls())
 # Read raster model for Lepus californicus
 model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                           package = "bamm")
 model <- raster::raster(model_path)
 # Convert model to sparse
-sparse_mod <- bamm::model2sparse(model = model)
+sparse_mod <- bamm::model2sparse(model = model,threshold=0.1)
 # Compute adjacency matrix
 adj_mod <- bamm::adj_mat(sparse_mod,ngbs=1)
 
@@ -105,9 +104,9 @@ occs_sparse <- bamm::occs2sparse(modelsparse = sparse_mod,
 
 # Run the bam (sdm) simultation for 100 time steps
 smd_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
-                            set_M = adj_mod,
-                            initial_points = occs_sparse,
-                            nsteps = 10)
+                             set_M = adj_mod,
+                             initial_points = occs_sparse,
+                             nsteps = 10)
 #----------------------------------------------------------------------------
 # Predict species' distribution under suitability change
 # scenarios (could be climate chage scenarios).
@@ -118,7 +117,7 @@ layers_path <- system.file("extdata/suit_change",
                            package = "bamm")
 niche_mods_stack <- raster::stack(list.files(layers_path,
                                              pattern = ".tif$",
-                                             full.names = TRUE)) > 0.1
+                                             full.names = TRUE))
 raster::plot(niche_mods_stack)
 # Predict
 new_preds <- predict(object = smd_lep_cal,
@@ -126,11 +125,14 @@ new_preds <- predict(object = smd_lep_cal,
                      nsteps_vec = c(50,100))
 
 # Generate the dispersal animation for time period 1 and 2
+\dontrun{
+ani_prd <- tempfile(pattern = "prediction_",fileext = ".gif")
 new_preds <- predict(object = smd_lep_cal,
                      niche_layers = niche_mods_stack,
                      nsteps_vec = c(10,10),
                      animate=TRUE,
-                     filename="/home/l916o895/Desktop/animacion_01.html",
-                     fmt="HTML")
+                     filename=ani_prd,
+                     fmt="GIF")
+
 }
 }

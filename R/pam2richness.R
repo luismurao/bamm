@@ -5,7 +5,7 @@
 #'
 #' @param pamobj An object of class pam see \code{\link[bamm]{csim2pam}}
 #' @param which_steps Time steps in the pam to convert
-#' @return A RasterStack of richness for each simulation step.
+#' @return A RasterStack richness for each simulation step.
 #' @examples
 #' \donttest{
 #' lagos_path <- system.file("extdata/conejos",

@@ -3,11 +3,15 @@
 #'          representing species and rows sites.
 #' @param niter Number of iterations to permute the PAM.
 #' @param as_sparse If TRUE the PAM will be returned as a sparse matrix
-#' @return Returns a list of length equal to the number of sites
-#' in the PAM (n=nrows(m)). Each entry of the list has the permuted
+#' @return Returns a permuted matrix of the same dimensions of m
+#' (same number of rows and columns). Note that the sum of each row and column
+#' of this permuted matrix is equal to that of m.
 #' species.
 #' @details This function is an implementation of the curve ball algorithm
-#'           following \insertRef{Strona2014}{bamm}.
+#'           following Strona et al. (2014).
+#' @references
+#' \insertRef{Strona2014}{bamm}.
+#'
 #' @export
 #' @author Luis Osorio-Olvera & Jorge Soberón
 #' @examples
