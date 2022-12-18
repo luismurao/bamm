@@ -76,12 +76,17 @@ The first one is the longitude and the second is the latitude.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A sparse vector of zeros and ones.</p>
+<p>A sparse vector of zeros (presences) and ones (absences).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Rows of this column vector represent non NA pixels of the
+niche model.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/Lepus_californicus_cont.tif"</span>,</span></span>
 <span class="r-in"><span>                          package <span class="op">=</span> <span class="st">"bamm"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster</a></span><span class="op">(</span><span class="va">model_path</span><span class="op">)</span></span></span>
@@ -96,7 +101,15 @@ The first one is the longitude and the second is the latitude.</p></dd>
 <span class="r-in"><span><span class="va">occs_sparse</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu">occs2sparse</span><span class="op">(</span>modelsparse <span class="op">=</span> <span class="va">sparse_mod</span>,</span></span>
 <span class="r-in"><span>                                occs <span class="op">=</span> <span class="va">occs_lep_cal</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">occs_sparse</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 x 1 sparse Matrix of class "dgCMatrix"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] .</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
