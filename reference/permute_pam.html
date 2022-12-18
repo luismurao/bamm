@@ -79,14 +79,19 @@ representing species and rows sites.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Returns a list of length equal to the number of sites
-in the PAM (n=nrows(m)). Each entry of the list has the permuted
+<p>Returns a permuted matrix of the same dimensions of m
+(same number of rows and columns). Note that the sum of each row and column
+of this permuted matrix is equal to that of m.
 species.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function is an implementation of the curve ball algorithm
-          following Strona G, Nappo D, Boccacci F, Fattorini S, San-Miguel-Ayanz J (2014).
+          following Strona et al. (2014).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Strona G, Nappo D, Boccacci F, Fattorini S, San-Miguel-Ayanz J (2014).
 “A fast and unbiased procedure to randomize ecological binary matrices with fixed row and column totals.”
 <em>Nature Communications</em>, <b>5</b>(1), 1--9.
 ISSN 20411723, <a href="https://doi.org/10.1038/ncomms5114" class="external-link">doi:10.1038/ncomms5114</a>
