@@ -1,7 +1,7 @@
 Package: bamm
 Type: Package
-Title: Species Distribution models as a function of Biotic, Abiotic and 
-       Movement factors (BAM)
+Title: Species Distribution Models as a Function of Biotic, Abiotic and 
+       Movement Factors (BAM)
 Version: 0.4.3
 Authors@R: c(person("Luis", "Osorio-Olvera", 
                  email = "luismurao@gmail.com", 
@@ -21,7 +21,7 @@ Description: Species Distribution Modeling (SDM) is a practical methodology
  correlative species distribution models can be interpreted 
  as maps of the suitable environment for a species but not generally as maps
  of its actual distribution. 
- Soberon and Peterson (2005) <doi.org/10.17161/bi.v2i0.4 > presented
+ Soberón and Peterson (2005) <doi:10.17161/bi.v2i0.4> presented
  the BAM scheme, a heuristic framework that states that the occupied area of 
  a species occurs on sites that have been accessible through dispersal (M) and 
  have both favorable biotic (B) and abiotic conditions (A). 
@@ -40,7 +40,8 @@ SystemRequirements: C++11, GDAL (>= 2.2.3): gdal-bin (deb), libgdal-dev (deb) or
                     ImageMagick (http://imagemagick.org) or GraphicsMagick 
                     (http://www.graphicsmagick.org) or LyX (http://www.lyx.org) 
                     for saveGIF(); (PDF)LaTeX for saveLatex();
-                    SWF Tools (http://swftools.org) for saveSWF(); FFmpeg (http://ffmpeg.org) 
+                    SWF Tools (http://swftools.org) for saveSWF(); 
+                    FFmpeg (http://ffmpeg.org) 
                     or avconv (https://libav.org/avconv.html) for saveVideo()
 NeedsCompilation: yes
 License: GPL (>= 3)
