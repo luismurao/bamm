@@ -3,6 +3,9 @@
 This is a resubmission. In this version I have done what the reviewer asked for:
  
  1) Description: 
+     - I replaced dontrun{} with \donttest{} and added 
+     if(requireNamespace("pkgname")){} for examples that use functions from
+     other packages
      - I changed the Title field to be in title case
      - I changed <doi.org/10.17161/bi.v2i0.4> to <doi:10.17161/bi.v2i0.4>
      - I give more details about what the package does.

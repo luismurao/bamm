@@ -46,7 +46,7 @@
 #'                                          return_null_dfield=TRUE)
 #' bamm::plot(rdivan,plot_type="diversity_range")
 #' # Lagomorphos
-#' \dontrun{
+#' \donttest{
 #' lagos_path <- system.file("extdata/conejos",
 #'                           package = "bamm")
 #' enm_path <- list.files(lagos_path,
@@ -57,6 +57,7 @@
 #' nonas <- which(!is.na(en_models[[1]][]))
 #' xy_mat <- sp::coordinates(en_models[[1]])[ nonas,]
 #' pam <- bamm::models2pam(en_models,sparse=FALSE)
+#'
 #' rdivan <- bamm::diversity_range_analysis(pam=pam,
 #'                                          xy_mat=xy_mat,
 #'                                          raster_templete = en_models[[1]],
@@ -65,9 +66,9 @@
 #'                                          return_null_dfield=TRUE)
 #' bamm::plot(rdivan,plot_type="diversity_range")
 #' bamm::plot(rdivan,plot_type="diversity_range_map")
-#'
-#' bamm::plot(rdivan,plot_type="diversity_range_interactive")
-#'
+#' if(requireNamespace("plotly")){
+#' #bamm::plot(rdivan,plot_type="diversity_range_interactive")
+#' }
 #' }
 
 diversity_range_analysis <- function(pam,xy_mat=NULL,lower_interval=0.05,

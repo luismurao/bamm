@@ -125,7 +125,8 @@ new_preds <- predict(object = smd_lep_cal,
                      nsteps_vec = c(50,100))
 
 # Generate the dispersal animation for time period 1 and 2
-\dontrun{
+\donttest{
+if(requireNamespace("animation")){
 ani_prd <- tempfile(pattern = "prediction_",fileext = ".gif")
 new_preds <- predict(object = smd_lep_cal,
                      niche_layers = niche_mods_stack,
@@ -134,6 +135,7 @@ new_preds <- predict(object = smd_lep_cal,
                      filename=ani_prd,
                      fmt="GIF")
 
+}
 }
 }
 \author{

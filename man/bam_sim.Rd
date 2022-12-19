@@ -76,13 +76,15 @@ ura_sim <- bamm::bam_sim(sp1=ura, sp2=omp, set_M=set_M,
                          nsteps=40)
 ura_omp <- bamm::sim2Raster(ura_sim)
 raster::plot(ura_omp[[c(1,5,10,15,20,30,35,40)]])
-\dontrun{
+\donttest{
+if(requireNamespace("animation")){
 # Animation example
 anp <-tempfile(pattern = "simulation_results_",fileext = ".gif")
 new_sim <- bamm::sim2Animation(sdm_simul = ura_sim,
                               which_steps = seq_len(ura_sim@sim_steps),
                               fmt = "GIF",
                               filename = anp)
+}
 }
 }
 \references{
