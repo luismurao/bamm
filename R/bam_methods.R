@@ -619,12 +619,12 @@ methods::setMethod(f = "plot",
 #' \donttest{
 #' if(requireNamespace("animation")){
 #' ani_prd <- tempfile(pattern = "prediction_",fileext = ".gif")
-#' new_preds <- predict(object = smd_lep_cal,
-#'                      niche_layers = niche_mods_stack,
-#'                      nsteps_vec = c(10,10),
-#'                      animate=TRUE,
-#'                      filename=ani_prd,
-#'                      fmt="GIF")
+#' #new_preds <- predict(object = smd_lep_cal,
+#' #                      niche_layers = niche_mods_stack,
+#' #                      nsteps_vec = c(10,10),
+#' #                      animate=TRUE,
+#' #                      filename=ani_prd,
+#' #                    fmt="GIF")
 #'
 #'}
 #'}

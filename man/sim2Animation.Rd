@@ -81,11 +81,11 @@ sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
 \donttest{
 if(requireNamespace("animation")){
 ani_name <- tempfile(pattern = "simulation_",fileext = ".html")
-sdm_lep_cal_st <- bamm::sim2Animation(sdm_simul = sdm_lep_cal,
-                                     which_steps = seq(1,50,by=1),
-                                     fmt = "HTML",ani.width = 1200,
-                                     ani.height = 1200,
-                                     filename = ani_name)
+#sdm_lep_cal_st <- bamm::sim2Animation(sdm_simul = sdm_lep_cal,
+#                                      which_steps = seq(1,50,by=1),
+#                                      fmt = "HTML",ani.width = 1200,
+#                                      ani.height = 1200,
+#                                      filename = ani_name)
 }
 }
 }

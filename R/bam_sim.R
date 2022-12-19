@@ -53,10 +53,10 @@
 #' if(requireNamespace("animation")){
 #' # Animation example
 #' anp <-tempfile(pattern = "simulation_results_",fileext = ".gif")
-#' new_sim <- bamm::sim2Animation(sdm_simul = ura_sim,
-#'                               which_steps = seq_len(ura_sim@sim_steps),
-#'                               fmt = "GIF",
-#'                               filename = anp)
+#' # new_sim <- bamm::sim2Animation(sdm_simul = ura_sim,
+#' #                                which_steps = seq_len(ura_sim@sim_steps),
+#' #                                fmt = "GIF",
+#' #                               filename = anp)
 #'}
 #'}
 #' @export
