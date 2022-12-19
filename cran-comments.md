@@ -3,6 +3,8 @@
 This is a resubmission. In this version I have done what the reviewer asked for:
  
  1) Description: 
+     - I changed the Title field to be in title case
+     - I changed <doi.org/10.17161/bi.v2i0.4> to <doi:10.17161/bi.v2i0.4>
      - I give more details about what the package does.
      - I added references to the paper describing methods
      - I explained all acronyms in the description text
