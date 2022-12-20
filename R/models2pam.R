@@ -46,8 +46,8 @@ models2pam <- function(mods_stack,sparse=TRUE,parallel=FALSE,ncores=2){
           return(df1)
         })
       } else{
-        plan(multisession,workers=ncores)
-
+        oplan <- plan(multisession,workers=ncores)
+        on.exit(plan(oplan), add = TRUE)
         pam0 <- 1:nsps %>% furrr::future_map_dfc(function(x){
           m1 <- mods_stack[[x]]
           m2 <- m1[]*1
@@ -58,7 +58,7 @@ models2pam <- function(mods_stack,sparse=TRUE,parallel=FALSE,ncores=2){
         },.progress = TRUE,
         .options = furrr::furrr_options(seed = NULL,packages = "raster"))
       }
-      future::plan(future::sequential)
+      #future::plan(future::sequential)
       pam0 <- data.matrix(pam0)
       return(pam0)
     }
@@ -75,7 +75,8 @@ models2pam <- function(mods_stack,sparse=TRUE,parallel=FALSE,ncores=2){
           return(msparse0)
         })
       } else{
-        plan(multisession,workers=ncores)
+        oplan <- plan(multisession,workers=ncores)
+        on.exit(plan(oplan), add = TRUE)
         pamL <- 1:nsps %>% furrr::future_map(function(x){
           m1 <- mods_stack[[x]]
           m2 <- m1[]*1.0
@@ -89,7 +90,7 @@ models2pam <- function(mods_stack,sparse=TRUE,parallel=FALSE,ncores=2){
           return(msparse0)
         },.progress = TRUE,
         .options = furrr::furrr_options(seed = NULL,packages = "raster"))
-        future::plan(future::sequential)
+        #future::plan(future::sequential)
       }
 
       pamL <- lapply(pamL, as, "sparseMatrix")

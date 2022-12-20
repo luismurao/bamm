@@ -41,11 +41,11 @@ null_dispersion_field_distribution <- function(pam,n_iter=10,
     stop("m should be a matrix or a data.frame")
   sniter <- 1:n_iter
   if(parallel){
-    plan(tweak(multisession, workers = n_cores))
+    oplan <- plan(tweak(multisession, workers = n_cores))
   } else{
-    plan(sequential)
+    oplan <- plan(sequential)
   }
-
+  on.exit(plan(oplan), add = TRUE)
   nms <-paste0("dfrand_",sniter)
   distfield_rand <- sniter %>% furrr::future_map_dfc(function(x){
     ppam <- bamm::permute_pam(m=pam,as_sparse=TRUE)
