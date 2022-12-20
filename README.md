@@ -52,6 +52,12 @@ The main functions of the package are:
 
 # Installation
 
+### CRAN
+
+```r
+install.packages("bamm")
+```
+### GitHub
 
 ```r
 if (!require('devtools')) install.packages('devtools')
