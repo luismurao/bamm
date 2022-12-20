@@ -27,7 +27,7 @@ jobs:
         && mv ganda /usr/local/bin
 
     - name: Setup ruby
-      uses: ruby/setup-ruby@v1
+      uses: ruby/setup-ruby@v2
       with:
         ruby-version: 3.1.0
     - run: bundle install
