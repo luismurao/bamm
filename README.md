@@ -1,7 +1,7 @@
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/luismurao/bamm/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/luismurao/bamm/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/luismurao/bamm/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/luismurao/bamm/actions/workflows/test-coverage.yaml)
-
+[![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/bamm)](https://github.com/r-hub/cranlogs.app)
 [![CRAN status](https://www.r-pkg.org/badges/version/bamm)](https://CRAN.R-project.org/package=bamm)
 <!-- badges: end -->
 
