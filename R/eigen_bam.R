@@ -42,7 +42,7 @@ eigen_bam <- function(A=NULL,M=NULL,which_eigen=1,rmap=TRUE){
 
   normalize_vec <- function(x){
     x <- abs(x)
-    return((x - min(x)) / max(x) - min(x))
+    return((x - min(x)) / (max(x) - min(x)))
   }
 
   AM <- A@sparse_model %*% M@adj_matrix
