@@ -196,6 +196,9 @@ bioindex_sparse <- methods::setClass(Class = "bioindex_sparse",
 #' @author Luis Osorio-Olvera & Jorge Soberón
 #' @slot alpha A matrix with the richness of species per site
 #' @slot omega A matrix with the range size of every species
+#' @slot wBeta A numeric value with Whittaker’s multiplicative beta index
+#' @slot laBeta A numeric value with Lande’s additive beta index
+#' @slot leBeta A numeric value with Legendre’s beta index
 #' @slot dispersion_field A matrix with the set of ranges of all species that
 #' occur in at each locality
 #' @exportClass bioindex
@@ -206,6 +209,9 @@ bioindex <- methods::setClass(Class = "bioindex",
                                      representation (
                                        alpha = "matrix",
                                        omega = "matrix",
+                                       wBeta = "numeric",
+                                       laBeta = "numeric",
+                                       leBeta = "numeric",
                                        dispersion_field = "matrix"
                                      ))
 
