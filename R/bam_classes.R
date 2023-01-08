@@ -177,6 +177,9 @@ csd <- methods::setClass(Class = "csd",
 #' @author Luis Osorio-Olvera & Jorge Soberón
 #' @slot alpha A sparse matrix with the richness of species per site
 #' @slot omega A sparse matrix with the range size of every species
+#' @slot wBeta A numeric value with Whittaker’s multiplicative beta index
+#' @slot laBeta A numeric value with Lande’s additive beta index
+#' @slot leBeta A numeric value with Legendre’s beta index
 #' @slot dispersion_field A sparse matrix with the set of ranges of all species
 #' that occur in at each locality
 #' @exportClass bioindex_sparse
@@ -187,6 +190,9 @@ bioindex_sparse <- methods::setClass(Class = "bioindex_sparse",
                               representation (
                                 alpha = "dgeMatrix",
                                 omega = "dgeMatrix",
+                                wBeta = "numeric",
+                                laBeta = "numeric",
+                                leBeta = "numeric",
                                 dispersion_field = "dgeMatrix"
                               ))
 

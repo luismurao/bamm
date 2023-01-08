@@ -2,7 +2,10 @@
 #' @description pam2bioindex estimates various biodiversity indices for a
 #' certain PAM.
 #' @param pam A Presence-Absence-Matrix of matrix class or sparse matrix.
-#' @param biodiv_index Possible values are alpha, omega, dispersion_field, all.
+#' @param biodiv_index Possible values are alpha, omega,
+#'  wbeta (Whittaker’s multiplicative beta index),
+#'  laBeta (Lande’s additive beta index)
+#'  dispersion_field, all.
 #' @param as_sparse Return indices as sparse objects
 #' @importFrom Rdpack reprompt
 #' @return An object of class \code{\link[bamm]{bioindex}} with three slots
@@ -55,7 +58,17 @@ pam2bioindex <- function(pam,biodiv_index="dispersion_field",as_sparse=FALSE) {
     ones_sites <- rep(1,N)
     pamT <- Matrix::t(pam)
     om   <- pamT  %*% ones_sites
+    trace_om <- sum(om)
     bioindices@omega <- if(as_sparse) om else as(om,"matrix")
+  }
+  if(any(c("wbeta","all") %in% biodiv_index)){
+    wbeta <- S*N/trace_om
+    bioindices@wBeta <- wbeta
+
+  }
+  if(any(c("labeta","all") %in% biodiv_index)){
+    labeta <- S*(1-(trace_om/(S*N)))
+    bioindices@laBeta <- labeta
   }
   if(any(c("dispersion_field","all") %in% biodiv_index)){
     om_st <- om/N

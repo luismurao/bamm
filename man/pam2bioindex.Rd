@@ -9,7 +9,10 @@ pam2bioindex(pam, biodiv_index = "dispersion_field", as_sparse = FALSE)
 \arguments{
 \item{pam}{A Presence-Absence-Matrix of matrix class or sparse matrix.}
 
-\item{biodiv_index}{Possible values are alpha, omega, dispersion_field, all.}
+\item{biodiv_index}{Possible values are alpha, omega,
+wbeta (Whittaker’s multiplicative beta index),
+laBeta (Lande’s additive beta index)
+dispersion_field, all.}
 
 \item{as_sparse}{Return indices as sparse objects}
 }
