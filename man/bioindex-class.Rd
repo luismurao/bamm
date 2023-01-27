@@ -27,6 +27,9 @@ Class  \code{bioindex}
 
 \item{\code{dispersion_field}}{A matrix with the set of ranges of all species that
 occur in at each locality}
+
+\item{\code{richness_field}}{A matrix with the number of  shared species in
+each site}
 }}
 
 \author{
