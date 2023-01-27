@@ -19,7 +19,7 @@ dispersion_field, all.}
 \value{
 An object of class \code{\link[bamm]{bioindex}} with three slots
 each represents a matrix of diversity indices: alpha, omega, and
-dispersion field.
+dispersion field, richness_field.
 }
 \description{
 pam2bioindex estimates various biodiversity indices for a

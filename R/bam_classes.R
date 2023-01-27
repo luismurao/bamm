@@ -182,6 +182,8 @@ csd <- methods::setClass(Class = "csd",
 #' @slot leBeta A numeric value with Legendre’s beta index
 #' @slot dispersion_field A sparse matrix with the set of ranges of all species
 #' that occur in at each locality
+#' @slot richness_field A sparse matrix with the number of  shared species in
+#' each site
 #' @exportClass bioindex_sparse
 #' @return An object of class bioindex_sparse
 #' @export
@@ -193,7 +195,8 @@ bioindex_sparse <- methods::setClass(Class = "bioindex_sparse",
                                 wBeta = "numeric",
                                 laBeta = "numeric",
                                 leBeta = "numeric",
-                                dispersion_field = "dgeMatrix"
+                                dispersion_field = "dgeMatrix",
+                                richness_field = "dgeMatrix"
                               ))
 
 
@@ -207,6 +210,8 @@ bioindex_sparse <- methods::setClass(Class = "bioindex_sparse",
 #' @slot leBeta A numeric value with Legendre’s beta index
 #' @slot dispersion_field A matrix with the set of ranges of all species that
 #' occur in at each locality
+#' @slot richness_field A matrix with the number of  shared species in
+#' each site
 #' @exportClass bioindex
 #' @return An object of class bioindex
 #' @export
@@ -218,7 +223,8 @@ bioindex <- methods::setClass(Class = "bioindex",
                                        wBeta = "numeric",
                                        laBeta = "numeric",
                                        leBeta = "numeric",
-                                       dispersion_field = "matrix"
+                                       dispersion_field = "matrix",
+                                       richness_field = "matrix"
                                      ))
 
 
