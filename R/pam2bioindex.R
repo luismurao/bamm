@@ -10,7 +10,7 @@
 #' @importFrom Rdpack reprompt
 #' @return An object of class \code{\link[bamm]{bioindex}} with three slots
 #' each represents a matrix of diversity indices: alpha, omega, and
-#' dispersion field.
+#' dispersion field, richness_field.
 #' @details The biodiversity indices can be found in Soberón and Cavner (2015).
 #' @references
 #' \insertRef{Soberon2015}{bamm}
@@ -32,6 +32,7 @@ pam2bioindex <- function(pam,biodiv_index="dispersion_field",as_sparse=FALSE) {
 
   if(is.data.frame(pam)){
     pam <- as.matrix(pam)
+    pam <- Matrix::Matrix(pam, sparse = TRUE)
   }
   if(is.matrix(pam)){
     pam <- Matrix::Matrix(pam, sparse = TRUE)
@@ -49,7 +50,7 @@ pam2bioindex <- function(pam,biodiv_index="dispersion_field",as_sparse=FALSE) {
   if(!as_sparse)
     bioindices <- methods::new(Class="bioindex")
 
-  if(any(c("alpha","all") %in% biodiv_index)){
+  if(any(c("alpha","richness_field","all") %in% biodiv_index)){
     ones_sps <- rep(1,S)
     alpha <- pam %*% ones_sps
     bioindices@alpha <- if(as_sparse) alpha else as(alpha,"matrix")
@@ -61,7 +62,7 @@ pam2bioindex <- function(pam,biodiv_index="dispersion_field",as_sparse=FALSE) {
     trace_om <- sum(om)
     bioindices@omega <- if(as_sparse) om else as(om,"matrix")
   }
-  if(any(c("wbeta","all") %in% biodiv_index)){
+  if(any(c("wbeta","lbeta","all") %in% biodiv_index)){
     wbeta <- S*N/trace_om
     bioindices@wBeta <- wbeta
 
@@ -70,10 +71,24 @@ pam2bioindex <- function(pam,biodiv_index="dispersion_field",as_sparse=FALSE) {
     labeta <- S*(1-(trace_om/(S*N)))
     bioindices@laBeta <- labeta
   }
-  if(any(c("dispersion_field","all") %in% biodiv_index)){
+  if(any(c("dispersion_field","lebeta","all") %in% biodiv_index)){
     om_st <- om/N
     fist <- pam%*%om_st
     bioindices@dispersion_field <- if(as_sparse) fist else as(fist,"matrix")
   }
+  if(any(c("richness_field", "all") %in% biodiv_index)){
+    ones_sps <- rep(1,S)
+    pamT <- Matrix::t(pam)
+    richf <- pamT %*% alpha
+    bioindices@richness_field <- if(as_sparse) richf else as(richf,"matrix")
+  }
+  if(any(c("lebeta","all") %in% biodiv_index)){
+    ones_sites <- rep(1,N)
+    #fist <- pam%*%om_st
+    #lebeta <- trace_om - Matrix::t(fist) %*%  ones_sites
+    lebeta <- ( S/wbeta)* Matrix::t(fist) %*%  ones_sites
+    bioindices@leBeta <- as.numeric(lebeta)
+  }
+
   return(bioindices)
 }
