@@ -140,11 +140,39 @@ ISSN 2051-1329, <a href="https://doi.org/10.1093/comnet/cnac049" class="external
 <span class="r-in"><span><span class="va">dfield_rand</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu">null_dispersion_field_distribution</span><span class="op">(</span><span class="va">pam</span>,n_iter<span class="op">=</span><span class="fl">10</span>,</span></span>
 <span class="r-in"><span>                                                       parallel<span class="op">=</span><span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>                                                       n_cores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in (function (.x, .f, ..., .progress = FALSE) {    map_("list", .x, .f, ..., .progress = .progress)})(.x = 1:10, .f = function (...) {    NULL    NULL    ...furrr_out &lt;- ...furrr_fn(...)    ...furrr_out}):</span> <span style="color: #00BBBB;">ℹ</span> In index: 1.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `permute_matrix_fb()`:</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> could not find function "permute_matrix_fb"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> New names:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `dfield` -&gt; `dfield...1`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `dfield` -&gt; `dfield...2`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `dfield` -&gt; `dfield...3`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `dfield` -&gt; `dfield...4`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `dfield` -&gt; `dfield...5`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `dfield` -&gt; `dfield...6`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `dfield` -&gt; `dfield...7`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `dfield` -&gt; `dfield...8`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `dfield` -&gt; `dfield...9`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `dfield` -&gt; `dfield...10`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> This function uses the code from:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> https://github.com/zpneal/fastball/blob/main/fastball.cpp</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Please when using the function for publications cite:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>              Godard K, Neal ZP (2022). 'fastball: a fast algorithm to randomly</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>              sample bipartite graphs with fixed degree sequences'.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>              Journal of Complex Networks, 10(6), cnac049.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dfield_rand</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'dfield_rand' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      dfrand_1 dfrand_2 dfrand_3 dfrand_4 dfrand_5 dfrand_6 dfrand_7 dfrand_8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]      0.8      0.6      0.8      0.3      0.8      0.8      0.8      0.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]      0.9      0.5      1.1      1.1      0.7      0.9      0.9      1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]      0.0      0.0      0.0      0.0      0.0      0.0      0.0      0.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]      0.3      0.3      0.3      0.3      0.5      0.3      0.3      0.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]      0.9      1.4      1.4      1.3      1.4      1.2      1.4      1.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]      0.3      0.5      0.3      0.1      0.3      0.3      0.3      0.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      dfrand_9 dfrand_10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]      0.8       0.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]      1.1       1.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]      0.0       0.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]      0.3       0.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]      1.0       1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]      0.5       0.2</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
