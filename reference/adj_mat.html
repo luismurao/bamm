@@ -14,7 +14,7 @@ region of interest."><meta property="og:image" content="/logo.png"><!-- mathjax 
     
     <a class="navbar-brand me-2" href="../index.html">bamm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,6 +137,7 @@ the theory of area of distribution (Soberon and Osorio-Olvera, 2022).</p>
 <span class="r-in"><span><span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">Polygons</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span>,<span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sps</span> <span class="op">&lt;-</span> <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">SpatialPolygons</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ps</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mx_grid</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu"><a href="shape2Grid.html">shape2Grid</a></span><span class="op">(</span><span class="va">sps</span>,resolution <span class="op">=</span> <span class="fl">0.25</span>,ones <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>sf required for evolution_status==2L</span>
 <span class="r-in"><span><span class="va">mx_sparse</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu"><a href="model2sparse.html">model2sparse</a></span><span class="op">(</span>model<span class="op">=</span><span class="va">mx_grid</span>, threshold <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">adj_mx</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu">adj_mat</span><span class="op">(</span>modelsparse<span class="op">=</span><span class="va">mx_sparse</span>,</span></span>
 <span class="r-in"><span>                        ngbs<span class="op">=</span><span class="fl">1</span>,eigen_sys<span class="op">=</span><span class="cn">TRUE</span>,which_eigs<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
