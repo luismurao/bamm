@@ -8,6 +8,7 @@ dispersion field}
 null_dispersion_field_distribution(
   pam,
   n_iter = 10,
+  randal = "fastball",
   parallel = TRUE,
   n_cores = 2
 )
@@ -16,6 +17,9 @@ null_dispersion_field_distribution(
 \item{pam}{A Presence-Absence-Matrix of matrix class or sparse matrix.}
 
 \item{n_iter}{Number of iterations to obtain the distribution.}
+
+\item{randal}{Randomization algorithm applied to the PAM.
+Possible choices "curveball" and "fastball".}
 
 \item{parallel}{If TRUE the computations will be performed in parallel.}
 
@@ -31,9 +35,12 @@ random distribution of the dispersion field values.
 }
 \details{
 Estimates a random distribution of the dispersion field values. To obtain
-         random values it uses the function code{\link[bamm]{permute_pam}}
-         at each step of the iterations. Randomization of the PAM is
-         performed using the Babe Ruth Algorithm see Strona et al. (2014).
+         random values it uses the function code {\link[bamm]{permute_pam}}
+         at each step of the iterations. Randomization of the PAM can be
+         performed using the "fastball" (Godard and Neal, 2022) and the
+         "curveball" (Strona et al., 2014) algorithms. The implementation
+         of the "fastball" in C++ is provided in
+         \url{https://github.com/zpneal/fastball/blob/main/fastball.cpp}
 }
 \examples{
 set.seed(111)
@@ -47,6 +54,8 @@ head(dfield_rand)
 \insertRef{Soberon2015}{bamm}
 
 \insertRef{Strona2014}{bamm}
+
+\insertRef{Gordard2022}{bamm}
 }
 \author{
 Luis Osorio-Olvera & Jorge Soberón

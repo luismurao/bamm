@@ -9,6 +9,8 @@
 #' @param niter Number of iterations to obtain the distribution.
 #' @param return_null_dfield If TRUE the null distribution of dispersal field
 #' will be returned.
+#' @param randal Randomization algorithm applied to the PAM.
+#' Possible choices "curveball" and "fastball".
 #' @param parallel If TRUE the computations will be performed in parallel.
 #' @param n_cores Number of cores for the parallel computation.
 #' @return An object of class  \code{\link[bamm]{diversity_range}}. The main
@@ -26,6 +28,9 @@
 #' see Soberon et al. (2022). To plot diversity range results use
 #' \code{\link[bamm]{plot}} method for objects of class
 #' \code{\link[bamm]{diversity_range}}.
+#'
+#' For details about randomization algorithms applied to the PAM see
+#' \code{\link[bamm]{null_dispersion_field_distribution}}.
 #'
 #' @references
 #' \insertRef{Soberon2022}{bamm}.
@@ -74,6 +79,7 @@
 diversity_range_analysis <- function(pam,xy_mat=NULL,lower_interval=0.05,
                                      upper_interval=0.95, raster_templete=NULL,
                                      niter=100,return_null_dfield=FALSE,
+                                     randal = "fastball",
                                      parallel=TRUE,
                                      n_cores=2){
 
@@ -83,6 +89,7 @@ diversity_range_analysis <- function(pam,xy_mat=NULL,lower_interval=0.05,
   distfield_rand <- null_dispersion_field_distribution(pam = pam,
                                                        n_iter=niter,
                                                        parallel=parallel,
+                                                       randal = randal,
                                                        n_cores =n_cores)
 
   if(return_null_dfield){
@@ -91,9 +98,9 @@ diversity_range_analysis <- function(pam,xy_mat=NULL,lower_interval=0.05,
 
 
   bioind <- bamm::pam2bioindex(pam=pam,
-                             biodiv_index = c("alpha",
-                                              "dispersion_field"),
-                             as_sparse = FALSE)
+                               biodiv_index = c("alpha",
+                                                "dispersion_field"),
+                               as_sparse = FALSE)
 
   results@alpha <- bioind@alpha
   results@omega <- bioind@omega
@@ -109,7 +116,7 @@ diversity_range_analysis <- function(pam,xy_mat=NULL,lower_interval=0.05,
 
   #cols <- c("#000000","#F6BDC0",
   #          "#F07470","#BBDFFA",
-   #         "#DC1C13","#6987D5",
+  #         "#DC1C13","#6987D5",
   #          "#1727AE")
   cols <- c("#000000","#F6BDC0",
             "#F1A13A","#BBDFFA",

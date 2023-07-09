@@ -1,6 +1,7 @@
 // [[Rcpp::depends(RcppArmadillo)]]
 #include <RcppArmadillo.h>
 #include <RcppArmadilloExtensions/sample.h>
+#include <Rcpp.h>
 
 using namespace Rcpp ;
 
@@ -133,6 +134,7 @@ Rcpp::List rList(Rcpp::NumericMatrix m, int niter) {
 }
 
 
+
 Rcpp::NumericMatrix fill_matrix(Rcpp::NumericMatrix m, Rcpp::List sps){
   int R = m.nrow();
   int C = m.cols();
@@ -147,8 +149,165 @@ Rcpp::NumericMatrix fill_matrix(Rcpp::NumericMatrix m, Rcpp::List sps){
   }
   return m1;
 }
+// Fastball algorithm
+// Function to create the list of randomized entries (species) for
+// each row in the PAM.
+// @param inputList presence-absence-list created using the function spList.
+//        The list contains the species present in each site of the PAM.
+// @param numSwaps Number of iterations to permute the PAM.
+// @return Returns a list of length equal to the number of sites
+// in the PAM (n=nrows(m)). Each entree of the list has the permuted species
+// @details The "fastball" algorithm is described in Godard and Neal (2022) and
+//          this is implementation is taken from
+//          \url{https://github.com/zpneal/fastball/blob/main/fastball.cpp}.
+//          Please when using the function for publications cite
+//          Godard K, Neal ZP (2022). "fastball: a fast algorithm to randomly
+//          sample bipartite graphs with fixed degree sequences."
+//          Journal of Complex Networks, 10(6), cnac049.
 
+Rcpp::List fastball_cpp(Rcpp::List inputList, int numSwaps) {
 
+  //get number of rows
+  int numRows = inputList.length();
+
+  //convert input list into a 2D std::vector
+  std::vector<std::vector<int>> oneLocs (numRows);
+  for(int i = 0; i < numRows; i++) {
+    oneLocs[i] = Rcpp::as<std::vector<int> > (inputList[i]);
+  }
+
+  //conduct row swaps a total of (numSwaps) times
+  for (int i = 1; i <= numSwaps; i++) {
+
+    //get two random row numbers
+    int r1Index = R::runif(0,1) * numRows;
+    int r2Index = r1Index;
+    while (r2Index == r1Index) {
+      r2Index = R::runif(0,1) * numRows;
+    }
+
+    //create references to the two rows being mixed
+    std::vector<int> & r1 = oneLocs[r1Index];
+    std::vector<int> & r2 = oneLocs[r2Index];
+    if (r1.size() == 0 || r2.size() == 0) {
+      continue;
+    }
+
+    //generate iterators for first pass through rows
+    std::vector<int>::iterator first1 = r1.begin();
+    std::vector<int>::iterator last1 = r1.end();
+    std::vector<int>::iterator first2 = r2.begin();
+    std::vector<int>::iterator last2 = r2.end();
+    size_t intersectionLength = 0;
+
+    //find the length of the intersection
+    while (first1!=last1 && first2!=last2)
+    {
+      if (*first1<*first2) ++first1;
+      else if (*first2<*first1) ++first2;
+      else {
+        intersectionLength += 1;
+        ++first1; ++first2;
+      }
+    }
+
+    //calculate length of symmetric difference
+    size_t r1SymDiffSize = r1.size() - intersectionLength;
+    size_t r2SymDiffSize = r2.size() - intersectionLength;
+    size_t symDiffSize = r1SymDiffSize + r2SymDiffSize;
+
+    if (symDiffSize == 0) {
+      continue;
+    }
+
+    //create vector of zeros and ones
+    //represents which row elements of the symmetric difference are placed in
+    std::vector<int> swapLocations (symDiffSize);
+    std::fill(swapLocations.begin(), swapLocations.begin() + r1SymDiffSize, 0);
+    std::fill(swapLocations.begin() + r1SymDiffSize, swapLocations.end(), 1);
+
+    //shuffle swapLocations using Fisher-Yates shuffle
+    for (size_t i = 0; i < swapLocations.size() - 1; i++) {
+      size_t j = i + R::runif(0,1) * (swapLocations.size() - i);
+      std::swap(swapLocations[i],swapLocations[j]);
+    }
+
+    //create vectors to store output of curveball swaps
+    std::vector<std::vector<int> > curveballRows (2);
+    curveballRows[0].reserve(r1.size());
+    curveballRows[1].reserve(r2.size());
+
+    //generate iterators for sweep through r1 and r2
+    first1 = r1.begin();
+    last1 = r1.end();
+    first2 = r2.begin();
+    last2 = r2.end();
+    std::vector<int>::iterator swapIterator = swapLocations.begin();
+
+    //compare elements in r1 and r2 until end of a vector is reached
+    while (first1!=last1 && first2!=last2)
+    {
+      //element in row1 is less than row2
+      if (*first1<*first2) {
+        //use swapLocations to add element to n1 or n2
+        curveballRows[*swapIterator].push_back(*first1);
+        //increment iterators
+        ++swapIterator;
+        ++first1;
+      }
+      //element in row1 is greater than row2
+      else if (*first2<*first1) {
+        //use swapLocations to add element to n1 or n2
+        curveballRows[*swapIterator].push_back(*first2);
+        //increment iterators
+        ++swapIterator;
+        ++first2;
+      }
+      //element in row1 is equal to row2
+      else {
+        //add element to poth arrays and increment both iterators
+        curveballRows[0].push_back(*first1);
+        curveballRows[1].push_back(*first2);
+        ++first1; ++first2;
+      }
+    }
+
+    //pass through remainder of r1
+    while (first1 != last1) {
+      curveballRows[*swapIterator].push_back(*first1);
+      ++swapIterator;
+      ++first1;
+    }
+
+    //pass through remainder of r2
+    while (first2 != last2) {
+      curveballRows[*swapIterator].push_back(*first2);
+      ++swapIterator;
+      ++first2;
+    }
+
+    //clear the rows for r1 and r2 in oneLocs
+    r1.clear();
+    r2.clear();
+
+    //create references to the shuffled rows
+    std::vector<int> & newV1 = curveballRows[0];
+    std::vector<int> & newV2 = curveballRows[1];
+
+    //insert the data for the shuffled rows back into oneLocs
+    r1.insert(r1.end(), newV1.begin(), newV1.end());
+    r2.insert(r2.end(), newV2.begin(), newV2.end());
+  }
+
+  //Return randomized adjacency list
+  Rcpp::List randomizedList (numRows);
+
+  for (int i = 0; i < numRows; i++) {
+    Rcpp::IntegerVector temp = Rcpp::wrap(oneLocs[i]);
+    randomizedList[i] = temp;
+  }
+  return randomizedList;
+}
 // Function to permute a PAM.
 // @param m Presence-Absence-Matrix (PAM) or a binary matrix with columns
 //          representing species and rows sites.
@@ -161,6 +320,21 @@ Rcpp::NumericMatrix permute_matrix(Rcpp::NumericMatrix m, int niter){
   Rcpp::NumericMatrix m1 = fill_matrix(m,sps);
   return m1;
 }
+
+// Function to permute a PAM.
+// @param m Presence-Absence-Matrix (PAM) or a binary matrix with columns
+//          representing species and rows sites.
+// @param niter Number of itereations to permute the PAM.
+// @return Returns a permuted PAM.
+// [[Rcpp::export]]
+
+Rcpp::NumericMatrix permute_matrix_fb(Rcpp::NumericMatrix m, int niter){
+  Rcpp::List hp = spList(m);
+  List sps = fastball_cpp(hp,niter);
+  Rcpp::NumericMatrix m1 = fill_matrix(m,sps);
+  return m1;
+}
+
 
 
 Rcpp::NumericVector Quantile(Rcpp::NumericVector x, Rcpp::NumericVector probs) {
@@ -218,3 +392,4 @@ Rcpp::NumericVector null_dispersion_field_cat(Rcpp::NumericMatrix dfield,
   }
   return dfield_cat;
 }
+

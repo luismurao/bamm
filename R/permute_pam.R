@@ -3,15 +3,23 @@
 #'          representing species and rows sites.
 #' @param niter Number of iterations to permute the PAM.
 #' @param as_sparse If TRUE the PAM will be returned as a sparse matrix
+#' @param randal Randomization algorithm applied to the PAM.
+#' Possible choices "curveball" and "fastball".
 #' @return Returns a permuted matrix of the same dimensions of m
 #' (same number of rows and columns). Note that the sum of each row and column
 #' of this permuted matrix is equal to that of m.
 #' species.
-#' @details This function is an implementation of the curve ball algorithm
-#'           following Strona et al. (2014).
+#' @details This function uses the "curveball" (Strona et al., 2014) and the
+#'          fastball (Godard and Neal, 2022) algorithms. The implementation
+#'          of the "fastball" in C++ is provided in
+#'          \url{https://github.com/zpneal/fastball/blob/main/fastball.cpp}.
+#'          Please when using the "fastball" algorithm for publications cite
+#'          Godard and Neal (2022). When using the "curveball" cite
+#'          Strona et al. (2014).
+#'
 #' @references
 #' \insertRef{Strona2014}{bamm}.
-#'
+#' \insertRef{Gordard2022}{bamm}
 #' @export
 #' @author Luis Osorio-Olvera & Jorge Soberón
 #' @examples
@@ -26,7 +34,7 @@
 #' all(Matrix::colSums(pam) == Matrix::colSums(ppam))
 
 
-permute_pam <- function(m,niter=NULL,as_sparse=FALSE){
+permute_pam <- function(m,niter=NULL,as_sparse=FALSE,randal="fastball"){
   if(is.data.frame(m))
     m <- as.matrix(m)
   if(!is.matrix(m))
@@ -35,7 +43,11 @@ permute_pam <- function(m,niter=NULL,as_sparse=FALSE){
     niter <- nrow(m)*5
   if(!is.numeric(niter))
     stop("niter shuld be an integer")
-  ppam <- permute_matrix(m,niter)
+  if(randal == "curveball"){
+    ppam <- permute_matrix(m,niter)
+  } else {
+    ppam <- permute_matrix_fb(m,niter)
+  }
   if(as_sparse){
     ppam <- Matrix::Matrix(ppam, sparse = TRUE)
   }

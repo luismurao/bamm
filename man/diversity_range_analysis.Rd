@@ -12,6 +12,7 @@ diversity_range_analysis(
   raster_templete = NULL,
   niter = 100,
   return_null_dfield = FALSE,
+  randal = "fastball",
   parallel = TRUE,
   n_cores = 2
 )
@@ -31,6 +32,9 @@ diversity_range_analysis(
 
 \item{return_null_dfield}{If TRUE the null distribution of dispersal field
 will be returned.}
+
+\item{randal}{Randomization algorithm applied to the PAM.
+Possible choices "curveball" and "fastball".}
 
 \item{parallel}{If TRUE the computations will be performed in parallel.}
 
@@ -58,6 +62,9 @@ see Soberon and Cavner (2015). For detail about the diversity range analysis
 see Soberon et al. (2022). To plot diversity range results use
 \code{\link[bamm]{plot}} method for objects of class
 \code{\link[bamm]{diversity_range}}.
+
+For details about randomization algorithms applied to the PAM see
+\code{\link[bamm]{null_dispersion_field_distribution}}.
 }
 \examples{
 set.seed(111)
