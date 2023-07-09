@@ -57,7 +57,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">permute_pam</span><span class="op">(</span><span class="va">m</span>, niter <span class="op">=</span> <span class="cn">NULL</span>, as_sparse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">permute_pam</span><span class="op">(</span><span class="va">m</span>, niter <span class="op">=</span> <span class="cn">NULL</span>, as_sparse <span class="op">=</span> <span class="cn">FALSE</span>, randal <span class="op">=</span> <span class="st">"fastball"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -74,6 +74,11 @@ representing species and rows sites.</p></dd>
 <dt>as_sparse</dt>
 <dd><p>If TRUE the PAM will be returned as a sparse matrix</p></dd>
 
+
+<dt>randal</dt>
+<dd><p>Randomization algorithm applied to the PAM.
+Possible choices "curveball" and "fastball".</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -86,8 +91,13 @@ species.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function is an implementation of the curve ball algorithm
-          following Strona et al. (2014).</p>
+    <p>This function uses the "curveball" (Strona et al., 2014) and the
+         fastball (Godard and Neal, 2022) algorithms. The implementation
+         of the "fastball" in C++ is provided in
+         <a href="https://github.com/zpneal/fastball/blob/main/fastball.cpp" class="external-link">https://github.com/zpneal/fastball/blob/main/fastball.cpp</a>.
+         Please when using the "fastball" algorithm for publications cite
+         Godard and Neal (2022). When using the "curveball" cite
+         Strona et al. (2014).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -96,7 +106,12 @@ species.</p>
 <em>Nature Communications</em>, <b>5</b>(1), 1--9.
 ISSN 20411723, <a href="https://doi.org/10.1038/ncomms5114" class="external-link">doi:10.1038/ncomms5114</a>
 , <a href="https://www.r-project.org" class="external-link">https://www.r-project.org</a>.
-.</p>
+.
+Godard K, Neal ZP (2022).
+“fastball: a fast algorithm to randomly sample bipartite graphs with fixed degree sequences.”
+<em>Journal of Complex Networks</em>, <b>10</b>(6), cnac049.
+ISSN 2051-1329, <a href="https://doi.org/10.1093/comnet/cnac049" class="external-link">doi:10.1093/comnet/cnac049</a>
+, https://academic.oup.com/comnet/article-pdf/10/6/cnac049/47758701/cnac049.pdf.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -108,15 +123,16 @@ ISSN 20411723, <a href="https://doi.org/10.1038/ncomms5114" class="external-link
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">111</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">pam</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fl">100</span>,<span class="fl">1</span>,<span class="fl">0.3</span><span class="op">)</span>,nrow <span class="op">=</span> <span class="fl">10</span>,ncol <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ppam</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu">permute_pam</span><span class="op">(</span>m <span class="op">=</span> <span class="va">pam</span>,niter <span class="op">=</span> <span class="cn">NULL</span>,as_sparse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in permute_matrix_fb(m, niter):</span> could not find function "permute_matrix_fb"</span>
 <span class="r-in"><span><span class="co"># Check if matrices are different</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">pam</span> <span class="op">==</span> <span class="va">ppam</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'ppam' not found</span>
 <span class="r-in"><span><span class="co"># Check if row totals are the same</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">pam</span><span class="op">)</span> <span class="op">==</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">ppam</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in h(simpleError(msg, call)):</span> error in evaluating the argument 'x' in selecting a method for function 'rowSums': object 'ppam' not found</span>
 <span class="r-in"><span><span class="co"># Check if column total are the same</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">pam</span><span class="op">)</span> <span class="op">==</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">ppam</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in h(simpleError(msg, call)):</span> error in evaluating the argument 'x' in selecting a method for function 'colSums': object 'ppam' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
