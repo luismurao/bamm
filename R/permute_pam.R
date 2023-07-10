@@ -45,7 +45,11 @@ permute_pam <- function(m,niter=NULL,as_sparse=FALSE,randal="fastball"){
     stop("niter shuld be an integer")
   if(randal == "curveball"){
     ppam <- permute_matrix(m,niter)
-  } else {
+  } else if(randal == "fastball"){
+    ppam <- permute_matrix_fb(m,niter)
+  } else{
+    warning("Algorithm not available:\n running the fastball algorithm...",
+            call. = TRUE)
     ppam <- permute_matrix_fb(m,niter)
   }
   if(as_sparse){
