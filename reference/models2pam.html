@@ -60,7 +60,13 @@ Presence Absences Matrix.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">models2pam</span><span class="op">(</span><span class="va">mods_stack</span>, sparse <span class="op">=</span> <span class="cn">TRUE</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span>, ncores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">models2pam</span><span class="op">(</span></span>
+<span>  <span class="va">mods_stack</span>,</span>
+<span>  return_coords <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  sparse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ncores <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -68,6 +74,11 @@ Presence Absences Matrix.</p>
     <dl><dt>mods_stack</dt>
 <dd><p>A raster stack containing binary models of each
 species in the community.</p></dd>
+
+
+<dt>return_coords</dt>
+<dd><p>Logical. If TRUE the pam will be returned with
+coordinates in the first two columns.</p></dd>
 
 
 <dt>sparse</dt>
@@ -113,37 +124,39 @@ species in the community.</p></dd>
 <span class="r-in"><span>                       pattern <span class="op">=</span> <span class="st">".tif"</span>,</span></span>
 <span class="r-in"><span>                       full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">en_models</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/stack.html" class="external-link">stack</a></span><span class="op">(</span><span class="va">enm_path</span><span class="op">)</span> <span class="op">&gt;</span><span class="fl">0.01</span></span></span>
-<span class="r-in"><span><span class="va">pam</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu">models2pam</span><span class="op">(</span><span class="va">en_models</span>,sparse<span class="op">=</span><span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span><span class="va">pam</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu">models2pam</span><span class="op">(</span><span class="va">en_models</span>,</span></span>
+<span class="r-in"><span>                        return_coords<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                        sparse<span class="op">=</span><span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>                        parallel<span class="op">=</span><span class="cn">FALSE</span>,ncores<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pam</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Brachylagus_idahoensis_cont Lepus_alleni_cont Lepus_americanus_cont</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]                           0                 0                     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]                           0                 0                     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]                           0                 0                     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]                           0                 0                     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]                           0                 0                     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]                           0                 0                     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Lepus_arcticus_cont Lepus_californicus_cont Lepus_callotis_cont</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]                   0                       0                   0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]                   0                       0                   0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]                   0                       0                   0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]                   0                       0                   0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]                   0                       0                   0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]                   0                       0                   0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Lepus_europaeus_cont Lepus_othus_cont Lepus_townsendii_cont</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]                    0                0                     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]                    0                0                     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]                    0                0                     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]                    0                0                     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]                    0                0                     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]                    0                0                     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Ochotona_collaris_cont</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]                      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]                      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]                      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]                      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]                      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]                      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           x        y Brachylagus_idahoensis_cont Lepus_alleni_cont</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -91.66667 82.66667                           0                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 -90.66667 82.66667                           0                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 -89.66667 82.66667                           0                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 -88.66667 82.66667                           0                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 -87.66667 82.66667                           0                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 -86.66667 82.66667                           0                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Lepus_americanus_cont Lepus_arcticus_cont Lepus_californicus_cont</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                     0                   0                       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                     0                   0                       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                     0                   0                       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                     0                   0                       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                     0                   0                       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                     0                   0                       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Lepus_callotis_cont Lepus_europaeus_cont Lepus_othus_cont</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                   0                    0                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                   0                    0                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                   0                    0                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                   0                    0                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                   0                    0                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                   0                    0                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Lepus_townsendii_cont Ochotona_collaris_cont</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                     0                      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                     0                      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                     0                      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                     0                      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                     0                      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                     0                      0</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
