@@ -113,6 +113,7 @@ models2pam <- function(mods_stack,return_coords=FALSE,sparse=TRUE,
       colnames(pam0) <- names(mods_stack)
       if(return_coords){
         xys <- sp::coordinates(mods_stack[[1]])[cellIDs,]
+        xys <- Matrix::Matrix(xys,sparse = TRUE)
         pam0 <- Matrix::cbind2(xys,pam0)
       }
       return(pam0)
