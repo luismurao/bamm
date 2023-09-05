@@ -3,6 +3,8 @@
 #' Presence Absences Matrix.
 #' @param mods_stack A raster stack containing binary models of each
 #' species in the community.
+#' @param return_coords Logical. If TRUE the pam will be returned with
+#' coordinates in the first two columns.
 #' @param sparse Logical. If TRUE the PAM will be returned as a sparse matrix.
 #' @param parallel Logical. If TRUE computations will be done in parallel
 #' @param ncores Integer. Number of cores to run the parallel process.
@@ -21,11 +23,14 @@
 #'                        pattern = ".tif",
 #'                        full.names = TRUE)[1:10]
 #' en_models <- raster::stack(enm_path) >0.01
-#' pam <- bamm::models2pam(en_models,sparse=FALSE,
+#' pam <- bamm::models2pam(en_models,
+#'                         return_coords=TRUE,
+#'                         sparse=FALSE,
 #'                         parallel=FALSE,ncores=2)
 #' head(pam)
 #' }
-models2pam <- function(mods_stack,sparse=TRUE,parallel=FALSE,ncores=2){
+models2pam <- function(mods_stack,return_coords=FALSE,sparse=TRUE,
+                       parallel=FALSE,ncores=2){
   cmod <-class(mods_stack)
   if(!cmod %in% c("RasterStack","RasterBrick")){
     stop("'mods_stack' should be of class 'RasterStack' or 'RasterBrick'")
@@ -35,6 +40,7 @@ models2pam <- function(mods_stack,sparse=TRUE,parallel=FALSE,ncores=2){
     nsps <- raster::nlayers(mods_stack)
     rvals <- mods_stack[[1]][]
     cellIDs <- which(!is.na(rvals))
+
     if(!sparse){
       if(!parallel){
         pam0 <- 1:nsps %>% purrr::map_dfc(function(x){
@@ -60,6 +66,10 @@ models2pam <- function(mods_stack,sparse=TRUE,parallel=FALSE,ncores=2){
       }
       #future::plan(future::sequential)
       pam0 <- data.matrix(pam0)
+      if(return_coords){
+        xys <- sp::coordinates(mods_stack[[1]])[cellIDs,]
+        pam0 <- data.frame(xys,pam0)
+      }
       return(pam0)
     }
     else{
@@ -96,11 +106,15 @@ models2pam <- function(mods_stack,sparse=TRUE,parallel=FALSE,ncores=2){
       pamL <- lapply(pamL, as, "sparseMatrix")
       pam0 <- pamL[[1]]
       for(i in 2:length(pamL)){
-       pam0 <- Matrix::cbind2(pam0,pamL[[i]])
+        pam0 <- Matrix::cbind2(pam0,pamL[[i]])
       }
 
       #pam0 <- do.call(cbind2, pamL)
       colnames(pam0) <- names(mods_stack)
+      if(return_coords){
+        xys <- sp::coordinates(mods_stack[[1]])[cellIDs,]
+        pam0 <- Matrix::cbind2(xys,pam0)
+      }
       return(pam0)
     }
 
