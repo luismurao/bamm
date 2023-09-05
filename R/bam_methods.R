@@ -687,8 +687,10 @@ methods::setMethod(f = "predict",
                        length(object@sdm_sim)]])
                      nsteps <- nsteps_vec[1]
                      niche_mod <- niche_layers[[1]]
-                     sparse_mod <- bamm::model2sparse(niche_mod,threshold =
-                                                        object@suit_threshold)
+                     suit_th <- ifelse(!is.na(object@suit_threshold),
+                                       object@suit_threshold,0.1)
+                     sparse_mod <- bamm::model2sparse(niche_mod,
+                                                      threshold =suit_th)
                      sdm <- bamm::sdm_sim(set_A = sparse_mod,
                                          set_M = ad_mat[[1]],
                                          initial_points = initial_points,
@@ -709,7 +711,7 @@ methods::setMethod(f = "predict",
                          niche_mod <- niche_layers[[x]]
                          sparse_mod <- bamm::model2sparse(
                            model = niche_mod,
-                           threshold = object@suit_threshold)
+                           threshold = suit_th)
                          bam_object <- sim_results[[x]]
                          initial_points <- Matrix::t(
                            bam_object@sdm_sim[[bam_object@sim_steps]])
@@ -791,10 +793,11 @@ methods::setMethod(f = "predict",
                        if(!fmt %in% c("GIF",'HTML'))
                          stop("fmt should be GIF or HTML")
 
-                       dir1 <- unlist(strsplit(filename,split = "[/]|[\\]"))
+                       dir1 <- unlist(strsplit(filename,split = "[/]|[\\\\]"))
                        filename <- paste0(dir1,collapse = "/")
                        dir2 <- paste0(dir1[seq_len(length(dir1)-1)],
                                       collapse = '/')
+                       if(dir2 == "") dir2 <- "."
                        dir2 <- normalizePath(dir2)
                        if(fmt == "GIF"){
                          animation::ani.options(ani.width = ani.width,
@@ -838,7 +841,8 @@ methods::setMethod(f = "predict",
                                            fsep = '/')
                          dir3 <- gsub("[\\]","/",dir3)
 
-                         dir3 <- gsub("[.]","_",dir3)
+                         #dir3 <- gsub("[.]","_",dir3)
+                         #if(!dir.exists(dir3)) dir.create(dir3)
 
                          animation::saveHTML({
                            for (i in seq_len(raster::nlayers(sdm_st))) {
