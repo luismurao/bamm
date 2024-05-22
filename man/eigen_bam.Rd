@@ -4,12 +4,15 @@
 \alias{eigen_bam}
 \title{eigen_bam: Compute the Eigen system of two bam objects}
 \usage{
-eigen_bam(A = NULL, M = NULL, which_eigen = 1, rmap = TRUE)
+eigen_bam(A = NULL, M = NULL, AM = TRUE, which_eigen = 1, rmap = TRUE)
 }
 \arguments{
 \item{A}{A bam object of class setA.}
 
 \item{M}{A bam object of class setM.}
+
+\item{AM}{A logical value to specify whether to use the product AM or MA.
+If true the AM will be returned else the product MA will be returned.}
 
 \item{which_eigen}{An integer representing the which eigen value and eigen
 vector will be computed.}
@@ -42,8 +45,12 @@ model <- raster::raster(model_path)
 sparse_mod <- bamm::model2sparse(model = model,0.75)
 plot(sparse_mod@niche_model)
 adj_mod <- bamm::adj_mat(sparse_mod,ngbs = 1,eigen_sys = TRUE)
-eig_bam <- bamm::eigen_bam(A=sparse_mod,M=adj_mod)
-raster::plot(eig_bam$map)
+# Product AM
+eig_bam_am <- bamm::eigen_bam(A=sparse_mod,M=adj_mod,AM=TRUE)
+raster::plot(eig_bam_am$map)
+# Product MA
+eig_bam_ma <- bamm::eigen_bam(A=sparse_mod,M=adj_mod,AM=FALSE)
+raster::plot(eig_bam_ma$map)
 }
 }
 \references{
