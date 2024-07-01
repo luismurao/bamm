@@ -40,7 +40,8 @@ sdm_comm <- bamm::community_sim(en_models = en_models,
 
 pams <-bamm::csim2pam(community_sim = sdm_comm ,
                       which_steps = seq_len(nsteps))
-richness_stack <- bamm::pam2richness(pams,which_steps=pams@which_steps)
+richness_stack <- bamm::pam2richness(pamobj = pams,
+                                     which_steps = pams@which_steps)
 raster::plot(richness_stack)
 }
 }

@@ -29,7 +29,8 @@
 #'
 #' pams <-bamm::csim2pam(community_sim = sdm_comm ,
 #'                       which_steps = seq_len(nsteps))
-#' richness_stack <- bamm::pam2richness(pams,which_steps=pams@which_steps)
+#' richness_stack <- bamm::pam2richness(pamobj = pams,
+#'                                      which_steps = pams@which_steps)
 #' raster::plot(richness_stack)
 #' }
 #' @export
@@ -47,7 +48,7 @@ pam2richness <- function(pamobj,which_steps){
 
   richneesL <- 1:nsteps %>% purrr::map(function(x){
     grid_base <- pamobj@grid
-    grid_base[pamobj@cellIDs] <- Matrix::rowSums(pams2covert[[x]])
+    grid_base[pamobj@cellIDs] <- Matrix::rowSums(pams2covert[[x]][,-(1:2)])
     utils::setTxtProgressBar(pb, x)
     return(grid_base)
   })
