@@ -82,7 +82,7 @@ community_sim <- function(en_models,
   if(is.null(threshold_vec) || length(threshold_vec) != n_models){
     threshold_vec <- rep(0.1,n_models)
   }
-  sdmsimL <- seq_len(n_models) %>% purrr::map(function(x){
+  sdmsimL <- seq_len(n_models) %>% furrr::future_map(function(x){
 
     sparse_mod <- bamm::model2sparse(model = models[[x]],
                                      threshold = threshold_vec[x])
@@ -107,7 +107,7 @@ community_sim <- function(en_models,
 
     return(sdmsimul)
 
-  })
+  },.progress = TRUE,.options = furrr::furrr_options(seed = NULL))
   names(sdmsimL) <- names(init_coordsL)
 
   res1 <- community_bam(community_sim = sdmsimL)
