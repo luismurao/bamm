@@ -13,6 +13,10 @@ permute_matrix_fb <- function(m, niter) {
     .Call('_bamm_permute_matrix_fb', PACKAGE = 'bamm', m, niter)
 }
 
+permute_matrix_indswap <- function(pam, niter) {
+    .Call('_bamm_permute_matrix_indswap', PACKAGE = 'bamm', pam, niter)
+}
+
 null_dispersion_field_cat <- function(dfield, dfield_rand, lower_interval, upper_interval) {
     .Call('_bamm_null_dispersion_field_cat', PACKAGE = 'bamm', dfield, dfield_rand, lower_interval, upper_interval)
 }
