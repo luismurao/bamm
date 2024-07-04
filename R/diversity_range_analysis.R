@@ -10,7 +10,7 @@
 #' @param return_null_dfield If TRUE the null distribution of dispersal field
 #' will be returned.
 #' @param randal Randomization algorithm applied to the PAM.
-#' Possible choices "curveball" and "fastball".
+#' Possible choices "curveball","fastball" and "indep_swap".
 #' @param parallel If TRUE the computations will be performed in parallel.
 #' @param n_cores Number of cores for the parallel computation.
 #' @return An object of class  \code{\link[bamm]{diversity_range}}. The main
@@ -79,10 +79,16 @@
 diversity_range_analysis <- function(pam,xy_mat=NULL,lower_interval=0.05,
                                      upper_interval=0.95, raster_templete=NULL,
                                      niter=100,return_null_dfield=FALSE,
-                                     randal = "fastball",
+                                     randal = "indep_swap",
                                      parallel=TRUE,
                                      n_cores=2){
 
+  ral <- match.arg(arg = randal,
+                   choices = c("indep_swap","curveball","fastball"))
+
+  if(!methods::is(pam,"matrix") & !is.numeric(pam[1,1])){
+    stop("pam object should be a binary matrix")
+  }
 
   results <- methods::new(Class = "diversity_range")
 

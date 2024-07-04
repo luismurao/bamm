@@ -7,7 +7,7 @@
 #' @param parallel If TRUE the computations will be performed in parallel.
 #' @param n_cores Number of cores for the parallel computation.
 #' @param randal Randomization algorithm applied to the PAM.
-#' Possible choices "curveball" and "fastball".
+#' Possible choices "curveball", "fastball", and "indep_swap".
 #' @importFrom Rdpack reprompt
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib bamm
@@ -18,9 +18,10 @@
 #'          random values it uses the function code {\link[bamm]{permute_pam}}
 #'          at each step of the iterations. Randomization of the PAM can be
 #'          performed using the "fastball" (Godard and Neal, 2022) and the
-#'          "curveball" (Strona et al., 2014) algorithms. The implementation
-#'          of the "fastball" in C++ is provided in
-#'          \url{https://github.com/zpneal/fastball/blob/main/fastball.cpp}
+#'          "curveball" (Strona et al., 2014), and  and the independent
+#'          swap (Kembel et al. 2010) algorithms.
+#'          The implementation of the "fastball" in C++ is provided
+#'          in \url{https://github.com/zpneal/fastball/blob/main/fastball.cpp}
 #'
 #' @references
 #' \insertRef{Soberon2015}{bamm}
@@ -29,6 +30,7 @@
 #'
 #' \insertRef{Gordard2022}{bamm}
 #'
+#' \insertRef{Kembel2010}{bamm}
 #' @author Luis Osorio-Olvera & Jorge Soberón
 #' @examples
 #' set.seed(111)
@@ -39,13 +41,16 @@
 #' head(dfield_rand)
 #' @export
 
-null_dispersion_field_distribution <- function(pam,n_iter=10,randal="fastball",
+null_dispersion_field_distribution <- function(pam,n_iter=10,randal="indep_sw",
                                                parallel=TRUE,n_cores=2){
+  ral <- match.arg(arg = randal,
+                   choices = c("indep_swap","curveball","fastball"))
 
   if(is.data.frame(pam))
     pam <- data.matrix(pam)
-  if(!is.matrix(pam))
-    stop("m should be a matrix or a data.frame")
+  if(!methods::is(pam,"matrix") & !is.numeric(pam[1,1])){
+    stop("pam object should be a binary matrix")
+  }
   sniter <- 1:n_iter
   if(parallel){
     oplan <- plan(tweak(multisession, workers = n_cores))
