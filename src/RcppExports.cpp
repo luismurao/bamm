@@ -47,6 +47,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// permute_matrix_indswap
+Rcpp::NumericMatrix permute_matrix_indswap(Rcpp::NumericMatrix pam, int niter);
+RcppExport SEXP _bamm_permute_matrix_indswap(SEXP pamSEXP, SEXP niterSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type pam(pamSEXP);
+    Rcpp::traits::input_parameter< int >::type niter(niterSEXP);
+    rcpp_result_gen = Rcpp::wrap(permute_matrix_indswap(pam, niter));
+    return rcpp_result_gen;
+END_RCPP
+}
 // null_dispersion_field_cat
 Rcpp::NumericVector null_dispersion_field_cat(Rcpp::NumericMatrix dfield, Rcpp::NumericMatrix dfield_rand, double lower_interval, double upper_interval);
 RcppExport SEXP _bamm_null_dispersion_field_cat(SEXP dfieldSEXP, SEXP dfield_randSEXP, SEXP lower_intervalSEXP, SEXP upper_intervalSEXP) {
@@ -66,6 +78,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_bamm_rList", (DL_FUNC) &_bamm_rList, 2},
     {"_bamm_permute_matrix", (DL_FUNC) &_bamm_permute_matrix, 2},
     {"_bamm_permute_matrix_fb", (DL_FUNC) &_bamm_permute_matrix_fb, 2},
+    {"_bamm_permute_matrix_indswap", (DL_FUNC) &_bamm_permute_matrix_indswap, 2},
     {"_bamm_null_dispersion_field_cat", (DL_FUNC) &_bamm_null_dispersion_field_cat, 4},
     {NULL, NULL, 0}
 };
