@@ -2,7 +2,7 @@
 #include <RcppArmadillo.h>
 #include <RcppArmadilloExtensions/sample.h>
 #include <Rcpp.h>
-
+#include <Rmath.h>
 using namespace Rcpp ;
 
 // Function to create the list of species present
@@ -333,6 +333,60 @@ Rcpp::NumericMatrix permute_matrix_fb(Rcpp::NumericMatrix m, int niter){
   List sps = fastball_cpp(hp,niter);
   Rcpp::NumericMatrix m1 = fill_matrix(m,sps);
   return m1;
+}
+
+
+/*This takes an integer n and returns one random integer
+  This function originally if from the package picante
+
+*/
+int intrand(int n)
+{
+  double u;
+  u = unif_rand();
+  return((int)(u*n));/*Cast the double as an integer*/
+}
+
+// Function to permute a PAM using the independent swap algorithm
+// which is implemented in the picante package. Please if you
+// use this function cite
+// S.W. Kembel, P.D. Cowan, M.R. Helmus, W.K. Cornwell, H. Morlon,
+// D.D. Ackerly, S.P. Blomberg, and C.O. Webb. 2010. Picante: R tools
+// for integrating phylogenies and ecology. Bioinformatics 26:1463-1464.
+
+// @param m Presence-Absence-Matrix (PAM) or a binary matrix with columns
+//          representing species and rows sites.
+// @param niter Number of iterations to permute the PAM.
+// @return Returns a permuted PAM.
+
+// [[Rcpp::export]]
+Rcpp::NumericMatrix permute_matrix_indswap(Rcpp::NumericMatrix pam, int niter){
+  int swap;
+  int swapped;
+  int i,j,k,l;
+  int row = pam.nrow();
+  int column = pam.ncol();
+  double tmp;
+  for(swap= 0; swap < niter; swap++){
+    swapped = 0;
+    while(swapped == 0){
+      i = intrand(row);
+      while((j=intrand(row))==i);
+      k =  intrand(column);
+      while((l = intrand(column)) == k);
+      if((pam(i,k)>0 && pam(j,l)>0 && pam(i,l)+pam(j,k)==0)||(pam(i,k)+pam(j,l)==0 && pam(i,l)>0 && pam(j,k)>0))
+      {
+        tmp = pam(i,k);
+        pam(i,k) = pam(j,k);
+        pam(j,k) = tmp;
+        tmp = pam(i,l);
+        pam(i,l) = pam(j,l);
+        pam(j,l) = tmp;
+        swapped = 1;
+      }
+    }
+  }
+  return pam;
 }
 
 
