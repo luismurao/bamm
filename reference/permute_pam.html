@@ -57,7 +57,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">permute_pam</span><span class="op">(</span><span class="va">m</span>, niter <span class="op">=</span> <span class="cn">NULL</span>, as_sparse <span class="op">=</span> <span class="cn">FALSE</span>, randal <span class="op">=</span> <span class="st">"fastball"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">permute_pam</span><span class="op">(</span><span class="va">m</span>, niter <span class="op">=</span> <span class="cn">NULL</span>, as_sparse <span class="op">=</span> <span class="cn">FALSE</span>, randal <span class="op">=</span> <span class="st">"indep_swap"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -77,7 +77,7 @@ representing species and rows sites.</p></dd>
 
 <dt>randal</dt>
 <dd><p>Randomization algorithm applied to the PAM.
-Possible choices "curveball" and "fastball".</p></dd>
+Possible choices "curveball", "fastball", and "indep_swap".</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -91,13 +91,14 @@ species.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function uses the "curveball" (Strona et al., 2014) and the
-         fastball (Godard and Neal, 2022) algorithms. The implementation
-         of the "fastball" in C++ is provided in
-         <a href="https://github.com/zpneal/fastball/blob/main/fastball.cpp" class="external-link">https://github.com/zpneal/fastball/blob/main/fastball.cpp</a>.
+    <p>This function can use the "curveball" (Strona et al., 2014), the
+         fastball (Godard and Neal, 2022), and the independent swap
+         algorithms. The implementation of the "fastball" in C++ is provided
+         in <a href="https://github.com/zpneal/fastball/blob/main/fastball.cpp" class="external-link">https://github.com/zpneal/fastball/blob/main/fastball.cpp</a>.
          Please when using the "fastball" algorithm for publications cite
          Godard and Neal (2022). When using the "curveball" cite
-         Strona et al. (2014).</p>
+         Strona et al. (2014). When using independent swap ("indep_swap")
+         cite Kembel et al. (2010)</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -105,13 +106,15 @@ species.</p>
 “A fast and unbiased procedure to randomize ecological binary matrices with fixed row and column totals.”
 <em>Nature Communications</em>, <b>5</b>(1), 1--9.
 ISSN 20411723, <a href="https://doi.org/10.1038/ncomms5114" class="external-link">doi:10.1038/ncomms5114</a>
-, <a href="https://www.r-project.org" class="external-link">https://www.r-project.org</a>.
-.
-Godard K, Neal ZP (2022).
+, <a href="https://www.r-project.org" class="external-link">https://www.r-project.org</a>.</p>
+<p>Godard K, Neal ZP (2022).
 “fastball: a fast algorithm to randomly sample bipartite graphs with fixed degree sequences.”
 <em>Journal of Complex Networks</em>, <b>10</b>(6), cnac049.
 ISSN 2051-1329, <a href="https://doi.org/10.1093/comnet/cnac049" class="external-link">doi:10.1093/comnet/cnac049</a>
 , https://academic.oup.com/comnet/article-pdf/10/6/cnac049/47758701/cnac049.pdf.</p>
+<p>Kembel SW, Cowan PD, Helmus MR, Cornwell WK, Morlon H, Ackerly DD, Blomberg SP, Webb CO (2010).
+“Picante: R tools for integrating phylogenies and ecology.”
+<em>Bioinformatics</em>, <b>26</b>, 1463--1464.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

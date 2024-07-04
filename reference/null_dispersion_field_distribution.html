@@ -63,7 +63,7 @@ random distribution of the dispersion field values.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">null_dispersion_field_distribution</span><span class="op">(</span></span>
 <span>  <span class="va">pam</span>,</span>
 <span>  n_iter <span class="op">=</span> <span class="fl">10</span>,</span>
-<span>  randal <span class="op">=</span> <span class="st">"fastball"</span>,</span>
+<span>  randal <span class="op">=</span> <span class="st">"indep_swap"</span>,</span>
 <span>  parallel <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  n_cores <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -81,7 +81,7 @@ random distribution of the dispersion field values.</p>
 
 <dt>randal</dt>
 <dd><p>Randomization algorithm applied to the PAM.
-Possible choices "curveball" and "fastball".</p></dd>
+Possible choices "curveball", "fastball", and "indep_swap".</p></dd>
 
 
 <dt>parallel</dt>
@@ -105,9 +105,10 @@ field values.</p>
          random values it uses the function code <a href="permute_pam.html">permute_pam</a>
          at each step of the iterations. Randomization of the PAM can be
          performed using the "fastball" (Godard and Neal, 2022) and the
-         "curveball" (Strona et al., 2014) algorithms. The implementation
-         of the "fastball" in C++ is provided in
-         <a href="https://github.com/zpneal/fastball/blob/main/fastball.cpp" class="external-link">https://github.com/zpneal/fastball/blob/main/fastball.cpp</a></p>
+         "curveball" (Strona et al., 2014), and  and the independent
+         swap (Kembel et al. 2010) algorithms.
+         The implementation of the "fastball" in C++ is provided
+         in <a href="https://github.com/zpneal/fastball/blob/main/fastball.cpp" class="external-link">https://github.com/zpneal/fastball/blob/main/fastball.cpp</a></p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -124,6 +125,9 @@ ISSN 20411723, <a href="https://doi.org/10.1038/ncomms5114" class="external-link
 <em>Journal of Complex Networks</em>, <b>10</b>(6), cnac049.
 ISSN 2051-1329, <a href="https://doi.org/10.1093/comnet/cnac049" class="external-link">doi:10.1093/comnet/cnac049</a>
 , https://academic.oup.com/comnet/article-pdf/10/6/cnac049/47758701/cnac049.pdf.</p>
+<p>Kembel SW, Cowan PD, Helmus MR, Cornwell WK, Morlon H, Ackerly DD, Blomberg SP, Webb CO (2010).
+“Picante: R tools for integrating phylogenies and ecology.”
+<em>Bioinformatics</em>, <b>26</b>, 1463--1464.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
