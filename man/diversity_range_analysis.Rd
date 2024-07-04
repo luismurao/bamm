@@ -12,7 +12,7 @@ diversity_range_analysis(
   raster_templete = NULL,
   niter = 100,
   return_null_dfield = FALSE,
-  randal = "fastball",
+  randal = "indep_swap",
   parallel = TRUE,
   n_cores = 2
 )
@@ -34,7 +34,7 @@ diversity_range_analysis(
 will be returned.}
 
 \item{randal}{Randomization algorithm applied to the PAM.
-Possible choices "curveball" and "fastball".}
+Possible choices "curveball","fastball" and "indep_swap".}
 
 \item{parallel}{If TRUE the computations will be performed in parallel.}
 

@@ -4,7 +4,7 @@
 \alias{permute_pam}
 \title{permute_pam: Function to permute a Presence-Absence-Matrix.}
 \usage{
-permute_pam(m, niter = NULL, as_sparse = FALSE, randal = "fastball")
+permute_pam(m, niter = NULL, as_sparse = FALSE, randal = "indep_swap")
 }
 \arguments{
 \item{m}{Presence-Absence-Matrix (PAM) or a binary matrix with columns
@@ -15,7 +15,7 @@ representing species and rows sites.}
 \item{as_sparse}{If TRUE the PAM will be returned as a sparse matrix}
 
 \item{randal}{Randomization algorithm applied to the PAM.
-Possible choices "curveball" and "fastball".}
+Possible choices "curveball", "fastball", and "indep_swap".}
 }
 \value{
 Returns a permuted matrix of the same dimensions of m
@@ -27,13 +27,14 @@ species.
 permute_pam: Function to permute a Presence-Absence-Matrix.
 }
 \details{
-This function uses the "curveball" (Strona et al., 2014) and the
-         fastball (Godard and Neal, 2022) algorithms. The implementation
-         of the "fastball" in C++ is provided in
-         \url{https://github.com/zpneal/fastball/blob/main/fastball.cpp}.
+This function can use the "curveball" (Strona et al., 2014), the
+         fastball (Godard and Neal, 2022), and the independent swap
+         algorithms. The implementation of the "fastball" in C++ is provided
+         in \url{https://github.com/zpneal/fastball/blob/main/fastball.cpp}.
          Please when using the "fastball" algorithm for publications cite
          Godard and Neal (2022). When using the "curveball" cite
-         Strona et al. (2014).
+         Strona et al. (2014). When using independent swap ("indep_swap")
+         cite Kembel et al. (2010)
 }
 \examples{
 set.seed(111)
@@ -47,8 +48,11 @@ all(Matrix::rowSums(pam) == Matrix::rowSums(ppam))
 all(Matrix::colSums(pam) == Matrix::colSums(ppam))
 }
 \references{
-\insertRef{Strona2014}{bamm}.
+\insertRef{Strona2014}{bamm}
+
 \insertRef{Gordard2022}{bamm}
+
+\insertRef{Kembel2010}{bamm}
 }
 \author{
 Luis Osorio-Olvera & Jorge Soberón
