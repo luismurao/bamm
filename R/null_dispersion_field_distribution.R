@@ -37,11 +37,12 @@
 #' pam <- matrix(rbinom(100,1,0.3),nrow = 10,ncol = 10)
 #' dfield_rand <- bamm::null_dispersion_field_distribution(pam,n_iter=10,
 #'                                                        parallel=FALSE,
+#'                                                        randal="indep_swap",
 #'                                                        n_cores = 2)
 #' head(dfield_rand)
 #' @export
 
-null_dispersion_field_distribution <- function(pam,n_iter=10,randal="indep_sw",
+null_dispersion_field_distribution <- function(pam,n_iter=10,randal="indep_swap",
                                                parallel=TRUE,n_cores=2){
   ral <- match.arg(arg = randal,
                    choices = c("indep_swap","curveball","fastball"))
