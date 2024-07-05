@@ -71,8 +71,8 @@ bam_clusters <- function(model,ngbs=1,plot_model=FALSE){
     cols = factor(ama@Dimnames[[2]][cls],
                   levels=unique(ama@Dimnames[[2]])),
     value = vals)
-  net <- igraph::graph.data.frame(my_df, directed = FALSE)
-  cl <- igraph::clusters(net)
+  net <- igraph::graph_from_data_frame(my_df, directed = FALSE)
+  cl <- igraph::components(net)
 
   to_find <- seq_along(cl$csize)[cl$csize > 1]
 
