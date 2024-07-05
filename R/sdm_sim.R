@@ -153,6 +153,7 @@ sdm_sim <- function(set_A,set_M,initial_points,nsteps,
 #' that have no zero values.The function is taken from the
 #' Ringo package
 #' @param x A matrix of class "dgCMatrix"
+#' @noRd
 
 .nonzero <- function(x){
   stopifnot(inherits(x, "dgCMatrix"))
