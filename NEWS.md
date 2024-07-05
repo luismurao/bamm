@@ -1,3 +1,12 @@
+# bamm 0.5.0
+
+* The new version of the package implements the fastball and the independent 
+  swap algorithms to randomize the presence-absence matrix while preserving 
+  fixed richness and species incidence. The fastball and the independent 
+  swap algorithms run 10 and 60 times faster than the package implementation 
+  of the curveball algorithm. This is particularly relevant for running the
+  the null_dispersio_fiels and the diversity_range_analysis functions.
+
 # bamm 0.4.2.6
 
 * Added a `NEWS.md` file to track changes to the package.
