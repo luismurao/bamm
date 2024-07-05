@@ -1,3 +1,29 @@
+## Package update from version 0.4.3 to 0.5.0
+
+* Local check on ubuntu 22.04.4, install, R 4.4.1
+
+── R CMD check results ───────────────── bamm 0.5.0 ────
+Duration: 3m 26.6s
+
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
+### Test environments
+
+- R-hub windows-x86_64-devel (r-devel)
+- R-hub  macOS arm64 (R-devel)
+- R-hub ubuntu-clang
+- R-hub  macOS (R-devel)
+- R-hub  windows (R-devel)
+- windows-latest (release; on GitHub Actions)
+- macOS-latest (release; on GitHub Actions)
+- ubuntu-latest (release; on GitHub Actions)
+- ubuntu-latest (devel; on GitHub Actions)
+- ubuntu-latest (older-1; on GitHub Actions)
+- local ubuntu 22.04.4, install, R 4.4.1
+- local OS X 14.2 install, R 4.3.2
+- local windows 10 pro install, R 4.3.1
+
+
 ## Resubmission
 
 This is a resubmission. In this version I have done what the reviewer asked for:
