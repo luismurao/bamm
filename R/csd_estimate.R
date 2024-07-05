@@ -10,7 +10,7 @@
 #' Suitability-Diagram information estimated for each element in the vector
 #' of dispersal_steps. The second is tbl_df object with a summary of the number
 #' of cluster of each dispersal step and the mean number of connected clusters.
-#' The last element is base plot showing the information cointained in
+#' The last element is base plot showing the information contained in
 #' the tbl_df object.
 #' @details For more information about the Connectivity-Suitability-Diagram
 #' see \code{\link[bamm]{bam_clusters}}
