@@ -14,6 +14,9 @@ Duration: 3m 26.6s
 
 * Functions of packages ‘crosstalk’ and ‘plotly’are used in the method plot for 
   objects "diversity_range"
+* I tried to check and build the binary package using 
+  devtools::check_win_devel() but it wasn't working so I did it directly on 
+   https://win-builder.r-project.org/.
 
 ### Test environments
 
