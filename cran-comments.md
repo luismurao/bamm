@@ -1,6 +1,6 @@
 ## Package update from version 0.4.3 to 0.5.0
 
-* Local check on ubuntu 22.04.4, install, R 4.4.1
+* Local check on  OS X 14.2, install, R 4.3.2
 
 ── R CMD check results ───────────────── bamm 0.5.0 ────
 Duration: 3m 26.6s
