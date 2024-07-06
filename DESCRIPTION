@@ -4,10 +4,17 @@ Title: Species Distribution Models as a Function of Biotic, Abiotic and
     Movement Factors (BAM)
 Version: 0.5.0
 Authors@R: c(
-    person("Luis", "Osorio-Olvera", , "luismurao@gmail.com", role = c("aut", "cre"),
+    person("Luis", "Osorio-Olvera", 
+           email = "luismurao@gmail.com", 
+           role = c("aut", "cre"), 
            comment = c(ORCID = "0000-0003-0701-5398")),
-    person("Jorge", "Soberón", , "soberon@ku.edu", role = "aut",
-           comment = c(ORCID = "0000-0003-2160-4148"))
+    person("Jorge", "Soberón",  
+           email = "soberon@ku.edu", role = "aut",
+           comment = c(ORCID = "0000-0003-2160-4148")),
+    person("Rusby G.", "Contreras-Díaz", 
+           email = "rusby.contreras.diaz@gmail.com", 
+           role = "ctb",
+           comment = c(ORCID = "0000-0002-0569-8984"))
   )
 Maintainer: Luis Osorio-Olvera <luismurao@gmail.com>
 Description: Species Distribution Modeling (SDM) is a practical
