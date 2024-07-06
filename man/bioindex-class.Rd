@@ -25,6 +25,8 @@ Class  \code{bioindex}
 
 \item{\code{leBeta}}{A numeric value with Legendre’s beta index}
 
+\item{\code{nestedness}}{A numeric value with Wright and Reeves' nestedness}
+
 \item{\code{dispersion_field}}{A matrix with the set of ranges of all species that
 occur in at each locality}
 

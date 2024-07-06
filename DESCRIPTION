@@ -1,79 +1,82 @@
-Package: bamm
 Type: Package
-Title: Species Distribution Models as a Function of Biotic, Abiotic and 
-       Movement Factors (BAM)
+Package: bamm
+Title: Species Distribution Models as a Function of Biotic, Abiotic and
+    Movement Factors (BAM)
 Version: 0.5.0
-Authors@R: c(person("Luis", "Osorio-Olvera", 
-                 email = "luismurao@gmail.com", 
-                 role = c("aut", "cre"),
-                 comment = c(ORCID = "0000-0003-0701-5398")),
-            person("Jorge", "Soberón",
-                email = "soberon@ku.edu", 
-                role = "aut",
-                comment = c(ORCID = "0000-0003-2160-4148")))
+Authors@R: c(
+    person("Luis", "Osorio-Olvera", , "luismurao@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-0701-5398")),
+    person("Jorge", "Soberón", , "soberon@ku.edu", role = "aut",
+           comment = c(ORCID = "0000-0003-2160-4148"))
+  )
 Maintainer: Luis Osorio-Olvera <luismurao@gmail.com>
+Description: Species Distribution Modeling (SDM) is a practical
+    methodology that aims to estimate the area of distribution of a
+    species. However, most of the work has focused on estimating static
+    expressions of the correlation between environmental variables. The
+    outputs of correlative species distribution models can be interpreted
+    as maps of the suitable environment for a species but not generally as
+    maps of its actual distribution.  Soberón and Peterson (2005)
+    <doi:10.17161/bi.v2i0.4> presented the BAM scheme, a heuristic
+    framework that states that the occupied area of a species occurs on
+    sites that have been accessible through dispersal (M) and have both
+    favorable biotic (B) and abiotic conditions (A).  The 'bamm' package
+    implements classes and functions to operate on each element of the BAM
+    and by using a cellular automata model where the occupied area of a
+    species at time t is estimated by the multiplication of three binary
+    matrices: one matrix represents movements (M), another abiotic -niche-
+    tolerances (A), and a third, biotic interactions (B).  The theoretical
+    background of the package can be found in Soberón and Osorio-Olvera
+    (2023) <doi:10.1111/jbi.14587>.
+License: GPL (>= 3)
 URL: https://luismurao.github.io/bamm/
 BugReports: https://github.com/luismurao/bamm/issues
-Description: Species Distribution Modeling (SDM) is a practical methodology 
- that aims to estimate the area of distribution of a species. However, 
- most of the work has focused on estimating static expressions of the 
- correlation between environmental variables. The outputs of
- correlative species distribution models can be interpreted 
- as maps of the suitable environment for a species but not generally as maps
- of its actual distribution. 
- Soberón and Peterson (2005) <doi:10.17161/bi.v2i0.4> presented
- the BAM scheme, a heuristic framework that states that the occupied area of 
- a species occurs on sites that have been accessible through dispersal (M) and 
- have both favorable biotic (B) and abiotic conditions (A). 
- The 'bamm' package implements classes and functions to operate on each element 
- of the BAM and by using a cellular automata model where the occupied area 
- of a species at time t is estimated by the multiplication of three 
- binary matrices: one matrix represents movements (M), another 
- abiotic -niche- tolerances (A), and a third, biotic interactions (B). 
- The theoretical background of the package can be found in 
- Soberón and Osorio-Olvera (2023) <doi:10.1111/jbi.14587>.
-SystemRequirements: GDAL (>= 2.2.3): gdal-bin (deb), libgdal-dev (deb) or
-                    gdal-devel (rmp), GEOS (>= 3.4.0), PROJ (>= 4.9.3): 
-                    libproj-dev (deb), sqlite3, 
-                    ImageMagick++: imagemagick (deb), libmagic-dev (deb), 
-                    libmagick++-dev (deb) or ImageMagick-c++-devel (rpm)
-                    ImageMagick (http://imagemagick.org) or GraphicsMagick 
-                    (http://www.graphicsmagick.org) or LyX (http://www.lyx.org) 
-                    for saveGIF(); (PDF)LaTeX for saveLatex();
-                    SWF Tools (http://swftools.org) for saveSWF(); 
-                    FFmpeg (http://ffmpeg.org) 
-                    or avconv (https://libav.org/avconv.html) for saveVideo()
-NeedsCompilation: yes
-License: GPL (>= 3)
-Encoding: UTF-8
 Depends:
- R (>= 3.5.0)
-LazyData: true
+    R (>= 3.5.0)
 Imports: 
-    raster (>= 3.4-13),
-    Matrix (>= 1.2.14),
-    RSpectra (>= 0.13.1),
-    methods (>= 3.3),
-    magrittr (>= 1.2),
+    animation (>= 2.3),
+    crosstalk,
     dplyr (>= 0.8.0),
-    purrr (>= 0.2),
+    furrr (>= 0.1.0),
+    future (>= 1.18.0),
+    graphics,
+    grDevices,
     igraph (>= 1.2),
     leaflet (>= 2.0),
-    Rdpack (>= 0.11.0),
-    animation (>= 2.3),
-    future (>= 1.18.0),
-    furrr (>= 0.1.0),
+    magrittr (>= 1.2),
+    Matrix (>= 1.2.14),
+    methods (>= 3.3),
+    plotly,
+    purrr (>= 0.2),
+    raster (>= 3.4-13),
     Rcpp (>= 0.12.18),
-    sp(>= 1.3.0)
-RdMacros: Rdpack
-RoxygenNote: 7.3.1
+    Rdpack (>= 0.11.0),
+    RSpectra (>= 0.13.1),
+    sp (>= 1.3.0),
+    stats,
+    utils
 Suggests: 
     knitr,
-    crosstalk,
-    plotly,
     rmarkdown,
-    testthat (>= 3.0.0),
-    covr
-VignetteBuilder: knitr
-LinkingTo: Rcpp, RcppArmadillo
+    testthat (>= 3.0.0)
+LinkingTo: 
+    Rcpp,
+    RcppArmadillo
+VignetteBuilder: 
+    knitr
+RdMacros: 
+    Rdpack
 Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+NeedsCompilation: yes
+RoxygenNote: 7.3.1
+SystemRequirements: GDAL (>= 2.2.3): gdal-bin (deb), libgdal-dev (deb) or
+    gdal-devel (rmp), GEOS (>= 3.4.0), PROJ (>= 4.9.3): libproj-dev (deb),
+    sqlite3, ImageMagick++: imagemagick (deb), libmagic-dev (deb),
+    libmagick++-dev (deb) or ImageMagick-c++-devel (rpm) ImageMagick
+    (http://imagemagick.org) or GraphicsMagick
+    (http://www.graphicsmagick.org) or LyX (http://www.lyx.org) for
+    saveGIF(); (PDF)LaTeX for saveLatex(); SWF Tools (http://swftools.org)
+    for saveSWF(); FFmpeg (http://ffmpeg.org) or avconv
+    (https://libav.org/avconv.html) for saveVideo()
