@@ -15,7 +15,7 @@
 #' field values.
 #' @details
 #'  Estimates a random distribution of the dispersion field values. To obtain
-#'          random values it uses the function code {\link[bamm]{permute_pam}}
+#'          random values it uses the function code \link[bamm]{permute_pam}
 #'          at each step of the iterations. Randomization of the PAM can be
 #'          performed using the "fastball" (Godard and Neal, 2022) and the
 #'          "curveball" (Strona et al., 2014), and  and the independent
