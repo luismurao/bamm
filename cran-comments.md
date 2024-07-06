@@ -12,7 +12,7 @@ Duration: 3m 26.6s
     ‘crosstalk’ ‘plotly’
     All declared Imports should be used.
 
-* The packages ‘crosstalk’ and ‘plotly’are used in the method plot for 
+* Functions of packages ‘crosstalk’ and ‘plotly’are used in the method plot for 
   objects "diversity_range"
 
 ### Test environments
