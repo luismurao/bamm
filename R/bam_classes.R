@@ -180,6 +180,7 @@ csd <- methods::setClass(Class = "csd",
 #' @slot wBeta A numeric value with Whittaker’s multiplicative beta index
 #' @slot laBeta A numeric value with Lande’s additive beta index
 #' @slot leBeta A numeric value with Legendre’s beta index
+#' @slot nestedness A numeric value with Wright and Reeves' nestedness
 #' @slot dispersion_field A sparse matrix with the set of ranges of all species
 #' that occur in at each locality
 #' @slot richness_field A sparse matrix with the number of  shared species in
@@ -195,6 +196,7 @@ bioindex_sparse <- methods::setClass(Class = "bioindex_sparse",
                                 wBeta = "numeric",
                                 laBeta = "numeric",
                                 leBeta = "numeric",
+                                nestedness = "numeric",
                                 dispersion_field = "dgeMatrix",
                                 richness_field = "dgeMatrix"
                               ))
@@ -208,6 +210,7 @@ bioindex_sparse <- methods::setClass(Class = "bioindex_sparse",
 #' @slot wBeta A numeric value with Whittaker’s multiplicative beta index
 #' @slot laBeta A numeric value with Lande’s additive beta index
 #' @slot leBeta A numeric value with Legendre’s beta index
+#' @slot nestedness A numeric value with Wright and Reeves' nestedness
 #' @slot dispersion_field A matrix with the set of ranges of all species that
 #' occur in at each locality
 #' @slot richness_field A matrix with the number of  shared species in
@@ -223,6 +226,7 @@ bioindex <- methods::setClass(Class = "bioindex",
                                        wBeta = "numeric",
                                        laBeta = "numeric",
                                        leBeta = "numeric",
+                                       nestedness = "numeric",
                                        dispersion_field = "matrix",
                                        richness_field = "matrix"
                                      ))

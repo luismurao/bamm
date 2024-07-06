@@ -55,14 +55,15 @@ pam2bioindex <- function(pam,biodiv_index="dispersion_field",as_sparse=FALSE) {
     alpha <- pam %*% ones_sps
     bioindices@alpha <- if(as_sparse) alpha else as(alpha,"matrix")
   }
-  if(any(c("omega","dispersion_field","all") %in% biodiv_index)){
+  if(any(c("omega","dispersion_field",
+           "wbeta","labeta","lebeta","all") %in% biodiv_index)){
     ones_sites <- rep(1,N)
     pamT <- Matrix::t(pam)
     om   <- pamT  %*% ones_sites
     trace_om <- sum(om)
     bioindices@omega <- if(as_sparse) om else as(om,"matrix")
   }
-  if(any(c("wbeta","lbeta","all") %in% biodiv_index)){
+  if(any(c("wbeta","all") %in% biodiv_index)){
     wbeta <- S*N/trace_om
     bioindices@wBeta <- wbeta
 
@@ -71,6 +72,7 @@ pam2bioindex <- function(pam,biodiv_index="dispersion_field",as_sparse=FALSE) {
     labeta <- S*(1-(trace_om/(S*N)))
     bioindices@laBeta <- labeta
   }
+
   if(any(c("dispersion_field","lebeta","all") %in% biodiv_index)){
     om_st <- om/N
     fist <- pam%*%om_st
@@ -88,6 +90,12 @@ pam2bioindex <- function(pam,biodiv_index="dispersion_field",as_sparse=FALSE) {
     #lebeta <- trace_om - Matrix::t(fist) %*%  ones_sites
     lebeta <- ( S/wbeta)* Matrix::t(fist) %*%  ones_sites
     bioindices@leBeta <- as.numeric(lebeta)
+  }
+  if(any(c("nestedness", "all") %in% biodiv_index)){
+    ones_sites <- rep(1,N)
+    fist_ <- pam%*%om
+    nss <- (Matrix::t(fist_) %*% ones_sites) - (N*S/wbeta)
+    bioindices@nestedness <- as.numeric(nss)
   }
 
   return(bioindices)
