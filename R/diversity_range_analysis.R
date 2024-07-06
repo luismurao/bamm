@@ -71,7 +71,7 @@
 #'                                          return_null_dfield=TRUE)
 #' bamm::plot(rdivan,plot_type="diversity_range")
 #' bamm::plot(rdivan,plot_type="diversity_range_map")
-#' if(requireNamespace("plotly")){
+#' if(require(plotly) && require(crosstalk)){
 #' #bamm::plot(rdivan,plot_type="diversity_range_interactive")
 #' }
 #' }
