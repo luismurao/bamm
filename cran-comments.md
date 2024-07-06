@@ -5,7 +5,15 @@
 ── R CMD check results ───────────────── bamm 0.5.0 ────
 Duration: 3m 26.6s
 
-0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+0 errors ✔ | 0 warnings ✔ | 1 notes ✔
+
+❯ checking dependencies in R code ... NOTE
+  Namespaces in Imports field not imported from:
+    ‘crosstalk’ ‘plotly’
+    All declared Imports should be used.
+
+* The packages ‘crosstalk’ and ‘plotly’are used in the method plot for 
+  objects "diversity_range"
 
 ### Test environments
 
