@@ -19,7 +19,7 @@ element of the **BAM**, for example, the adjacency matrix
 
 The dynamic model behind the package is the cellular automata
 
-![\begin{equation} \mathbf{G}_j(t+1) =\mathbf{B}_j(t)\mathbf{A}_j(t) \mathbf{C}_j  \mathbf{G}_j(t) \label{eq:automata} \end{equation}](https://render.githubusercontent.com/render/math?math=%5Cbegin%7Bequation%7D%20%5Cmathbf%7BG%7D_j(t%2B1)%20%3D%5Cmathbf%7BB%7D_j(t)%5Cmathbf%7BA%7D_j(t)%20%5Cmathbf%7BC%7D_j%20%20%5Cmathbf%7BG%7D_j(t)%20%5Clabel%7Beq%3Aautomata%7D%20%5Cend%7Bequation%7D)
+$$\mathbf{G}_j(t+1) =\mathbf{B}_j(t)\mathbf{A}_j(t) \mathbf{C}_j  \mathbf{G}_j(t)$$
 
 The main functions of the package are:
 
