@@ -86,10 +86,15 @@ diversity_range_analysis <- function(pam,xy_mat=NULL,lower_interval=0.05,
   ral <- match.arg(arg = randal,
                    choices = c("indep_swap","curveball","fastball"))
 
-  if(!methods::is(pam,"matrix") & !is.numeric(pam[1,1])){
-    stop("pam object should be a binary matrix")
+  if(methods::is(pam,"data.frame")){
+    pam <- data.matrix(pam)
   }
-
+  if(!methods::is(pam,"matrix") & (pam[1,1] != 0 || pam[1,1] != 1)){
+    stop("`pam` object should be a binary matrix")
+  }
+  if(!is.null(raster_templete) && !methods::is(raster_templete,"RasterLayer")){
+    stop("`raster_templete` should be of class RasterLayer")
+  }
   results <- methods::new(Class = "diversity_range")
 
   distfield_rand <- null_dispersion_field_distribution(pam = pam,
