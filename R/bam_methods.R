@@ -396,7 +396,9 @@ methods::setMethod(f = "plot",
 
 
                              randiv <- x@diversity_range_raster
-                             vals <- stats::na.omit(randiv[])
+                             #vals <- stats::na.omit(randiv[])
+                             cvals <- raster::cellFromXY(randiv,x@xy_coordinates)
+                             vals <- randiv[cvals]
                              cols1 <- ifelse(
                                vals == 0,"#000000",
                                ifelse(vals ==1,
