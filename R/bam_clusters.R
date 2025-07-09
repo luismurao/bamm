@@ -5,6 +5,8 @@
 #' @param model A niche model in raster format or a \code{\link[bamm]{setA}}
 #' object (see \code{\link[bamm]{model2sparse}}).
 #' @param ngbs Numeric. Number of neighbors (see details).
+#' @param set_M A setM object containing the adjacency matrix of the
+#' study area. The default value is set to NULL
 #' @param plot_model Logical. Indicates whether to plot the niche model using a
 #' leaflet map, connected suitable cells shown in the same color.
 #' @details
@@ -38,7 +40,7 @@
 #'
 #'
 #'
-bam_clusters <- function(model,ngbs=1,plot_model=FALSE){
+bam_clusters <- function(model,ngbs=1,set_M = NULL,plot_model=FALSE){
 
   if(methods::is(model,"RasterLayer")){
     msparse <- bamm::model2sparse(model)
@@ -52,8 +54,13 @@ bam_clusters <- function(model,ngbs=1,plot_model=FALSE){
   #if(class(model) != "setA")
   #  stop("model should be of raster class or setA class")
 
-
-  adj_msp <- bamm::adj_mat(msparse,ngbs)
+  if(!is.null(set_M) & !inherits(set_M,"setM")){
+    stop("set_M should be of class setM")
+  } else if(methods::is(set_M,"setM")){
+    adj_msp <- set_M
+  } else{
+    adj_msp <- bamm::adj_mat(msparse,ngbs)
+  }
   ama <-   msparse@sparse_model %*% adj_msp@adj_matrix %*%  msparse@sparse_model
 
   ids_p <- which(Matrix::rowSums(ama)>0)
