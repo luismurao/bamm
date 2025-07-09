@@ -53,9 +53,9 @@
 #' sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
 #'                              set_M = adj_mod,
 #'                              initial_points = occs_sparse,
-#'                              nsteps = 10,
+#'                              nsteps = 100,
 #'                              stochastic_dispersal = TRUE,
-#'                              disp_prop2_suitability=TRUE,
+#'                              disp_prop2_suitability=FALSE,
 #'                              disper_prop=0.5,
 #'                              progress_bar=TRUE)
 #'
@@ -65,89 +65,101 @@
 #'}
 #' @export
 
-sdm_sim <- function(set_A,set_M,initial_points,nsteps,
+sdm_sim <- function(set_A, set_M, initial_points, nsteps,
                     stochastic_dispersal = TRUE,
-                    disp_prop2_suitability=TRUE,
-                    disper_prop=0.5,progress_bar=TRUE){
-  if(!inherits(set_A,"setA")){
-    stop("set_A should be of class setA")
-  }
-  if(!inherits(set_M,"setM")){
-    stop("set_M should be of class setM")
-  }
-  M_mat <- set_M@adj_matrix
-  AMA <- set_A@sparse_model %*% M_mat # %*% set_A@sparse_model
-  nsteps <- nsteps+1
-  iter_vec <- 1:nsteps
-  #iter_vec <- 1:50
-  if(progress_bar){
-    pb <- utils::txtProgressBar(min = 0,
-                                max = nsteps,
-                                style = 3)
-  }
+                    disp_prop2_suitability = TRUE,
+                    disper_prop = 0.5, progress_bar = TRUE) {
 
+  # Validate inputs
+  if (!inherits(set_A, "setA")) stop("set_A should be of class setA")
+  if (!inherits(set_M, "setM")) stop("set_M should be of class setM")
+
+  # BAM objects
+  M_orig <- set_M@adj_matrix
+  AMA <- set_A@sparse_model %*% M_orig %*% set_A@sparse_model
+  nsteps <- nsteps + 1
   g0 <- Matrix::t(initial_points)
   colnames(g0) <- set_A@cellIDs
   sdm <- list(g0)
 
-  if(stochastic_dispersal){
+  # Progress bar
+  if (progress_bar) pb <- utils::txtProgressBar(0, nsteps, style = 3)
+
+  if (stochastic_dispersal) {
     rd_adlist <- set_M@adj_list
-    if(disp_prop2_suitability){
-      suit_probs <- set_A@suit_values*disper_prop
+
+    # Precompute suitability probabilities if needed
+    if (disp_prop2_suitability) {
+      suit_probs <- set_A@suit_values * disper_prop
       names(suit_probs) <- set_A@cellIDs
     }
-    for (i in iter_vec) {
-      #g0_temp <- g0
-      pix_occ <- .nonzero(g0)[,2]
-      nbgmat <- do.call(rbind,rd_adlist[pix_occ])
-      nbgmat <- nbgmat[!duplicated(nbgmat[,2]),]
-      cellIDs <- nbgmat[,2]
-      n_vec <- length(cellIDs )
-      if(n_vec >0){
-        if(disp_prop2_suitability){
-          s_probs <- suit_probs[nbgmat[,4]]
-          invadible <- stats::rbinom(n = n_vec,1,
-                                     prob =  s_probs )
-        } else{
-          invadible <- stats::rbinom(n = n_vec,1,
-                                     prob = disper_prop)
+
+    for (i in seq_len(nsteps)) {
+      # Reset to original matrix (critical fix!)
+      M_mat <- M_orig
+
+      # Get occupied cells
+      occ_indices <- .nonzero(g0)[, 2]
+
+      if (length(occ_indices) > 0) {
+        # Efficiently process neighbors
+        all_edges <- lapply(occ_indices, function(idx) {
+          if (is.null(rd_adlist[[idx]])) return(NULL)
+          rd_adlist[[idx]]
+        })
+
+        if (!is.null(all_edges)) {
+          nbgmat <- do.call(rbind, all_edges)
+          n_vec <- nrow(nbgmat)
+
+          # Calculate dispersal probabilities
+          if (disp_prop2_suitability) {
+            s_probs <- suit_probs[nbgmat[, 4]]
+            invadible <- stats::rbinom(n_vec, 1, s_probs)
+          } else {
+            invadible <- stats::rbinom(n_vec, 1, disper_prop)
+          }
+
+          # Update adjacency matrix
+          M_mat[nbgmat[, 3:4]] <- invadible
+          M_mat <- Matrix::forceSymmetric(M_mat)  # Maintain symmetry
         }
-        M_mat[nbgmat[,3:4]] <- invadible
-      }
-      AMA <- set_A@sparse_model %*% M_mat #%*% set_A@sparse_model
-      #M_mat <- set_M@adj_matrix
-      g0 <- g0 %*% AMA
-      #g0 <- g0 + g0_temp
-      g0[g0>1] <- 1
-      sdm[[i+1]] <- g0
-      if(progress_bar){
-        utils::setTxtProgressBar(pb, i)
       }
 
+      # Propagate dispersal
+      AMA <- set_A@sparse_model %*% M_mat  %*% set_A@sparse_model
+      g0 <- g0 %*% AMA
+      g0 <-  g0 + sdm[[i]]
+      g0@x[g0@x > 1] <- 1  # Efficient thresholding
+
+      sdm[[i + 1]] <- g0
+      if (progress_bar) utils::setTxtProgressBar(pb, i)
     }
 
-  } else{
-    for (i in iter_vec) {
+  } else {
+    # Deterministic dispersal
+    for (i in seq_len(nsteps)) {
       g0 <- g0 %*% AMA
-      g0[g0>1] <- 1
-
-      #g0 <- (g0 - min(g0))/(max(g0)-min(g0))
-      sdm[[i+1]] <- g0
-      if(progress_bar){
-        utils::setTxtProgressBar(pb, i)
-      }
+      g0@x[g0@x > 1] <- 1  # Efficient thresholding
+      sdm[[i + 1]] <- g0
+      if (progress_bar) utils::setTxtProgressBar(pb, i)
     }
   }
-  bam_sim <- bam(sdm_sim =sdm,
-                 suit_threshold = set_A@suit_threshold,
-                 niche_model=set_A@niche_model,
-                 cellIDs=set_A@cellIDs,
-                 sparse_model = set_A@sparse_model,
-                 coordinates =set_A@coordinates,
-                 adj_matrix = set_M@adj_matrix,
-                 initial_points = initial_points,
-                 sim_steps = nsteps-1)
-  return(bam_sim)
+
+  if (progress_bar) close(pb)
+
+  # Return bam object
+  bam(
+    sdm_sim = sdm,
+    suit_threshold = set_A@suit_threshold,
+    niche_model = set_A@niche_model,
+    cellIDs = set_A@cellIDs,
+    sparse_model = set_A@sparse_model,
+    coordinates = set_A@coordinates,
+    adj_matrix = set_M@adj_matrix,
+    initial_points = initial_points,
+    sim_steps = nsteps - 1
+  )
 }
 #' Helper function to compute the elements in g0
 #' that have no zero values.The function is taken from the
