@@ -32,7 +32,7 @@ model2sparse <- function(model, threshold=NULL){
   source_model <- model
 
   if(is.numeric(threshold)){
-    model <- model > threshold
+    model <- model >= threshold
     source_model <- source_model*model
   }
 
