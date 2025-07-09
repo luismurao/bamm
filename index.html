@@ -6,16 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Species Distribution Models as a Function of Biotic, Abiotic and Movement Factors (BAM) • bamm</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Species Distribution Models as a Function of Biotic, Abiotic and Movement Factors (BAM)">
 <meta name="description" content="Species Distribution Modeling (SDM) is a practical methodology that aims to estimate the area of distribution of a species. However, most of the work has focused on estimating static expressions of the correlation between environmental variables. The outputs of correlative species distribution models can be interpreted as maps of the suitable environment for a species but not generally as maps of its actual distribution. Soberón and Peterson (2005) &lt;doi:10.17161/bi.v2i0.4&gt; presented the BAM scheme, a heuristic framework that states that the occupied area of a species occurs on sites that have been accessible through dispersal (M) and have both favorable biotic (B) and abiotic conditions (A). The bamm package implements classes and functions to operate on each element of the BAM and by using a cellular automata model where the occupied area of a species at time t is estimated by the multiplication of three binary matrices: one matrix represents movements (M), another abiotic -niche- tolerances (A), and a third, biotic interactions (B). The theoretical background of the package can be found in Soberón and Osorio-Olvera (2023) &lt;doi:10.1111/jbi.14587&gt;.">
 <meta property="og:description" content="Species Distribution Modeling (SDM) is a practical methodology that aims to estimate the area of distribution of a species. However, most of the work has focused on estimating static expressions of the correlation between environmental variables. The outputs of correlative species distribution models can be interpreted as maps of the suitable environment for a species but not generally as maps of its actual distribution. Soberón and Peterson (2005) &lt;doi:10.17161/bi.v2i0.4&gt; presented the BAM scheme, a heuristic framework that states that the occupied area of a species occurs on sites that have been accessible through dispersal (M) and have both favorable biotic (B) and abiotic conditions (A). The bamm package implements classes and functions to operate on each element of the BAM and by using a cellular automata model where the occupied area of a species at time t is estimated by the multiplication of three binary matrices: one matrix represents movements (M), another abiotic -niche- tolerances (A), and a third, biotic interactions (B). The theoretical background of the package can be found in Soberón and Osorio-Olvera (2023) &lt;doi:10.1111/jbi.14587&gt;.">
@@ -136,8 +135,8 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Luis Osorio-Olvera <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0701-5398" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Jorge Soberón <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-2160-4148" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Luis Osorio-Olvera <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0701-5398" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Jorge Soberón <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-2160-4148" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -161,7 +160,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
