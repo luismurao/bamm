@@ -46,7 +46,7 @@ en_models <- raster::stack(enm_path) >0.01
 pam <- bamm::models2pam(en_models,
                         return_coords=TRUE,
                         sparse=FALSE,
-                        parallel=FALSE,ncores=2)
+                        parallel=FALSE,ncores=1)
 head(pam)
 }
 }
