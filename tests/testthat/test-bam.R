@@ -496,7 +496,7 @@ test_that("community_sim simulates community dynamics and returns an
   bamm::plot(rdivan,plot_type="dispersion_field_map")
   expect_s4_class(rdivan,"diversity_range")
   rdivan <- bamm::diversity_range_analysis(pam=pam,parallel = TRUE,
-                                           xy_mat=xy_mat,
+                                           xy_mat=xy_mat,n_cores =1,
                                            raster_templete = NULL,
                                            return_null_dfield=TRUE)
   bamm::plot(rdivan,plot_type="diversity_range_map")
