@@ -382,7 +382,7 @@ test_that("sim2Raster returns a stack of the distribution at time t",{
   model <- raster::raster(model_path)
   sparse_mod <- bamm::model2sparse(model,0.2)
   adj_mod <- bamm::adj_mat(sparse_mod,ngbs = 1,eigen_sys = TRUE,1)
-  print(adj_mod)
+  #print(adj_mod)
   occs_lep_cal <- data.frame(longitude = c(-115.10417,
                                            -104.90417),
                              latitude = c(29.61846,
@@ -393,6 +393,10 @@ test_that("sim2Raster returns a stack of the distribution at time t",{
                                set_M = adj_mod,
                                initial_points = occs_sparse,
                                nsteps = 10)
+  sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+                               set_M = adj_mod,
+                               initial_points = occs_sparse,
+                               nsteps = 10,rcpp = FALSE)
   expect_error(bamm::sim2Raster(sdm_simul = "sdm_lep_cal",
                                 which_steps = seq(1,10,by=1)))
   expect_error(bamm::sim2Raster(sdm_simul = sdm_lep_cal,
@@ -678,7 +682,7 @@ test_that("predict retuns a prediction",{
   smd_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
                                set_M = adj_mod,
                                initial_points = occs_sparse,
-                               nsteps = 10)
+                               nsteps = 10,rcpp = TRUE)
   #----------------------------------------------------------------------------
   # Predict species' distribution under suitability change
   # scenarios (could be climate chage scenarios).
