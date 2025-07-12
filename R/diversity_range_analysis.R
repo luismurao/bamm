@@ -67,7 +67,7 @@
 #'                                          xy_mat=xy_mat,
 #'                                          raster_templete = en_models[[1]],
 #'                                          parallel=TRUE,
-#'                                          n_cores=2,
+#'                                          n_cores=1,
 #'                                          return_null_dfield=TRUE)
 #' bamm::plot(rdivan,plot_type="diversity_range")
 #' bamm::plot(rdivan,plot_type="diversity_range_map")
