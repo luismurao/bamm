@@ -2,7 +2,7 @@ Type: Package
 Package: bamm
 Title: Species Distribution Models as a Function of Biotic, Abiotic and
     Movement Factors (BAM)
-Version: 0.5.0
+Version: 0.5.5
 Authors@R: c(
     person("Luis", "Osorio-Olvera", 
            email = "luismurao@gmail.com", 
@@ -39,7 +39,7 @@ License: GPL (>= 3)
 URL: https://luismurao.github.io/bamm/
 BugReports: https://github.com/luismurao/bamm/issues
 Depends:
-    R (>= 3.5.0)
+    R (>= 4.1.0)
 Imports: 
     animation (>= 2.3),
     crosstalk,
