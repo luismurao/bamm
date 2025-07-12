@@ -71,7 +71,7 @@ The stochastic model uses a suitability values to model dispersal probabilities.
 These suitability values can be either obtained from the continues model stored in
 the set_A object or from the sp_interaction_model (RasterLayer).
 If the parameter rcpp is set to TRUE the model will be run using native C++
-code throw Rcpp and RcppArmadillo package.
+code through Rcpp and RcppArmadillo packages.
 }
 \examples{
 \donttest{
