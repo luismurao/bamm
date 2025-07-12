@@ -51,7 +51,7 @@ sim2Raster <- function(sdm_simul,which_steps = NULL){
     stepsvec <- which_steps
   }
 
-  sim_stack <- stepsvec %>% purrr::map(function(x){
+  sim_stack <- stepsvec |> purrr::map(function(x){
     grid_base <- sdm_simul@niche_model * 0
     grid_base[sdm_simul@cellIDs] <- sdm_simul@sdm_sim[[x]]
     return(grid_base)
