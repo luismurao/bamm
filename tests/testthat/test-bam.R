@@ -464,18 +464,18 @@ test_that("community_sim simulates community dynamics and returns an
 
   expect_error(bamm::models2pam(mods_stack = "en_models",
                                 sparse=FALSE,parallel=FALSE,
-                                ncores=2))
+                                ncores=1))
   pam <- bamm::models2pam(mods_stack = en_models,sparse=TRUE,
-                          parallel=TRUE,ncores=2)
+                          parallel=TRUE,ncores=1)
   expect_s4_class(pam,"dgCMatrix")
   pam <- bamm::models2pam(mods_stack = en_models,sparse=TRUE,
-                          parallel=FALSE,ncores=2)
+                          parallel=FALSE,ncores=1)
   expect_s4_class(pam,"dgCMatrix")
   pam <- bamm::models2pam(mods_stack = en_models,
-                          sparse=FALSE,parallel=TRUE,ncores=2)
+                          sparse=FALSE,parallel=TRUE,ncores=1)
   expect_match(class(pam)[1],"matrix")
   pam <- bamm::models2pam(mods_stack = en_models,sparse=FALSE,
-                          parallel=FALSE,ncores=2)
+                          parallel=FALSE,ncores=1)
   expect_match(class(pam)[1],"matrix")
 
   # Test for diversity_range_analysis
