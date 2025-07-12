@@ -83,7 +83,7 @@ bam_clusters <- function(model,ngbs=1,set_M = NULL,plot_model=FALSE){
 
   to_find <- seq_along(cl$csize)[cl$csize > 1]
 
-  clusterDF <- to_find %>%
+  clusterDF <- to_find |>
     purrr::map_df(function(x){
       cellID <- as.numeric(igraph::V(net)$name[cl$membership %in% x])
       dcl <- data.frame(cluster=x,
@@ -120,7 +120,7 @@ bam_clusters <- function(model,ngbs=1,set_M = NULL,plot_model=FALSE){
 
   cols <- cluster_color[clusterDF$cluster]
 
-  m <- leaflet::leaflet(df_clust1) %>% leaflet::addTiles()
+  m <- leaflet::leaflet(df_clust1) |> leaflet::addTiles()
 
   if(plot_model){
     #nw <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
@@ -130,13 +130,13 @@ bam_clusters <- function(model,ngbs=1,set_M = NULL,plot_model=FALSE){
     mod <- round(msparse@niche_model)
     mod <- raster::as.factor(mod)
     #raster::crs(mod)
-    m <- m %>%
+    m <- m |>
       leaflet::addRasterImage( mod,
                                colors = c("gray100","blue"),
                                opacity = 0.5)
   }
 
-  m <- m %>% leaflet::addCircleMarkers(lng = ~x,
+  m <- m |> leaflet::addCircleMarkers(lng = ~x,
                                        lat = ~y,
                                        popup = cluster_map,radius = 0.1,
                                        color = cols,opacity = 1)
