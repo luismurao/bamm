@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bamm</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,12 +45,14 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sdm_sim</span><span class="op">(</span></span>
 <span>  <span class="va">set_A</span>,</span>
 <span>  <span class="va">set_M</span>,</span>
+<span>  sp_interaction_model <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">initial_points</span>,</span>
 <span>  <span class="va">nsteps</span>,</span>
 <span>  stochastic_dispersal <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  disp_prop2_suitability <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  disper_prop <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  progress_bar <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  progress_bar <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  rcpp <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -67,6 +69,11 @@
 <dd><p>A setM object containing the adjacency matrix of the
 study area.
 See <code><a href="adj_mat.html">adj_mat</a></code></p></dd>
+
+
+<dt id="arg-sp-interaction-model">sp_interaction_model<a class="anchor" aria-label="anchor" href="#arg-sp-interaction-model"></a></dt>
+<dd><p>A RasterLayer representing a suitability model
+of a species positive interaction. See details</p></dd>
 
 
 <dt id="arg-initial-points">initial_points<a class="anchor" aria-label="anchor" href="#arg-initial-points"></a></dt>
@@ -96,6 +103,10 @@ value must be declared in the parameter `disper_prop`.</p></dd>
 <dt id="arg-progress-bar">progress_bar<a class="anchor" aria-label="anchor" href="#arg-progress-bar"></a></dt>
 <dd><p>Show progress bar</p></dd>
 
+
+<dt id="arg-rcpp">rcpp<a class="anchor" aria-label="anchor" href="#arg-rcpp"></a></dt>
+<dd><p>Logical. Use native C++ code to run the model.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -116,6 +127,11 @@ in \(t+1\) start with those occupied at time \(t\) denoted by
 \(\mathbf{G}_j(t)\), allow the individuals to disperse among
 adjacent patches, as defined by \(\mathbf{M}_j\), then remove individuals
 from patches that are unsuitable, as defined by \(\mathbf{A}_j(t)\).</p>
+<p>The stochastic model uses a suitability values to model dispersal probabilities.
+These suitability values can be either obtained from the continues model stored in
+the set_A object or from the sp_interaction_model (RasterLayer).
+If the parameter rcpp is set to TRUE the model will be run using native C++
+code through Rcpp and RcppArmadillo packages.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -150,12 +166,14 @@ from patches that are unsuitable, as defined by \(\mathbf{A}_j(t)\).</p>
 <span class="r-in"><span><span class="va">sdm_lep_cal</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu">sdm_sim</span><span class="op">(</span>set_A <span class="op">=</span> <span class="va">sparse_mod</span>,</span></span>
 <span class="r-in"><span>                             set_M <span class="op">=</span> <span class="va">adj_mod</span>,</span></span>
 <span class="r-in"><span>                             initial_points <span class="op">=</span> <span class="va">occs_sparse</span>,</span></span>
-<span class="r-in"><span>                             nsteps <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>                             nsteps <span class="op">=</span> <span class="fl">100</span>,</span></span>
 <span class="r-in"><span>                             stochastic_dispersal <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>                             disp_prop2_suitability<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                             disp_prop2_suitability<span class="op">=</span><span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>                             disper_prop<span class="op">=</span><span class="fl">0.5</span>,</span></span>
 <span class="r-in"><span>                             progress_bar<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |======                                                                |   9%  |                                                                              |=============                                                         |  18%  |                                                                              |===================                                                   |  27%  |                                                                              |=========================                                             |  36%  |                                                                              |================================                                      |  45%  |                                                                              |======================================                                |  55%  |                                                                              |=============================================                         |  64%  |                                                                              |===================================================                   |  73%  |                                                                              |=========================================================             |  82%  |                                                                              |================================================================      |  91%  |                                                                              |======================================================================| 100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simulation progress:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0%   10   20   30   40   50   60   70   80   90   100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [                                                  ][[&gt;                                                 ] 1%[=&gt;                                                ] 3%[==&gt;                                               ] 5%[===&gt;                                              ] 7%[====&gt;                                             ] 9%[=====&gt;                                            ] 11%[======&gt;                                           ] 13%[=======&gt;                                          ] 15%[========&gt;                                         ] 17%[=========&gt;                                        ] 19%[==========&gt;                                       ] 21%[===========&gt;                                      ] 23%[============&gt;                                     ] 25%[=============&gt;                                    ] 27%[==============&gt;                                   ] 29%[===============&gt;                                  ] 31%[================&gt;                                 ] 33%[=================&gt;                                ] 35%[==================&gt;                               ] 37%[===================&gt;                              ] 39%[====================&gt;                             ] 41%[=====================&gt;                            ] 43%[======================&gt;                           ] 45%[=======================&gt;                          ] 47%[========================&gt;                         ] 49%[=========================&gt;                        ] 51%[==========================&gt;                       ] 53%[===========================&gt;                      ] 55%[============================&gt;                     ] 57%[=============================&gt;                    ] 59%[==============================&gt;                   ] 61%[===============================&gt;                  ] 63%[================================&gt;                 ] 65%[=================================&gt;                ] 67%[==================================&gt;               ] 69%[===================================&gt;              ] 71%[====================================&gt;             ] 73%[=====================================&gt;            ] 75%[======================================&gt;           ] 77%[=======================================&gt;          ] 79%[========================================&gt;         ] 81%[=========================================&gt;        ] 83%[==========================================&gt;       ] 85%[===========================================&gt;      ] 87%[============================================&gt;     ] 89%[=============================================&gt;    ] 91%[==============================================&gt;   ] 93%[===============================================&gt;  ] 95%[================================================&gt; ] 97%[=================================================&gt;] 99%[==================================================] 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sim_res</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu"><a href="sim2Raster.html">sim2Raster</a></span><span class="op">(</span><span class="va">sdm_lep_cal</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_res</span><span class="op">)</span></span></span>
