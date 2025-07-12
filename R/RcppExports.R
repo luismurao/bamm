@@ -21,3 +21,7 @@ null_dispersion_field_cat <- function(dfield, dfield_rand, lower_interval, upper
     .Call('_bamm_null_dispersion_field_cat', PACKAGE = 'bamm', dfield, dfield_rand, lower_interval, upper_interval)
 }
 
+sdm_sim_rcpp <- function(A, M_orig, g0_input, suit_values, adj_list, nsteps, stochastic_dispersal, disp_prop2_suitability, disper_prop, progress_bar) {
+    .Call('_bamm_sdm_sim_rcpp', PACKAGE = 'bamm', A, M_orig, g0_input, suit_values, adj_list, nsteps, stochastic_dispersal, disp_prop2_suitability, disper_prop, progress_bar)
+}
+
