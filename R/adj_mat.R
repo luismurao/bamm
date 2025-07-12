@@ -77,7 +77,7 @@ adj_mat <- function(modelsparse,ngbs=1,eigen_sys=FALSE,which_eigs=1){
   id_nona <- seq_along(no_na)
   newff <- as.factor(c(r_ad[,1],r_ad[,2]))
   newff2 <- newff
-  connected_cells <- as.numeric(as.character(levels(newff)))
+  connected_cells <- unique(c(r_ad[,1],r_ad[,2]))# as.numeric(as.character(levels(newff)))
   connected_ids <- id_nona[which(no_na %in% connected_cells)]
   levels(newff2) <- connected_ids
   newnu <- as.numeric(as.character(newff2))
@@ -86,10 +86,10 @@ adj_mat <- function(modelsparse,ngbs=1,eigen_sys=FALSE,which_eigs=1){
   to <- as.numeric(as.character(newff[-idc]))
   from_nu <- newnu[idc]
   to_nu <- newnu[-idc]
-  big_vec <- c(from,to, from_nu,to_nu)
+  big_vec <- c(from,to, from_nu,to_nu)#,to_nu-1)
   r_ad_b <- matrix(big_vec,ncol = 4,byrow = FALSE)
   colnames(r_ad_b) <- c("FromRasCell","ToRasCell",
-                        "FromNonNaCell","ToNonNaCell")
+                        "FromNonNaCell","ToNonNaCell")#,"ToNonNaCell_C")
   rd_adlist <- split.data.frame(r_ad_b, r_ad_b[,3])
 
   g_set0 <- setM(adj_matrix = m_ad1,
