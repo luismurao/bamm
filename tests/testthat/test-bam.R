@@ -486,6 +486,7 @@ test_that("community_sim simulates community dynamics and returns an
   rdivan <- bamm::diversity_range_analysis(pam=pam,parallel = TRUE,
                                            xy_mat=xy_mat,
                                            raster_templete = en_models[[1]],
+                                           n_cores = 1,
                                            return_null_dfield=TRUE)
   expect_error(bamm::plot(rdivan,plot_type="diversity_range1"))
   bamm::plot(rdivan,plot_type="diversity_range_map")
@@ -544,13 +545,13 @@ test_that("null_distribution_field_distribution expects a matrix",{
   pam <- data.frame(matrix(rbinom(100,1,0.3),nrow = 10,ncol = 10))
   dfield_rand <- bamm::null_dispersion_field_distribution(pam,n_iter=10,
                                                           parallel=FALSE,
-                                                          n_cores = 2)
+                                                          n_cores = 1)
   dfield_rand <- bamm::null_dispersion_field_distribution(pam,n_iter=10,
                                                           parallel=TRUE,
-                                                          n_cores = 2)
+                                                          n_cores = 1)
   expect_error(bamm::null_dispersion_field_distribution("pam",n_iter=10,
                                                         parallel=FALSE,
-                                                        n_cores = 2))
+                                                        n_cores = 1))
   expect_vector(dfield_rand)
 })
 
