@@ -26,7 +26,7 @@
 #' pam <- bamm::models2pam(en_models,
 #'                         return_coords=TRUE,
 #'                         sparse=FALSE,
-#'                         parallel=FALSE,ncores=2)
+#'                         parallel=FALSE,ncores=1)
 #' head(pam)
 #' }
 models2pam <- function(mods_stack,return_coords=FALSE,sparse=TRUE,
