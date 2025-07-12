@@ -52,11 +52,11 @@ csim2pam <- function(community_sim, which_steps){
                             community_sim@community_sim[[1]]@cellIDs)
 
   pamL <- lapply(which_steps, function(t_step){
-    sim_t <- Matrix::t(community_sim@community_sim[[1]]@sdm_sim[[t_step]])
+    sim_t <- community_sim@community_sim[[1]]@sdm_sim[[t_step]]
     sim_t <- Matrix::cbind2(xys,sim_t)
     for (sps in 2:n_sps) {
       sim_tm <- community_sim@community_sim[[sps]]@sdm_sim[[t_step]]
-      sim_t <- Matrix::cbind2(sim_t,Matrix::t(sim_tm))
+      sim_t <- Matrix::cbind2(sim_t,sim_tm)
     }
     return(sim_t)
   })
