@@ -178,6 +178,7 @@ see Soberon et al. (2022). To plot diversity range results use
 <span class="r-in"><span><span class="va">nonas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">en_models</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">xy_mat</span> <span class="op">&lt;-</span> <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://edzer.github.io/sp/reference/coordinates.html" class="external-link">coordinates</a></span><span class="op">(</span><span class="va">en_models</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">[</span> <span class="va">nonas</span>,<span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">pam</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu"><a href="models2pam.html">models2pam</a></span><span class="op">(</span><span class="va">en_models</span>,sparse<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: sp</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">rdivan</span> <span class="op">&lt;-</span> <span class="fu">bamm</span><span class="fu">::</span><span class="fu">diversity_range_analysis</span><span class="op">(</span>pam<span class="op">=</span><span class="va">pam</span>,</span></span>
 <span class="r-in"><span>                                         xy_mat<span class="op">=</span><span class="va">xy_mat</span>,</span></span>
@@ -300,6 +301,9 @@ see Soberon et al. (2022). To plot diversity range results use
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:ggplot2’:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     last_plot</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:raster’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     select</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:stats’:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     filter</span>
