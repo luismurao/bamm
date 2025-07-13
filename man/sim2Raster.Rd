@@ -4,13 +4,15 @@
 \alias{sim2Raster}
 \title{sim2Raster: Convert a BAM simulation object to RasterStack}
 \usage{
-sim2Raster(sdm_simul, which_steps = NULL)
+sim2Raster(sdm_simul, which_steps = NULL, progress_bar = TRUE)
 }
 \arguments{
 \item{sdm_simul}{A bam object. See \code{\link[bamm]{sdm_sim}}}
 
 \item{which_steps}{A numeric vector indicating the simulation steps that
 are going to be converted into raster layers.}
+
+\item{progress_bar}{Show progress bar}
 }
 \value{
 A RasterStack of species' distribution at each simulation step
