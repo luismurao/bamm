@@ -75,6 +75,12 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
                   double disper_prop,
                   bool progress_bar) {
 
+  // Set the same random seed as R
+  if(stochastic_dispersal){
+    Rcpp::Environment baseEnv("package:base");
+    Rcpp::Function setSeed = baseEnv["set.seed"];
+    setSeed(0); //any other number would do it here
+  }
   // Convert inputs
   sp_mat A_mat = Rcpp::as<arma::sp_mat>(A);
   sp_mat M_mat = Rcpp::as<arma::sp_mat>(M_orig);
@@ -128,7 +134,7 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
   }
 
   // Progress bar setup
-  const int bar_width = 50;
+  const int bar_width = 70;
   int progress_interval = std::max(1, nsteps / bar_width);
 
   if (progress_bar) {
