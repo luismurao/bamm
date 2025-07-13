@@ -74,39 +74,42 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
                   bool disp_prop2_suitability,
                   double disper_prop,
                   bool progress_bar) {
-
-  // Set the same random seed as R
+  // Set random seed if needed
   if(stochastic_dispersal){
     Rcpp::Environment baseEnv("package:base");
     Rcpp::Function setSeed = baseEnv["set.seed"];
-    setSeed(0); //any other number would do it here
+    setSeed(0);
   }
-  // Convert inputs
+
+  // Convert inputs with dimension checks
   sp_mat A_mat = Rcpp::as<arma::sp_mat>(A);
   sp_mat M_mat = Rcpp::as<arma::sp_mat>(M_orig);
-  sp_mat g0 = Rcpp::as<arma::sp_mat>(g0_input);  // Column vector
+  sp_mat g0 = Rcpp::as<arma::sp_mat>(g0_input);
   const uword n = A_mat.n_rows;
 
-  // Extract binary suitability mask (0/1)
+  if (g0.n_rows != n || g0.n_cols != 1) {
+    stop("Initial state vector must be Nx1");
+  }
+
+  // Binary suitability
   vec binary_suit(n, fill::zeros);
   for(uword i = 0; i < n; ++i) {
     binary_suit(i) = (A_mat(i, i) > 0) ? 1.0 : 0.0;
   }
 
-  // Prepare suitability probabilities
+  // Suitability probabilities
   vec suit_probs = as<vec>(suit_values);
   if(disp_prop2_suitability) {
     suit_probs *= disper_prop;
   }
 
-  // Rebuild neighbor cache with proper index mapping
+  // Build neighbor cache
   std::vector<std::vector<uword>> neighbors(n);
   CharacterVector list_names = adj_list.names();
 
   for (R_xlen_t i = 0; i < adj_list.size(); i++) {
     if (adj_list[i] == R_NilValue) continue;
 
-    // Get source cell index from list name (1-based to 0-based)
     int src_cell_1based = std::stoi(as<std::string>(list_names[i]));
     uword src_cell = static_cast<uword>(src_cell_1based - 1);
 
@@ -116,14 +119,17 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
     if (!df.containsElementNamed("ToNonNaCell")) continue;
 
     NumericVector to_non_na = df["ToNonNaCell"];
+    neighbors[src_cell].reserve(to_non_na.size());
+
     for (R_xlen_t j = 0; j < to_non_na.size(); j++) {
-      uword nb_index = static_cast<uword>(to_non_na[j]-1);  // Already 0-based
+      uword nb_index = static_cast<uword>(to_non_na[j]-1);
       if (nb_index < n) {
         neighbors[src_cell].push_back(nb_index);
       }
     }
   }
 
+  // Pre-allocate output
   List sdm(nsteps + 1);
   sdm[0] = g0;
 
@@ -133,47 +139,45 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
     AMA_base = A_mat * M_mat * A_mat;
   }
 
-  // Progress bar setup
-  const int bar_width = 70;
+  // Progress setup
+  const int bar_width = 50;
   int progress_interval = std::max(1, nsteps / bar_width);
-
   if (progress_bar) {
-    Rprintf("Simulation progress:\n");
-    Rprintf("0%%   10   20   30   40   50   60   70   80   90   100%%\n");
-    Rprintf("[");
+    Rprintf("Simulation progress:\n[");
     for (int i = 0; i < bar_width; i++) Rprintf(" ");
     Rprintf("]\r[");
-    R_FlushConsole();
   }
 
   // Main simulation loop
+  sp_mat g0_next;
   for (int step = 1; step <= nsteps; ++step) {
     if (progress_bar && (step % 10 == 0)) Rcpp::checkUserInterrupt();
 
-    sp_mat g0_next = g0;  // Start with persistence
+    g0_next = g0;
 
     if (stochastic_dispersal) {
-      // Snapshot of current occupied cells
-      umat occ_locs = find(g0 > 0);
+      // Generate random numbers in bulk
+      vec rand_values(n, fill::randu);
 
-      for (uword i = 0; i < occ_locs.n_rows; ++i) {
-        uword cell = occ_locs(i, 0);  // Row index in column vector
+      const uvec& occ_locs = find(g0 > 0);
+      const uword n_occ = occ_locs.n_elem;
 
-        // Skip invalid cells
+      for (uword i = 0; i < n_occ; ++i) {
+        const uword cell = occ_locs(i);
         if (cell >= neighbors.size()) continue;
 
-        // Process neighbors
-        for (uword nb_index : neighbors[cell]) {
-          // Skip unsuitable cells
+        const std::vector<uword>& cell_neighbors = neighbors[cell];
+        const uword n_nb = cell_neighbors.size();
+
+        for (uword j = 0; j < n_nb; ++j) {
+          const uword nb_index = cell_neighbors[j];
           if (binary_suit(nb_index) < 0.5) continue;
 
-          // Calculate colonization probability
-          double prob = disp_prop2_suitability ?
-          suit_probs(nb_index) :
-            disper_prop;
+          const double prob = disp_prop2_suitability ?
+          suit_probs(nb_index) : disper_prop;
 
-          if (randu() < prob) {
-            g0_next(nb_index, 0) = 1.0;  // Colonize neighbor
+          if (rand_values(nb_index) < prob) {
+            g0_next(nb_index, 0) = 1.0;
           }
         }
       }
@@ -186,18 +190,14 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
     g0 = g0_next;
     sdm[step] = g0;
 
-    // Update progress bar
+    // Progress update
     if (progress_bar && (step % progress_interval == 0 || step == nsteps)) {
-      double progress = static_cast<double>(step) / nsteps;
-      int pos = static_cast<int>(bar_width * progress);
+      int pos = static_cast<int>(bar_width * static_cast<double>(step) / nsteps);
       Rprintf("\r[");
-      for (int i = 0; i < bar_width; i++) {
-        if (i < pos) Rprintf("=");
-        else if (i == pos) Rprintf(">");
-        else Rprintf(" ");
-      }
-      Rprintf("] %d%%", static_cast<int>(progress * 100));
-      R_FlushConsole();
+      for (int i = 0; i < pos; i++) Rprintf("=");
+      if (pos < bar_width) Rprintf(">");
+      for (int i = pos+1; i < bar_width; i++) Rprintf(" ");
+      Rprintf("] %3d%%", static_cast<int>(100.0 * step / nsteps));
     }
   }
 
