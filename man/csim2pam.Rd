@@ -4,12 +4,14 @@
 \alias{csim2pam}
 \title{csim2pam: Converts community simulation to a Presence Absence Matrix (PAM)}
 \usage{
-csim2pam(community_sim, which_steps)
+csim2pam(community_sim, which_steps, progress_bar = TRUE)
 }
 \arguments{
 \item{community_sim}{An object of class \code{\link[bamm]{community_bam}}.}
 
 \item{which_steps}{Steps in the simulation object to be converted into a PAM}
+
+\item{progress_bar}{Show progress bar}
 }
 \value{
 An object of class \code{\link[bamm]{pam}}; it contains five slots.
