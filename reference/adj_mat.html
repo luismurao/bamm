@@ -89,14 +89,19 @@ non-NA coordinates (coordinates), and a matrix of eigen vectors (eigen_vec).</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The model is a raster object of the area where the dispersal
-process will occur.
-The number of neighbors depends on the dispersal abilities of the species
+process will occur.</p>
+<p>The function creates an adjacency matrix where cells are considered connected based on:</p><ul><li><p>The specified neighborhood size (`ngbs`)</p></li>
+<li><p>The spatial resolution of the input raster</p></li>
+<li><p>Only non-NA cells in the original model</p></li>
+</ul><p>When `eigen_sys = TRUE`, the function performs spectral decomposition using <code><a href="https://rdrr.io/pkg/RSpectra/man/eigs.html" class="external-link">eigs</a></code>,
+which is particularly useful for:</p><ul><li><p>Analyzing network connectivity properties</p></li>
+<li><p>Identifying clusters or communities in the landscape</p></li>
+<li><p>Modeling dispersal processes using spectral graph theory</p></li>
+</ul><p>The number of neighbors depends on the dispersal abilities of the species
 and the spatial resolution of the niche model; for example, a species's
 with big dispersal abilities will move throughout more than 1 km^2 per day,
 so the idea is to give an approximate number of moving neighbors (pixels)
-per unit of time.
-For more information about see adjacency matrices in the context of
-the theory of area of distribution (Soberon and Osorio-Olvera, 2022).</p>
+per unit of time.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -106,6 +111,15 @@ the theory of area of distribution (Soberon and Osorio-Olvera, 2022).</p>
 <a href="https://doi.org/10.1111/jbi.14587" class="external-link">doi:10.1111/jbi.14587</a>
 , <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/jbi.14587" class="external-link">https://onlinelibrary.wiley.com/doi/abs/10.1111/jbi.14587</a>.
 .</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index">
+<ul><li><p><code><a href="model2sparse.html">model2sparse</a></code> for creating the input `setA` object</p></li>
+<li><p><code><a href="setM-class.html">setM</a></code> for the output class structure</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/RSpectra/man/eigs.html" class="external-link">eigs</a></code> for the eigen decomposition implementation</p></li>
+</ul><p>For more information about see adjacency matrices in the context of
+the theory of area of distribution (Soberon and Osorio-Olvera, 2022).</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
