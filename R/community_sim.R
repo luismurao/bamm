@@ -102,7 +102,7 @@ community_sim <- function(en_models,
                               nsteps = nsteps,
                               stochastic_dispersal = stochastic_dispersal,
                               disp_prop2_suitability=disp_prop2_suitability,
-                              disper_prop=disper_prop)
+                              disper_prop=disper_prop,progress_bar = FALSE)
     utils::setTxtProgressBar(pb, x)
 
     return(sdmsimul)
