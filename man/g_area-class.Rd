@@ -4,26 +4,30 @@
 \name{g_area-class}
 \alias{g_area-class}
 \alias{g_area}
-\alias{coordinates-class}
-\title{S4 classes to organize data and results of \code{bamm} objects}
-\value{
-An object of class g_area
-}
+\title{S4 Class Hierarchy for BAM (Biotic-Abiotic-Movement) Modeling}
 \description{
-S4 classes to organize data and results of \code{bamm} objects
+This documentation describes the S4 class system used in the \code{bamm} package
+for modeling species distributions using the BAM (Biotic-Abiotic-Movement) framework.
+The classes organize data and results for ecological niche modeling, dispersal
+simulation, and biodiversity analysis.
+
+The foundational class containing geographic coordinates and optional eigen
+analysis results for spectral graph methods.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{coordinates}}{A two column matrix with coordinates}
+\item{\code{coordinates}}{A numeric matrix with two columns (x, y) representing
+geographic coordinates of non-NA cells}
 
-\item{\code{eigen_vec}}{Eigen vector of adjacency matrix}
+\item{\code{eigen_vec}}{Matrix containing eigenvectors from adjacency matrix analysis}
 
-\item{\code{eigen_val}}{Eigen value of adjacency matrix
-slot g_model A raster representing the geographic area
-slot g_sparse A sparse matrix of the geographic area}
+\item{\code{eigen_val}}{Numeric vector containing eigenvalues from adjacency matrix analysis}
 }}
 
+\seealso{
+\code{\link{setA-class}}, \code{\link{setM-class}}
+}
 \author{
 Luis Osorio-Olvera & Jorge Soberón
 }

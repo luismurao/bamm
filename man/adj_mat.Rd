@@ -37,13 +37,27 @@ region of interest.
 \details{
 The model is a raster object of the area where the dispersal
 process will occur.
+
+The function creates an adjacency matrix where cells are considered connected based on:
+\itemize{
+  \item The specified neighborhood size (`ngbs`)
+  \item The spatial resolution of the input raster
+  \item Only non-NA cells in the original model
+}
+
+When `eigen_sys = TRUE`, the function performs spectral decomposition using \code{\link[RSpectra]{eigs}},
+which is particularly useful for:
+\itemize{
+  \item Analyzing network connectivity properties
+  \item Identifying clusters or communities in the landscape
+  \item Modeling dispersal processes using spectral graph theory
+}
+
 The number of neighbors depends on the dispersal abilities of the species
 and the spatial resolution of the niche model; for example, a species's
 with big dispersal abilities will move throughout more than 1 km^2 per day,
 so the idea is to give an approximate number of moving neighbors (pixels)
 per unit of time.
-For more information about see adjacency matrices in the context of
-the theory of area of distribution (Soberon and Osorio-Olvera, 2022).
 }
 \examples{
 x_coord <- c(-106.5699, -111.3737,-113.9332,
@@ -66,6 +80,15 @@ raster::plot(mx_grid_eigen)
 }
 \references{
 \insertRef{SoberonOsorio}{bamm}.
+}
+\seealso{
+\itemize{
+  \item \code{\link[bamm]{model2sparse}} for creating the input `setA` object
+  \item \code{\link[bamm]{setM}} for the output class structure
+  \item \code{\link[RSpectra]{eigs}} for the eigen decomposition implementation
+}
+For more information about see adjacency matrices in the context of
+the theory of area of distribution (Soberon and Osorio-Olvera, 2022).
 }
 \author{
 Luis Osorio-Olvera & Jorge Soberón
