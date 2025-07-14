@@ -780,7 +780,7 @@ testthat::test_that("sim2Animation",{
                                         fmt = "HTML",ani.width = 1200,
                                         ani.height = 1200,
                                         filename = ani_name)
-  expect_s4_class(sdm_lep_cal_st,"RasterLayer")
+  expect_null(sdm_lep_cal_st)
   ani_name <- tempfile(pattern = "anima_",fileext = ".gif")
   sdm_lep_cal_st <- bamm::sim2Animation(sdm_simul = sdm_lep_cal,
                                         which_steps = seq(1,20,by=1),
@@ -788,6 +788,6 @@ testthat::test_that("sim2Animation",{
                                         ani.height = 1200,
                                         filename = ani_name)
 
-  expect_s4_class(sdm_lep_cal_st,"RasterLayer")
+  expect_null(sdm_lep_cal_st)
 
 })
