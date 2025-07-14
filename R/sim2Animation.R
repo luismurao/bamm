@@ -59,150 +59,127 @@
 #' }
 #' }
 
-sim2Animation <- function(sdm_simul,which_steps,
-                          fmt="GIF",filename,
-                          png_keyword="sdm_sim",
+sim2Animation <- function(sdm_simul, which_steps,
+                          fmt = "GIF", filename,
+                          png_keyword = "sdm_sim",
                           extra_legend = NULL,
                           bg_color = "#F6F2E5",
                           suit_color = "#0076BE",
                           occupied_color = "#03C33F",
-                          gif_vel =0.8,
+                          gif_vel = 0.8,
                           ani.width = 1200,
                           ani.height = 1200,
-                          ani.res=300){
+                          ani.res = 300) {
 
+  # Validate inputs
   fmt <- toupper(fmt)
-  if(!fmt %in% c("GIF",'HTML'))
-    stop("fmt should be GIF or HTML")
-
-  dir1 <- unlist(strsplit(filename,split = "[/]|[\\]"))
-  filename <- paste0(dir1,collapse = "/")
-  dir2 <- paste0(dir1[1:(length(dir1)-1)],collapse = '/')
-  dir2 <- gsub("[\\]","/",dir2)
-
-  which_steps <- c(0,which_steps)
-  titles <- paste("Simulation step:",which_steps)
-  if(!is.null(extra_legend)){
-    titles <- paste(titles,paste(extra_legend,collapse = "; "),
-                    sep="; ")
+  if(!fmt %in% c("GIF", "HTML")) {
+    stop("fmt should be either 'GIF' or 'HTML'")
   }
 
-  pb <- utils::txtProgressBar(min = 0,
-                              max = length(which_steps),
-                              style = 3)
+  # Prepare directory structure
+  filename <- normalizePath(filename, mustWork = FALSE)
+  dir2 <- dirname(filename)
+
+  # Prepare animation steps and titles
+  which_steps <- c(0, which_steps)
+  titles <- paste("Simulation step:", which_steps)
+  if(!is.null(extra_legend)) {
+    titles <- paste(titles, paste(extra_legend, collapse = "; "), sep = "; ")
+  }
+
+  # Set up progress bar
+  pb <- utils::txtProgressBar(min = 0, max = length(which_steps), style = 3)
   which_steps <- which_steps + 1
-  oldpar <- graphics::par(no.readonly = TRUE)
-  on.exit(graphics::par(oldpar),add=TRUE)
-  if(fmt == "GIF"){
+  oldpar <- NULL
+  # Only store if a graphics device is open
+  if(grDevices::dev.cur() != 1) {
+    oldpar <- graphics::par(no.readonly = TRUE)
+    on.exit({
+      if(!is.null(oldpar)) {
+        suppressWarnings(graphics::par(oldpar))
+      }
+    })
+  }
+
+
+  # Plotting function
+
+  plot_simulation_step <- function(i) {
+    # Create a new plot device if none exists
+    if(grDevices::dev.cur() == 1) {
+      grDevices::dev.new(width = ani.width/100, height = ani.height/100)
+    }
+
+    sdm_st <- sdm_simul@niche_model * 0
+    valuess <- sdm_simul@sdm_sim[[which_steps[i]]]
+    no_cero <- .nonzero(valuess)
+    sdm_st[sdm_simul@cellIDs] <- valuess
+    sdm_st <- sdm_simul@niche_model + sdm_st
+
+    # Determine colors based on values
+    maxv <- raster::maxValue(sdm_st)
+    minv <- raster::minValue(sdm_st)
+
+    colores <- if(maxv == 1 && minv == 1) {
+      suit_color
+    } else if(maxv == 2 && minv == 2) {
+      occupied_color
+    } else if(maxv == 2 && minv != 0) {
+      c(suit_color, occupied_color)
+    } else if((maxv == 2 && nrow(no_cero) > 2) || (maxv == 2 && minv == 0)) {
+      c(bg_color, suit_color, occupied_color)
+    } else {
+      c(bg_color, suit_color)
+    }
+
+    # Set plotting parameters
+    op <- graphics::par(mar = c(2, 2, 3, 2), xpd = FALSE)
+    on.exit(graphics::par(op), add = TRUE)
+
+    raster::plot(sdm_st, main = titles[i], col = colores,
+                 legend = FALSE, xaxt = 'n', yaxt = 'n')
+
+    graphics::par(xpd = TRUE)
+    graphics::legend(
+      "bottom",
+      legend = c("Unsuitable", "Suitable", "Occupied"),
+      fill = c(bg_color, suit_color, occupied_color),
+      horiz = TRUE,
+      inset = -0.2,
+      cex = 0.75,
+      bty = "n"
+    )
+    utils::setTxtProgressBar(pb, i)
+  }
+  # Generate animation based on format
+  if(fmt == "GIF") {  # Prepare plot parameters
+
     animation::ani.options(ani.width = ani.width,
                            ani.height = ani.height,
                            ani.res = ani.res)
 
-
-
     animation::saveGIF({
-      for (i in seq_along(which_steps)) {
-        sdm_st <- sdm_simul@niche_model *0
-        valuess <- sdm_simul@sdm_sim[[which_steps[i]]]
-        no_cero <- .nonzero(valuess)
-        sdm_st[sdm_simul@cellIDs] <- sdm_simul@sdm_sim[[which_steps[i]]]
-
-        sdm_st <- sdm_simul@niche_model + sdm_st
-
-        maxv <- raster::maxValue(sdm_st)
-        minv <- raster::minValue(sdm_st)
-        if(maxv ==1  && minv == 1){
-          colores <- suit_color
-        } else if(maxv == 2 && minv == 2){
-          colores <- occupied_color
-        } else if(maxv == 2 && minv != 0) {
-          colores <- c(suit_color,occupied_color)
-        } else if((maxv == 2 && nrow(no_cero)>2) || (maxv == 2 && minv==0) ){
-          colores <- c(bg_color,suit_color,occupied_color)
-        } else{
-          colores <- c(bg_color,suit_color)
-        }
-
-        graphics::par(xpd = FALSE)
-
-
-        raster::plot(sdm_st,main=titles[i],
-                     col=colores,legend=FALSE,
-                     xaxt = 'n',
-                     yaxt = 'n')
-
-        graphics::par(xpd = TRUE)
-        graphics::legend(
-          "bottom",
-          legend = c("Unsuitable", "Suitable", "Occupied"),
-          fill = c(bg_color,suit_color,occupied_color),
-          horiz = TRUE,
-          inset = -0.2,
-          cex = 0.75,
-          bty="n"
-        )
-        utils::setTxtProgressBar(pb, i)
+      for(i in seq_along(which_steps)) {
+        plot_simulation_step(i)
       }
+    }, interval = gif_vel, movie.name = filename)
 
-    },interval=gif_vel,ani.width = ani.width,
-    movie.name = filename)
-  }
-  if(fmt == "HTML"){
-
-
-    dir3 <- file.path(dir2,paste0("pngs_",png_keyword),
-                      fsep = '/')
-    dir3 <- gsub("[.]","_",dir3)
+  } else if(fmt == "HTML") {
+    dir3 <- file.path(dir2, paste0("pngs_", png_keyword))
+    dir3 <- gsub("[.]", "_", dir3)
+    # Prepare plot parameters
     animation::saveHTML({
-      for (i in seq_along(which_steps)) {
-        sdm_st <- sdm_simul@niche_model *0
-        valuess <- sdm_simul@sdm_sim[[which_steps[i]]]
-        no_cero <- .nonzero(valuess)
-        sdm_st[sdm_simul@cellIDs] <- sdm_simul@sdm_sim[[which_steps[i]]]
-
-        sdm_st <- sdm_simul@niche_model + sdm_st
-
-        maxv <- raster::maxValue(sdm_st)
-        minv <- raster::minValue(sdm_st)
-        if(maxv ==1  && minv == 1){
-          colores <- suit_color
-        } else if(maxv == 2 && minv == 2){
-          colores <- occupied_color
-        } else if(maxv == 2 && minv != 0) {
-          colores <- c(suit_color,occupied_color)
-        } else if((maxv == 2 && nrow(no_cero)>2) || (maxv == 2 && minv==0) ){
-          colores <- c(bg_color,suit_color,occupied_color)
-        } else{
-          colores <- c(bg_color,suit_color)
-        }
-        graphics::par(xpd = FALSE)
-
-
-        raster::plot(sdm_st,
-                     main=titles[i],
-                     col=colores,legend=FALSE,
-                     xaxt = 'n',
-                     yaxt = 'n')
-
-        graphics::par(xpd = TRUE)
-        graphics::legend(
-          "bottom",
-          legend = c("Unsuitable", "Suitable", "Occupied"),
-          fill = c(bg_color,suit_color,occupied_color),
-          horiz = TRUE,
-          inset = -0.2,
-          cex = 0.75,
-          bty="n"
-        )
-        utils::setTxtProgressBar(pb, i)
+      for(i in seq_along(which_steps)) {
+        plot_simulation_step(i)
       }
-    },img.name = png_keyword,
-    imgdir = dir3 ,
+    }, img.name = png_keyword,
+    imgdir = dir3,
     htmlfile = filename,
-    ani.width=ani.width,
-    ani.height=ani.width,interval=0.1,
-    ani.dev = function(...){grDevices::png(res=ani.res,...)})
+    ani.width = ani.width,
+    ani.height = ani.height,
+    interval = 0.1,
+    ani.dev = function(...) { grDevices::png(res = ani.res, ...) })
   }
-  return(sdm_st)
-
+  return(invisible())
 }
