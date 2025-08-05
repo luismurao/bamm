@@ -61,7 +61,7 @@
 
 sim2Animation <- function(sdm_simul, which_steps,
                           fmt = "GIF", filename,
-                          png_keyword = "sdm_sim",
+                          png_keyword = NULL,
                           extra_legend = NULL,
                           bg_color = "#F6F2E5",
                           suit_color = "#0076BE",
@@ -70,6 +70,12 @@ sim2Animation <- function(sdm_simul, which_steps,
                           ani.width = 1200,
                           ani.height = 1200,
                           ani.res = 300) {
+
+  if(is.null(png_keyword)){
+    png_keyword <- gsub("[.]","_",basename(filename))
+    #png_keyword <- gsub(,"_")
+  }
+
 
   # Validate inputs
   fmt <- toupper(fmt)
@@ -101,15 +107,10 @@ sim2Animation <- function(sdm_simul, which_steps,
       }
     })
   }
-
-
   # Plotting function
 
   plot_simulation_step <- function(i) {
     # Create a new plot device if none exists
-    if(grDevices::dev.cur() == 1) {
-      grDevices::dev.new(width = ani.width/100, height = ani.height/100)
-    }
 
     sdm_st <- sdm_simul@niche_model * 0
     valuess <- sdm_simul@sdm_sim[[which_steps[i]]]
@@ -134,22 +135,12 @@ sim2Animation <- function(sdm_simul, which_steps,
     }
 
     # Set plotting parameters
-    op <- graphics::par(mar = c(2, 2, 3, 2), xpd = FALSE)
-    on.exit(graphics::par(op), add = TRUE)
 
+    #x11()
     raster::plot(sdm_st, main = titles[i], col = colores,
                  legend = FALSE, xaxt = 'n', yaxt = 'n')
 
-    graphics::par(xpd = TRUE)
-    graphics::legend(
-      "bottom",
-      legend = c("Unsuitable", "Suitable", "Occupied"),
-      fill = c(bg_color, suit_color, occupied_color),
-      horiz = TRUE,
-      inset = -0.2,
-      cex = 0.75,
-      bty = "n"
-    )
+
     utils::setTxtProgressBar(pb, i)
   }
   # Generate animation based on format
@@ -158,20 +149,39 @@ sim2Animation <- function(sdm_simul, which_steps,
     animation::ani.options(ani.width = ani.width,
                            ani.height = ani.height,
                            ani.res = ani.res)
-
     animation::saveGIF({
       for(i in seq_along(which_steps)) {
         plot_simulation_step(i)
+        graphics::par(xpd = TRUE)
+        graphics::legend(
+          "bottom",
+          legend = c("Unsuitable", "Suitable", "Occupied"),
+          fill = c(bg_color, suit_color, occupied_color),
+          horiz = TRUE,
+          inset = -0.2,
+          cex = 0.75,
+          bty = "n"
+        )
       }
     }, interval = gif_vel, movie.name = filename)
 
   } else if(fmt == "HTML") {
     dir3 <- file.path(dir2, paste0("pngs_", png_keyword))
-    dir3 <- gsub("[.]", "_", dir3)
+    #dir3 <- gsub("[.]", "_", dir3)
     # Prepare plot parameters
     animation::saveHTML({
       for(i in seq_along(which_steps)) {
         plot_simulation_step(i)
+        graphics::par(xpd = TRUE)
+        graphics::legend(
+          "bottom",
+          legend = c("Unsuitable", "Suitable", "Occupied"),
+          fill = c(bg_color, suit_color, occupied_color),
+          horiz = TRUE,
+          inset = -0.2,
+          cex = 0.75,
+          bty = "n"
+        )
       }
     }, img.name = png_keyword,
     imgdir = dir3,
