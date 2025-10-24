@@ -2,7 +2,7 @@ Type: Package
 Package: bamm
 Title: Species Distribution Models as a Function of Biotic, Abiotic and
     Movement Factors (BAM)
-Version: 0.5.5
+Version: 0.5.6
 Authors@R: c(
     person("Luis", "Osorio-Olvera", 
            email = "luismurao@gmail.com", 
@@ -60,6 +60,7 @@ Imports:
     Rdpack (>= 0.11.0),
     RSpectra (>= 0.13.1),
     sp (>= 1.3.0),
+    exactextractr,
     stats,
     utils
 Suggests: 
