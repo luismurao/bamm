@@ -12,7 +12,7 @@ diversity_range_analysis(
   raster_templete = NULL,
   niter = 100,
   return_null_dfield = FALSE,
-  randal = "indep_swap",
+  randal = "fastball",
   parallel = TRUE,
   n_cores = 2
 )
