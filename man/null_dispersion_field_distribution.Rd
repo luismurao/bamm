@@ -8,7 +8,7 @@ dispersion field}
 null_dispersion_field_distribution(
   pam,
   n_iter = 10,
-  randal = "indep_swap",
+  randal = "fastball",
   parallel = TRUE,
   n_cores = 2
 )
