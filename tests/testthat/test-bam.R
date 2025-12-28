@@ -490,6 +490,8 @@ test_that("community_sim simulates community dynamics and returns an
                                            return_null_dfield=TRUE)
   expect_error(bamm::plot(rdivan,plot_type="diversity_range1"))
   bamm::plot(rdivan,plot_type="diversity_range_map")
+  bamm::plot(rdivan,plot_type="diversity_range_interactive")
+
   #bamm::plot(rdivan,plot_type="diversity_range_interactive")
   bamm::plot(rdivan,plot_type="alpha")
   bamm::plot(rdivan,plot_type="dispersion_field")
@@ -789,5 +791,27 @@ testthat::test_that("sim2Animation",{
                                         filename = ani_name)
 
   expect_null(sdm_lep_cal_st)
+
+})
+
+
+# Test polygons 2 pam
+
+testthat::test_that("pol2pam",{
+  # Example with sample data
+  uicn <- readRDS(system.file("extdata/uicn.rds",package = "bamm"))
+  sudam <- readRDS(system.file("extdata/suam.rds",package = "bamm"))
+  # Convert to PAM with 0.5 degree resolution
+  pam_result <- bamm::pol2pam(poly = uicn,
+                              taxon_attribute = "binomial",
+                              resolution = 0.5,
+                              polymask = NULL)
+
+  # With masking polygon
+  pam_masked <- pol2pam(poly = uicn,
+                        taxon_attribute = "binomial",
+                        resolution = 0.5,
+                        polymask = sudam)
+  testthat::expect_equal(class(pam_masked),"data.frame")
 
 })
