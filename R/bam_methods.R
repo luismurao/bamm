@@ -390,10 +390,11 @@ methods::setMethod(f = "plot",
                                               "LE/HR")
 
                              COLORES <- cols[names(cols) %in% names(codifi)]
+                             COLORES <- COLORES[COLORES %in% levels(labs)]
+
                              levels(labs) <-  names(COLORES)[order(COLORES,
                                                                    levels(labs))
                                                              ]
-
 
                              randiv <- x@diversity_range_raster
                              #vals <- stats::na.omit(randiv[])
