@@ -42,7 +42,7 @@
 #' head(dfield_rand)
 #' @export
 
-null_dispersion_field_distribution <- function(pam,n_iter=10,randal="indep_swap",
+null_dispersion_field_distribution <- function(pam,n_iter=10,randal="fastball",
                                                parallel=TRUE,n_cores=2){
   ral <- match.arg(arg = randal,
                    choices = c("indep_swap","curveball","fastball"))
