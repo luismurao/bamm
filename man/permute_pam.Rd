@@ -4,7 +4,7 @@
 \alias{permute_pam}
 \title{permute_pam: Function to permute a Presence-Absence-Matrix.}
 \usage{
-permute_pam(m, niter = NULL, as_sparse = FALSE, randal = "indep_swap")
+permute_pam(m, niter = NULL, as_sparse = FALSE, randal = "fastball")
 }
 \arguments{
 \item{m}{Presence-Absence-Matrix (PAM) or a binary matrix with columns
