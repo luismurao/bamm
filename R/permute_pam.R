@@ -38,7 +38,7 @@
 #' all(Matrix::colSums(pam) == Matrix::colSums(ppam))
 
 
-permute_pam <- function(m,niter=NULL,as_sparse=FALSE,randal="indep_swap"){
+permute_pam <- function(m,niter=NULL,as_sparse=FALSE,randal="fastball"){
   ral <- match.arg(arg = randal,
                    choices = c("indep_swap","curveball","fastball"))
   if(is.data.frame(m))
