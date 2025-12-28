@@ -50,7 +50,8 @@
 <span>  threshold_vec <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stochastic_dispersal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  disp_prop2_suitability <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  disper_prop <span class="op">=</span> <span class="fl">0.5</span></span>
+<span>  disper_prop <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  rcpp <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -90,12 +91,16 @@ visiting neighbor cells (Moore neighborhood).</p></dd>
 
 <dt id="arg-disp-prop-suitability">disp_prop2_suitability<a class="anchor" aria-label="anchor" href="#arg-disp-prop-suitability"></a></dt>
 <dd><p>Logical. If probability of dispersal
-is proportional to the suitability of reachable cells. The proportional
-value must be declared in the parameter `disper_prop`.</p></dd>
+is proportional to the suitability of reachable cells. The proportional</p></dd>
 
 
 <dt id="arg-disper-prop">disper_prop<a class="anchor" aria-label="anchor" href="#arg-disper-prop"></a></dt>
 <dd><p>Probability of dispersal to reachable cells.</p></dd>
+
+
+<dt id="arg-rcpp">rcpp<a class="anchor" aria-label="anchor" href="#arg-rcpp"></a></dt>
+<dd><p>Logical. Use native C++ code to run the model.
+value must be declared in the parameter `disper_prop`.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -161,7 +166,7 @@ details about the simulation see <code><a href="sdm_sim.html">sdm_sim</a></code>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
