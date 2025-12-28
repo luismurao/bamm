@@ -12,7 +12,8 @@ community_sim(
   threshold_vec = NULL,
   stochastic_dispersal = FALSE,
   disp_prop2_suitability = TRUE,
-  disper_prop = 0.5
+  disper_prop = 0.5,
+  rcpp = TRUE
 )
 }
 \arguments{
@@ -35,10 +36,12 @@ models.}
 visiting neighbor cells (Moore neighborhood).}
 
 \item{disp_prop2_suitability}{Logical. If probability of dispersal
-is proportional to the suitability of reachable cells. The proportional
-value must be declared in the parameter `disper_prop`.}
+is proportional to the suitability of reachable cells. The proportional}
 
 \item{disper_prop}{Probability of dispersal to reachable cells.}
+
+\item{rcpp}{Logical. Use native C++ code to run the model.
+value must be declared in the parameter `disper_prop`.}
 }
 \value{
 An object of class community_sim. The object contains simulation
