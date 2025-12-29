@@ -156,9 +156,6 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
     g0_next = g0;
 
     if (stochastic_dispersal) {
-      // Generate random numbers in bulk
-      vec rand_values(n, fill::randu);
-
       const uvec& occ_locs = find(g0 > 0);
       const uword n_occ = occ_locs.n_elem;
 
@@ -169,14 +166,26 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
         const std::vector<uword>& cell_neighbors = neighbors[cell];
         const uword n_nb = cell_neighbors.size();
 
+        // Generate random values for THIS cell's neighbors
+        vec rand_values(n_nb, fill::randu);
+
         for (uword j = 0; j < n_nb; ++j) {
           const uword nb_index = cell_neighbors[j];
+
+          // CRITICAL: Validate index bounds
+          if (nb_index >= n) {
+            Rcpp::warning("Neighbor index out of bounds: %llu >= %llu",
+                          (unsigned long long)nb_index, (unsigned long long)n);
+            continue;
+          }
+
           if (binary_suit(nb_index) < 0.5) continue;
 
           const double prob = disp_prop2_suitability ?
           suit_probs(nb_index) : disper_prop;
 
-          if (rand_values(nb_index) < prob) {
+          // Use rand_values[j] for THIS specific dispersal event
+          if (rand_values(j) < prob) {
             g0_next(nb_index, 0) = 1.0;
           }
         }
@@ -204,4 +213,3 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
   if (progress_bar) Rprintf("\n");
   return sdm;
 }
-
