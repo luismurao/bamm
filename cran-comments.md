@@ -1,3 +1,30 @@
+## Package update from version 0.5.0 to 0.6.0
+
+* Local check on  OS X 14.2, install, R 4.3.2
+
+── R CMD check results ──────────────── bamm 0.6.0 ────
+Duration: 2m 19.2s
+
+❯ checking dependencies in R code ... NOTE
+  Namespaces in Imports field not imported from:
+    ‘crosstalk’ ‘plotly’
+    All declared Imports should be used.
+
+0 errors ✔ | 0 warnings ✔ | 1 note ✖
+
+* Functions of packages ‘crosstalk’ and ‘plotly’are used in the method plot for 
+  objects of class "diversity_range"
+  
+
+### Test environments
+
+- R-hub windows-x86_64-devel (r-devel)
+- R-hub  macOS arm64 (R-devel)
+- R-hub ubuntu-clang
+- R-hub  windows (R-devel)
+- local ubuntu 22.04.4, install, R 4.4.1
+- local OS X 14.2 install, R 4.3.2
+
 ## Package update from version 0.4.3 to 0.5.0
 
 * Local check on  OS X 14.2, install, R 4.3.2
