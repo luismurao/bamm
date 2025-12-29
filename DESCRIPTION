@@ -2,7 +2,7 @@ Type: Package
 Package: bamm
 Title: Species Distribution Models as a Function of Biotic, Abiotic and
     Movement Factors (BAM)
-Version: 0.5.6
+Version: 0.6.0
 Authors@R: c(
     person("Luis", "Osorio-Olvera", 
            email = "luismurao@gmail.com", 
@@ -66,6 +66,7 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
+    spelling,
     testthat (>= 3.0.0)
 LinkingTo: 
     Rcpp,
@@ -88,3 +89,4 @@ SystemRequirements: GDAL (>= 2.2.3): gdal-bin (deb), libgdal-dev (deb) or
     saveGIF(); (PDF)LaTeX for saveLatex(); SWF Tools (http://swftools.org)
     for saveSWF(); FFmpeg (http://ffmpeg.org) or avconv
     (https://libav.org/avconv.html) for saveVideo()
+Language: en-US
