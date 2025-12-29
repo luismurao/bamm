@@ -1,5 +1,13 @@
 # Changelog
 
+## bamm 0.6.0
+
+- This version implements a C++ port of the `sdm_sim` function,
+  delivering at least a 10-fold speedup in simulation performance.
+
+- A new function (pol2pam) has been added to generate
+  Presence-Absence-Matrices (PAMs) from polygon data.
+
 ## bamm 0.5.0
 
 CRAN release: 2024-07-06

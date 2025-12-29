@@ -17,12 +17,12 @@ Source:
 
 Osorio-Olvera L, Soberón J (2025). *bamm: Species Distribution Models as
 a Function of Biotic, Abiotic and Movement Factors (BAM)*. R package
-version 0.5.6, <https://luismurao.github.io/bamm/>.
+version 0.6.0, <https://luismurao.github.io/bamm/>.
 
     @Manual{,
       title = {bamm: Species Distribution Models as a Function of Biotic, Abiotic and Movement Factors (BAM)},
       author = {Luis Osorio-Olvera and Jorge Soberón},
       year = {2025},
-      note = {R package version 0.5.6},
+      note = {R package version 0.6.0},
       url = {https://luismurao.github.io/bamm/},
     }
