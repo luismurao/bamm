@@ -69,7 +69,7 @@ null_dispersion_field_distribution <- function(pam,n_iter=10,randal="fastball",
     y <- data.frame(dfield =distfield@dispersion_field)
     return(y)
   },.progress = TRUE,.options = furrr::furrr_options(seed = NULL))
-  plan(sequential)
+
 
   distfield_rand <- data.matrix(distfield_rand)
   colnames(distfield_rand) <- nms
