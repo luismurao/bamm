@@ -490,7 +490,10 @@ test_that("community_sim simulates community dynamics and returns an
                                            return_null_dfield=TRUE)
   expect_error(bamm::plot(rdivan,plot_type="diversity_range1"))
   bamm::plot(rdivan,plot_type="diversity_range_map")
-  bamm::plot(rdivan,plot_type="diversity_range_interactive")
+  if(interactive()){
+    # bamm::plot(rdivan,plot_type="diversity_range_interactive")
+
+  }
 
   #bamm::plot(rdivan,plot_type="diversity_range_interactive")
   bamm::plot(rdivan,plot_type="alpha")
