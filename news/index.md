@@ -2,6 +2,8 @@
 
 ## bamm 0.6.0
 
+CRAN release: 2026-02-03
+
 - This version implements a C++ port of the `sdm_sim` function,
   delivering at least a 10-fold speedup in simulation performance.
 
