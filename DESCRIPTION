@@ -42,7 +42,6 @@ Depends:
     R (>= 4.1.0)
 Imports: 
     animation (>= 2.3),
-    crosstalk,
     dplyr (>= 0.8.0),
     furrr (>= 0.1.0),
     future (>= 1.18.0),
@@ -53,7 +52,6 @@ Imports:
     magrittr (>= 1.2),
     Matrix (>= 1.2.14),
     methods (>= 3.3),
-    plotly,
     purrr (>= 0.2),
     raster (>= 3.4-13),
     Rcpp (>= 0.12.18),
@@ -67,6 +65,8 @@ Suggests:
     knitr,
     rmarkdown,
     spelling,
+    plotly,
+    crosstalk,
     testthat (>= 3.0.0)
 LinkingTo: 
     Rcpp,
