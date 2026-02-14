@@ -1,3 +1,40 @@
+February 14
+Dear CRAN team,
+
+I have received a NOTE in the CRAN checks regarding the size of the extdata 
+directory in my package. Specifically, the extdata directory is 1.1 MB in size, 
+which contributes to the total installed package size of 6.3 MB.
+
+I would like to clarify that the files in extdata are necessary for reproducing 
+the examples in the package documentation. These datasets are intentionally included
+to ensure that users can fully understand and replicate the functionality 
+demonstrated in the examples.
+
+If there are any concerns or recommendations for reducing the size of the extdata
+directory while maintaining the reproducibility of the examples, I would be 
+happy to address them.
+
+Thank you for your time and consideration.
+checking installed package size ... NOTE
+  installed size is  6.3Mb
+  sub-directories of 1Mb or more:
+    extdata   1.1Mb
+    libs      3.7Mb
+
+
+
+
+I have the following issue
+
+Flavor: r-devel-linux-x86_64-debian-gcc
+Check: for detritus in the temp directory, Result: NOTE
+  Found the following files/directories:
+    'calibre-1peztqud'
+
+Which suggests I started a web browser in non interactivce mode.
+So I Make sure to protect such calls via
+if(interactive()) ...
+
 ## Package update from version 0.5.0 to 0.6.0
 
 * Local check on  OS X 14.2, install, R 4.3.2
