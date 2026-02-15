@@ -47,7 +47,8 @@ sp_mat safe_spmat_conversion(SEXP mat) {
 
   sp_mat result(n_rows, n_cols);
 
-  for (int col = 0; col < n_cols; col++) {
+  // *** CORREGIDO: usar uword en lugar de int ***
+  for (uword col = 0; col < n_cols; col++) {
     int start = p[col];
     int end = p[col+1];
     for (int j = start; j < end; j++) {
@@ -55,8 +56,9 @@ sp_mat safe_spmat_conversion(SEXP mat) {
       if (row_idx >= n_rows) {
         char msg[256];
         snprintf(msg, sizeof(msg),
-                 "Row index %llu out of bounds (max %llu) at col %d, position %d",
-                 (unsigned long long)row_idx, (unsigned long long)n_rows, col, j);
+                 "Row index %llu out of bounds (max %llu) at col %llu, position %d",
+                 (unsigned long long)row_idx, (unsigned long long)n_rows,
+                 (unsigned long long)col, j);
         throw std::runtime_error(msg);
       }
       result(row_idx, col) = x[j];
@@ -87,17 +89,30 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
   sp_mat g0 = Rcpp::as<arma::sp_mat>(g0_input);
   const uword n = A_mat.n_rows;
 
+  // *** CRÍTICO: Validar dimensiones antes de crear vectores ***
+  if (n == 0) {
+    stop("Input matrices cannot be empty (n_rows = 0)");
+  }
+
   if (g0.n_rows != n || g0.n_cols != 1) {
     stop("Initial state vector must be Nx1");
   }
 
-  // Binary suitability
+  if (nsteps <= 0) {
+    stop("nsteps must be positive");
+  }
+
+  // Binary suitability - ahora seguro porque n > 0
   vec binary_suit(n, fill::zeros);
   for(uword i = 0; i < n; ++i) {
     binary_suit(i) = (A_mat(i, i) > 0) ? 1.0 : 0.0;
   }
 
-  // Suitability probabilities
+  // Suitability probabilities - validar tamaño
+  if (suit_values.size() != static_cast<int>(n)) {
+    stop("suit_values length must match matrix dimensions");
+  }
+
   vec suit_probs = as<vec>(suit_values);
   if(disp_prop2_suitability) {
     suit_probs *= disper_prop;
@@ -147,6 +162,7 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
     for (int i = 0; i < bar_width; i++) Rprintf(" ");
     Rprintf("]\r[");
   }
+
   // Main simulation loop
   sp_mat g0_next;
   for (int step = 1; step <= nsteps; ++step) {
@@ -155,7 +171,7 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
     g0_next = g0;
 
     if (stochastic_dispersal) {
-      // Generate random numbers in bulk
+      // Generate random numbers in bulk - ahora seguro porque n > 0
       vec rand_values(n, fill::randu);
       const uvec& occ_locs = find(g0 > 0);
       const uword n_occ = occ_locs.n_elem;
@@ -174,7 +190,6 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
           suit_probs(nb_index) : disper_prop;
 
           if (rand_values(nb_index) < prob) {
-            // Use rand_values[j] for THIS specific dispersal event
             g0_next(nb_index, 0) = 1.0;
           }
         }
