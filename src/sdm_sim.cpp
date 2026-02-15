@@ -180,8 +180,23 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
     g0_next = g0;
 
     if (stochastic_dispersal) {
-      // Generate random numbers - AHORA ES SEGURO porque n > 0
-      vec rand_values(n, fill::randu);
+      // *** VALIDACIÓN EXTRA DEFENSIVA ***
+      if (n == 0 || binary_suit.n_elem == 0) {
+        stop("Corrupted state detected: n became 0 during execution");
+      }
+
+      // Generate random numbers - con validación extra
+      vec rand_values;
+      try {
+        rand_values = vec(n, fill::randu);
+      } catch (...) {
+        char msg[256];
+        snprintf(msg, sizeof(msg),
+                 "Failed to create rand_values with n=%llu",
+                 (unsigned long long)n);
+        stop(msg);
+      }
+
       const uvec& occ_locs = find(g0 > 0);
       const uword n_occ = occ_locs.n_elem;
 
@@ -194,11 +209,13 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
         for (uword j = 0; j < n_nb; ++j) {
           const uword nb_index = cell_neighbors[j];
 
+          if (nb_index >= binary_suit.n_elem) continue;  // *** VALIDACIÓN EXTRA ***
           if (binary_suit(nb_index) < 0.5) continue;
+
           const double prob = disp_prop2_suitability ?
           suit_probs(nb_index) : disper_prop;
 
-          if (rand_values(nb_index) < prob) {
+          if (nb_index < rand_values.n_elem && rand_values(nb_index) < prob) {
             g0_next(nb_index, 0) = 1.0;
           }
         }
