@@ -87,11 +87,20 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
   sp_mat A_mat = Rcpp::as<arma::sp_mat>(A);
   sp_mat M_mat = Rcpp::as<arma::sp_mat>(M_orig);
   sp_mat g0 = Rcpp::as<arma::sp_mat>(g0_input);
+
+  // *** VALIDACIONES CRÍTICAS - DEBEN IR AQUÍ, INMEDIATAMENTE ***
   const uword n = A_mat.n_rows;
 
-  // *** CRÍTICO: Validar dimensiones antes de crear vectores ***
   if (n == 0) {
     stop("Input matrices cannot be empty (n_rows = 0)");
+  }
+
+  if (A_mat.n_cols != n) {
+    stop("Matrix A must be square");
+  }
+
+  if (M_mat.n_rows != n || M_mat.n_cols != n) {
+    stop("Matrix M dimensions must match A");
   }
 
   if (g0.n_rows != n || g0.n_cols != 1) {
@@ -102,17 +111,17 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
     stop("nsteps must be positive");
   }
 
-  // Binary suitability - ahora seguro porque n > 0
+  if (suit_values.size() != static_cast<int>(n)) {
+    stop("suit_values length must match matrix dimensions");
+  }
+
+  // Binary suitability - AHORA ES SEGURO crear este vector
   vec binary_suit(n, fill::zeros);
   for(uword i = 0; i < n; ++i) {
     binary_suit(i) = (A_mat(i, i) > 0) ? 1.0 : 0.0;
   }
 
-  // Suitability probabilities - validar tamaño
-  if (suit_values.size() != static_cast<int>(n)) {
-    stop("suit_values length must match matrix dimensions");
-  }
-
+  // Suitability probabilities
   vec suit_probs = as<vec>(suit_values);
   if(disp_prop2_suitability) {
     suit_probs *= disper_prop;
@@ -171,7 +180,7 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
     g0_next = g0;
 
     if (stochastic_dispersal) {
-      // Generate random numbers in bulk - ahora seguro porque n > 0
+      // Generate random numbers - AHORA ES SEGURO porque n > 0
       vec rand_values(n, fill::randu);
       const uvec& occ_locs = find(g0 > 0);
       const uword n_occ = occ_locs.n_elem;
