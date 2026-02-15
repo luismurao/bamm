@@ -377,6 +377,7 @@ test_that("bam_ssim A simple simultation of predator-prey interaction.
 
 test_that("sim2Raster returns a stack of the distribution at time t",{
   ## Not run:
+  rm(list = ls())
   model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                             package = "bamm")
   model <- raster::raster(model_path)
@@ -416,6 +417,7 @@ test_that("sim2Raster returns a stack of the distribution at time t",{
 test_that("community_sim simulates community dynamics and returns an
           object of class ",{
   ## Not run:
+
   lagos_path <- system.file("extdata/conejos",
                             package = "bamm")
   enm_path <- list.files(lagos_path,
@@ -454,7 +456,7 @@ test_that("community_sim simulates community dynamics and returns an
                               which_steps = c(1:10)))
 
   expect_s4_class(pams,"pam")
-  print(pams)
+
   richness_stack <- bamm::pam2richness(pams,which_steps=pams@which_steps)
   expect_error(bamm::pam2richness(pamobj = "a",which_steps=pams@which_steps))
 
@@ -466,7 +468,7 @@ test_that("community_sim simulates community dynamics and returns an
                                 sparse=FALSE,parallel=FALSE,
                                 ncores=1))
   pam <- bamm::models2pam(mods_stack = en_models,sparse=TRUE,
-                          parallel=TRUE,ncores=1)
+                          parallel=FALSE,ncores=1)
   expect_s4_class(pam,"dgCMatrix")
   pam <- bamm::models2pam(mods_stack = en_models,sparse=TRUE,
                           parallel=FALSE,ncores=1)
@@ -491,7 +493,7 @@ test_that("community_sim simulates community dynamics and returns an
   expect_error(bamm::plot(rdivan,plot_type="diversity_range1"))
   bamm::plot(rdivan,plot_type="diversity_range_map")
   if(interactive()){
-    # bamm::plot(rdivan,plot_type="diversity_range_interactive")
+     #bamm::plot(rdivan,plot_type="diversity_range_interactive")
 
   }
 
