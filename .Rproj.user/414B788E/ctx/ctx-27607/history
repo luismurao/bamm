@@ -1,0 +1,512 @@
+vvec<- normalize_vec(vvec)
+max( vvec)
+r1 <- RSpectra::eigs(prod_mat,which_eigen)
+vvec <- Re(r1$vectors)
+vvec <-ifelse(vvec<0,0,vvec)
+eigen_vectors_norm <- normalize_vec(vvec)
+r1 <- RSpectra::eigs(prod_mat,which_eigen)
+vvec <- Re(r1$vectors)
+vvex <- ifelse(vvec<0,0,vvec)
+eigen_vectors_norm <- normalize_vec(vvex)
+r2 <- list(eigen_values = r1$values,
+eigen_vectors=vvec,
+eigen_vectors_norm=eigen_vectors_norm)
+library(bamm)
+library(bamm)
+library(bamm)
+library(bamm)
+lagos_path <- system.file("extdata/conejos",
+package = "bamm")
+enm_path <- list.files(lagos_path,
+pattern = ".tif",
+full.names = TRUE)[seq(1,10)]
+en_models <- raster::stack(enm_path)
+ngbs_vect <- sample(1:2,replace = TRUE,
+size = raster::nlayers(en_models))
+init_coords <- read.csv(file.path(lagos_path,
+"lagos_initit.csv"))[seq(1,10),]
+nsteps <- 10
+sdm_comm <- bamm::community_sim(en_models = en_models,
+ngbs_vect = ngbs_vect,
+init_coords = init_coords,
+nsteps = nsteps,
+threshold = 0.1)
+pamt10 <- bamm::csim2pam(community_sim = sdm_comm ,
+which_steps = 10)
+community_sim = sdm_comm
+which_steps = 10
+inherits(community_sim, "community_sim")
+n_sps <- length(community_sim@community_sim)
+n_sps
+sps_names <- names(community_sim@community_sim)
+sps_names
+community_sim@community_sim
+which_steps
+sim_t <- Matrix::t(community_sim@community_sim[[1]]@sdm_sim[[t_step]])
+t_step=10
+sim_t <- Matrix::t(community_sim@community_sim[[1]]@sdm_sim[[t_step]])
+sim_t
+xys <- community_sim@community_sim
+community_sim@community_sim
+xys <- raster::xyFromCell(community_sim@community_sim[[1]]@niche_model,
+community_sim@community_sim[[1]]@cellIDs)
+xys
+sim_t <- Matrix::cbind2(xys,sim_t)
+sim_t
+pamL <- lapply(which_steps, function(t_step){
+sim_t <- Matrix::t(community_sim@community_sim[[1]]@sdm_sim[[t_step]])
+sim_t <- Matrix::cbind2(xys,sim_t)
+for (sps in 2:n_sps) {
+sim_tm <- community_sim@community_sim[[sps]]@sdm_sim[[t_step]]
+sim_t <- Matrix::cbind2(sim_t,Matrix::t(sim_tm))
+}
+return(sim_t)
+})
+pamL
+which_steps
+library(bamm)
+\donttest{
+lagos_path <- system.file("extdata/conejos",
+package = "bamm")
+enm_path <- list.files(lagos_path,
+pattern = ".tif",
+full.names = TRUE)[seq(1,10)]
+en_models <- raster::stack(enm_path)
+ngbs_vect <- sample(1:2,replace = TRUE,
+size = raster::nlayers(en_models))
+init_coords <- read.csv(file.path(lagos_path,
+"lagos_initit.csv"))[seq(1,10),]
+nsteps <- 10
+sdm_comm <- bamm::community_sim(en_models = en_models,
+ngbs_vect = ngbs_vect,
+init_coords = init_coords,
+nsteps = nsteps,
+threshold = 0.1)
+pamt10 <- bamm::csim2pam(community_sim = sdm_comm ,
+which_steps = 10)
+pams <- bamm::csim2pam(community_sim = sdm_comm ,
+which_steps = seq_len(10))
+rich_pam <- bamm::pam2richness(pams,which_steps = c(1,5))
+print(rich_pam)
+plot(rich_pam)
+bamm::pam2richness
+pamobj = pams
+which_steps = pams@which_steps
+tsteps <- paste0("time_step_",which_steps)
+tsteps
+pams2covert <- pamobj@pams[tsteps]
+pams2covert
+nsteps <- length(tsteps)
+pb <- utils::txtProgressBar(min = 0,
+max = nsteps,
+style = 3)
+grid_base <- pamobj@grid
+richneesL <- 1:nsteps %>% purrr::map(function(x){
+grid_base <- pamobj@grid
+grid_base[pamobj@cellIDs] <- Matrix::rowSums(pams2covert[[x]][,-(1:2)])
+utils::setTxtProgressBar(pb, x)
+return(grid_base)
+})
+x=1
+grid_base <- pamobj@grid
+grid_base[pamobj@cellIDs] <- Matrix::rowSums(pams2covert[[x]][,-(1:2)])
+plot(grid_base)
+library(bamm)
+pams <-bamm::csim2pam(community_sim = sdm_comm ,
+which_steps = seq_len(nsteps))
+richness_stack <- bamm::pam2richness(pamobj = pams,
+which_steps = pams@which_steps)
+raster::plot(richness_stack)
+library(bamm)
+lagos_path <- system.file("extdata/conejos",
+package = "bamm")
+enm_path <- list.files(lagos_path,
+pattern = ".tif",
+full.names = TRUE)[seq(1,10)]
+en_models <- raster::stack(enm_path)
+ngbs_vect <- sample(1:2,replace = TRUE,
+size = raster::nlayers(en_models))
+init_coords <- read.csv(file.path(lagos_path,
+"lagos_initit.csv"))[seq(1,10),]
+nsteps <- 12
+sdm_comm <- bamm::community_sim(en_models = en_models,
+ngbs_vect = ngbs_vect,
+init_coords = init_coords,
+nsteps = nsteps)
+com_pam <- bamm::csim2pam(sdm_comm,which_steps = seq(1,nsteps))
+rich_pam <- pam2richness(com_pam,which_steps = c(1,5,10))
+raster::plot(rich_pam)
+install.packages("rhub")
+install.packages("rhub")
+rhub::rhub_doctor()
+## set your user name and email:
+usethis::use_git_config(user.name = "luismurao", user.email = "luismurao@gmail.com")
+## create a personal access token for authentication:
+usethis::create_github_token()
+usethis::use_git_config(helper="cache --timeout=2600000") #> cache timeout ~30 days
+## set personal access token:
+credentials::set_github_pat("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")
+usethis::edit_r_environ()
+usethis::git_sitrep()
+rhub::rhub_doctor()
+rhub::rhub_check()
+rhub::rhub_check()
+# Check content
+# install.packages('checkhelper', repos = 'https://thinkr-open.r-universe.dev')
+checkhelper::find_missing_tags()
+# Check content
+# install.packages('checkhelper', repos = 'https://thinkr-open.r-universe.dev')
+checkhelper::find_missing_tags()
+build_site()
+library(pkgdown)
+build_site()
+library(bamm)
+attachment::att_amend_desc()
+covr::package_coverage()
+rhub::rhub_setup() # Commit, push, merge
+rhub::rhub_doctor()
+rhub::rhub_platforms()
+rhub::rhub_check(platforms = 1,2,3,4,15,20) # launch manually
+rhub::rhub_check(platforms = c(1,2,3,4,15,20) )# launch manually
+rhub::rhub_check(platforms = as.character(c(1,2,3,4,15,20)))# launch manually
+rhub::rhub_check(platforms = c("linux","macos",
+"macos-arm64","windows",
+"intel","ubuntu-clang"))# launch manually
+# Check reverse dependencies
+# remotes::install_github("r-lib/revdepcheck")
+usethis::use_git_ignore("revdep/")
+usethis::use_build_ignore("revdep/")
+devtools::revdep()
+# In another session because Rstudio interactive change your config:
+id <- rstudioapi::terminalExecute("Rscript -e 'revdepcheck::revdep_check(num_workers = 4)'")
+rstudioapi::terminalKill(id)
+# See outputs now available in revdep/
+revdep_details(revdep = "pkg")
+# See outputs now available in revdep/
+rstudioapi::revdep_details(revdep = "pkg")
+devtools::revdep()
+# See outputs now available in revdep/
+devtools::revdep_details(revdep = "pkg")
+library(bamm)
+rhub::rhub_check(platforms = c("linux","macos",
+"macos-arm64","windows",
+"ubuntu-clang"))# launch manually
+# Verify you're ready for release, and release
+devtools::release()
+library(bamm)
+?bamm::null_dispersion_field_distribution
+lagos_path <- system.file("extdata/conejos",
+package = "bamm")
+enm_path <- list.files(lagos_path,
+pattern = ".tif",
+full.names = TRUE)
+en_models <- raster::stack(enm_path) >0.01
+nonas <- which(!is.na(en_models[[1]][]))
+xy_mat <- sp::coordinates(en_models[[1]])[ nonas,]
+pam <- bamm::models2pam(en_models,sparse=FALSE)
+rdivan <- bamm::diversity_range_analysis(pam=pam,
+xy_mat=xy_mat,
+raster_templete = en_models[[1]],
+parallel=TRUE,
+n_cores=2,
+return_null_dfield=TRUE)
+bamm::plot(rdivan,plot_type="diversity_range")
+bamm::plot(rdivan,plot_type="diversity_range_map")
+if(requireNamespace("plotly")){
+#bamm::plot(rdivan,plot_type="diversity_range_interactive")
+bamm::plot(rdivan,plot_type="diversity_range_interactive")
+if(requireNamespace("plotly")){
+bamm::plot(rdivan,plot_type="diversity_range_interactive")
+}
+library(bamm)
+library(bamm)
+rhub::rhub_check(platforms = c("linux","macos",
+"macos-arm64","windows",
+"ubuntu-clang"))# launch manually
+rhub::rhub_check(platforms = c("linux","macos",
+"macos-arm64","windows",
+"ubuntu-clang"))# launch manually
+# Verify you're ready for release, and release
+devtools::release()
+devtools::check_win_devel()
+httr::set_config(use_proxy(url="10.3.100.207",port=8080))
+httr::set_config(httr::use_proxy(url="10.3.100.207",port=8080))
+devtools::check_win_devel()
+?bamm::adj_mat
+devtools::check_win_devel()
+?devtools::check_win_devel()
+# Verify you're ready for release, and release
+devtools::release()
+library(bamm)
+# Verify you're ready for release, and release
+devtools::release()
+devtools::install_github("stranda/holoSimCell")
+rhub::rhub_check(platforms = c("linux","macos",
+"macos-arm64","windows",
+"ubuntu-clang"))# launch manually
+library(bamm)
+# Verify you're ready for release, and release
+devtools::release()
+model_path <- system.file("extdata/Lepus_californicus_cont.tif",
+model_path <- system.file("extdata/Lepus_californicus_cont.tif",
+package = "bamm")
+model <- raster::raster(model_path)
+sparse_mod <- bamm::model2sparse(model,threshold=0.05)
+adj_mod <- bamm::adj_mat(sparse_mod,ngbs=1)
+occs_lep_cal <- data.frame(longitude = c(-110.08880,
+-98.89638),
+latitude = c(30.43455,
+25.19919))
+occs_sparse <- bamm::occs2sparse(modelsparse = sparse_mod,
+occs = occs_lep_cal)
+sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+set_M = adj_mod,
+initial_points = occs_sparse,
+nsteps = 10,
+stochastic_dispersal = TRUE,
+disp_prop2_suitability=TRUE,
+disper_prop=0.5,
+progress_bar=TRUE)
+sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+set_M = adj_mod,
+initial_points = occs_sparse,
+nsteps = 10,
+stochastic_dispersal = TRUE,
+disp_prop2_suitability=TRUE,
+disper_prop=0.5,
+progress_bar=TRUE)
+set_A = sparse_mod
+set_M = adj_mod
+initial_points = occs_sparse
+nsteps = 10
+stochastic_dispersal = TRUE
+disp_prop2_suitability=TRUE
+disper_prop=0.5
+progress_bar=TRUE
+# Validate inputs
+if (!inherits(set_A, "setA")) stop("set_A should be of class setA")
+if (!inherits(set_M, "setM")) stop("set_M should be of class setM")
+# Initialize objects
+M_orig <- set_M@adj_matrix
+AMA <- set_A@sparse_model %*% M_orig
+nsteps <- nsteps + 1
+g0 <- Matrix::t(initial_points)
+colnames(g0) <- set_A@cellIDs
+sdm <- list(g0)
+# Setup progress bar
+if (progress_bar) pb <- utils::txtProgressBar(0, nsteps, style = 3)
+stochastic_dispersal
+rd_adlist <- set_M@adj_list
+rd_adlist
+# Precompute suitability probabilities if needed
+if (disp_prop2_suitability) {
+suit_probs <- set_A@suit_values * disper_prop
+names(suit_probs) <- set_A@cellIDs
+}
+suit_probs
+# Reset to original matrix (critical fix!)
+M_mat <- M_orig
+M_mat
+# Get occupied cells
+occ_indices <- .nonzero(g0)[, 2]
+.nonzero <- function(x){
+stopifnot(inherits(x, "dgCMatrix"))
+if (all(x@p == 0))
+return(matrix(0, nrow=0, ncol=2,
+dimnames=list(character(0), c("row","col"))))
+res <- cbind(x@i+1, rep(seq(dim(x)[2]), diff(x@p)))
+colnames(res) <- c("row", "col")
+res <- res[x@x != 0, , drop = FALSE]
+return(res)
+}
+# Get occupied cells
+occ_indices <- .nonzero(g0)[, 2]
+occ_indices
+length(occ_indices) > 0
+# Efficiently process neighbors
+all_edges <- unlist(lapply(occ_indices, function(idx) {
+if (is.null(rd_adlist[[idx]])) return(NULL)
+rd_adlist[[idx]]
+}), recursive = FALSE)
+all_edges
+!is.null(all_edges)
+nbgmat <- do.call(rbind, all_edges)
+rbind
+all_edges
+lapply(occ_indices, function(idx) {
+if (is.null(rd_adlist[[idx]])) return(NULL)
+rd_adlist[[idx]]
+})
+# Efficiently process neighbors
+all_edges <- lapply(occ_indices, function(idx) {
+if (is.null(rd_adlist[[idx]])) return(NULL)
+rd_adlist[[idx]]
+})
+all_edges
+nbgmat <- do.call(rbind, all_edges)
+nbgmat
+n_vec <- nrow(nbgmat)
+n_vec
+disp_prop2_suitability
+nbgmat[, 4]
+suit_probs
+s_probs <- suit_probs[nbgmat[, 4]]
+s_probs
+invadible <- stats::rbinom(n_vec, 1, s_probs)
+invadible
+# Calculate dispersal probabilities
+if (disp_prop2_suitability) {
+s_probs <- suit_probs[nbgmat[, 4]]
+invadible <- stats::rbinom(n_vec, 1, s_probs)
+} else {
+invadible <- stats::rbinom(n_vec, 1, disper_prop)
+}
+invadible
+# Update adjacency matrix
+M_mat[nbgmat[, 3:4]] <- invadible
+M_mat <- Matrix::forceSymmetric(M_mat)  # Maintain symmetry
+M_mat
+# Propagate dispersal
+AMA <- set_A@sparse_model %*% M_mat
+g0 <- g0 %*% AMA
+g0@x[g0@x > 1] <- 1  # Efficient thresholding
+sdm[[i + 1]] <- g0
+sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+set_M = adj_mod,
+initial_points = occs_sparse,
+nsteps = 10,
+stochastic_dispersal = TRUE,
+disp_prop2_suitability=TRUE,
+disper_prop=0.5,
+progress_bar=TRUE)
+sdm_lep_cal
+sim_res <- bamm::sim2Raster(sdm_lep_cal)
+raster::plot(sim_res)
+nsteps = 100,
+sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+set_M = adj_mod,
+initial_points = occs_sparse,
+nsteps = 100,
+stochastic_dispersal = TRUE,
+disp_prop2_suitability=TRUE,
+disper_prop=0.5,
+progress_bar=TRUE)
+sim_res <- bamm::sim2Raster(sdm_lep_cal)
+raster::plot(sim_res)
+raster::plot(sim_res[[90:100]])
+model_path <- system.file("extdata/Lepus_californicus_cont.tif",
+package = "bamm")
+model <- raster::raster(model_path)
+sparse_mod <- bamm::model2sparse(model,threshold=0.05)
+adj_mod <- bamm::adj_mat(sparse_mod,ngbs=1)
+occs_lep_cal <- data.frame(longitude = c(-110.08880,
+-98.89638),
+latitude = c(30.43455,
+25.19919))
+occs_sparse <- bamm::occs2sparse(modelsparse = sparse_mod,
+occs = occs_lep_cal)
+sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+set_M = adj_mod,
+initial_points = occs_sparse,
+nsteps = 100,
+stochastic_dispersal = TRUE,
+disp_prop2_suitability=TRUE,
+disper_prop=0.5,
+progress_bar=TRUE)
+sim_res <- bamm::sim2Raster(sdm_lep_cal)
+raster::plot(sim_res)
+model_path <- system.file("extdata/Lepus_californicus_cont.tif",
+package = "bamm")
+model <- raster::raster(model_path)
+sparse_mod <- bamm::model2sparse(model,threshold=0.05)
+adj_mod <- bamm::adj_mat(sparse_mod,ngbs=1)
+occs_lep_cal <- data.frame(longitude = c(-110.08880,
+-98.89638),
+latitude = c(30.43455,
+25.19919))
+occs_sparse <- bamm::occs2sparse(modelsparse = sparse_mod,
+occs = occs_lep_cal)
+sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+set_M = adj_mod,
+initial_points = occs_sparse,
+nsteps = 10,
+stochastic_dispersal = TRUE,
+disp_prop2_suitability=TRUE,
+disper_prop=0.5,
+progress_bar=TRUE)
+sim_res <- bamm::sim2Raster(sdm_lep_cal)
+raster::plot(sim_res)
+n_vec
+raster::plot(sim_res[[90:100]])
+sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+set_M = adj_mod,
+initial_points = occs_sparse,
+nsteps = 100,
+stochastic_dispersal = TRUE,
+disp_prop2_suitability=TRUE,
+disper_prop=0.5,
+progress_bar=TRUE)
+sim_res <- bamm::sim2Raster(sdm_lep_cal)
+raster::plot(sim_res[[90:100]])
+raster::plot(sim_res[[70:100]])
+raster::plot(sim_res[[30:100]])
+occs_sparse <- bamm::occs2sparse(modelsparse = sparse_mod,
+occs = occs_lep_cal)
+sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+set_M = adj_mod,
+initial_points = occs_sparse,
+nsteps = 100,
+stochastic_dispersal = TRUE,
+disp_prop2_suitability=TRUE,
+disper_prop=0.1,
+progress_bar=TRUE)
+sim_res <- bamm::sim2Raster(sdm_lep_cal)
+raster::plot(sim_res[[30:100]])
+sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+set_M = adj_mod,
+initial_points = occs_sparse,
+nsteps = 100,
+stochastic_dispersal = TRUE,
+disp_prop2_suitability=TRUE,
+disper_prop=1,
+progress_bar=TRUE)
+sim_res <- bamm::sim2Raster(sdm_lep_cal)
+raster::plot(sim_res[[30:100]])
+raster::plot(sim_res[[10:100]])
+occs = occs_lep_cal)
+sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+set_M = adj_mod,
+initial_points = occs_sparse,
+nsteps = 100,
+stochastic_dispersal = TRUE,
+disp_prop2_suitability=F,
+disper_prop=1,
+progress_bar=TRUE)
+sim_res <- bamm::sim2Raster(sdm_lep_cal)
+raster::plot(sim_res)
+sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+set_M = adj_mod,
+initial_points = occs_sparse,
+nsteps = 100,
+stochastic_dispersal = TRUE,
+disp_prop2_suitability=F,
+disper_prop=0.5,
+progress_bar=TRUE)
+sim_res <- bamm::sim2Raster(sdm_lep_cal)
+raster::plot(sim_res)
+progress_bar=TRUE)
+occs = occs_lep_cal)
+sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+set_M = adj_mod,
+initial_points = occs_sparse,
+nsteps = 100,
+stochastic_dispersal = TRUE,
+disp_prop2_suitability=FALSE,
+disper_prop=0.5,
+progress_bar=TRUE)
+sim_res <- bamm::sim2Raster(sdm_lep_cal)
+raster::plot(sim_res)
+suit_probs
+s_probs
+invadible
+Rcpp::sourceCpp("src/sdm_sim.cpp")

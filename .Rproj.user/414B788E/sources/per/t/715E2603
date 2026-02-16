@@ -1,0 +1,26 @@
+{
+    "id": "715E2603",
+    "path": "~/Dropbox/bam_sep/bam/R/pam2richness.R",
+    "project_path": null,
+    "type": "r_source",
+    "hash": "431062743",
+    "contents": "",
+    "dirty": false,
+    "created": 1752344960262.0,
+    "source_on_save": false,
+    "relative_order": 10,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "41,21",
+        "scrollLine": "22"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1752346219,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1752346219421,
+    "read_only": false,
+    "read_only_alternatives": []
+}

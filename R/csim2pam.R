@@ -9,7 +9,6 @@
 #' 2) which_steps: time steps corresponding to each PAM. 3) sp_names: a
 #' vector of species names. 4) the grid area used in the simulation. 5) Non NA
 #' cell (pixel) IDs.
-#' @param progress_bar Show progress bar
 #' @details For details about the object community_sim see
 #' \code{\link[bamm]{community_sim}}
 #' @references
@@ -43,7 +42,7 @@
 #' print(rich_pam)
 #' }
 #'
-csim2pam <- function(community_sim, which_steps,progress_bar = TRUE){
+csim2pam <- function(community_sim, which_steps){
   if(!inherits(community_sim, "community_sim"))
     stop("Object should be of class community_sim")
 
@@ -51,17 +50,14 @@ csim2pam <- function(community_sim, which_steps,progress_bar = TRUE){
   sps_names <- names(community_sim@community_sim)
   xys <- raster::xyFromCell(community_sim@community_sim[[1]]@niche_model,
                             community_sim@community_sim[[1]]@cellIDs)
-  if (progress_bar) pb <- utils::txtProgressBar(0, length(which_steps), style = 3)
 
-
-  pamL <- lapply(seq_along(which_steps), function(t_step){
-    sim_t <- community_sim@community_sim[[1]]@sdm_sim[[which_steps[t_step]]]
+  pamL <- lapply(which_steps, function(t_step){
+    sim_t <- Matrix::t(community_sim@community_sim[[1]]@sdm_sim[[t_step]])
     sim_t <- Matrix::cbind2(xys,sim_t)
     for (sps in 2:n_sps) {
-      sim_tm <- community_sim@community_sim[[sps]]@sdm_sim[[which_steps[t_step]]]
-      sim_t <- Matrix::cbind2(sim_t,sim_tm)
+      sim_tm <- community_sim@community_sim[[sps]]@sdm_sim[[t_step]]
+      sim_t <- Matrix::cbind2(sim_t,Matrix::t(sim_tm))
     }
-    if (progress_bar) utils::setTxtProgressBar(pb, which_steps[t_step])
     return(sim_t)
   })
 

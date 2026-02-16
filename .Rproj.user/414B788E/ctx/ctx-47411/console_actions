@@ -1,0 +1,10 @@
+{
+    "type": [
+        2,
+        2
+    ],
+    "data": [
+        "\nR version 4.5.1 (2025-06-13) -- \"Great Square Root\"\nCopyright (C) 2025 The R Foundation for Statistical Computing\nPlatform: x86_64-pc-linux-gnu\n\nR es un software libre y viene sin GARANTIA ALGUNA.\nUsted puede redistribuirlo bajo ciertas circunstancias.\nEscriba 'license()' o 'licence()' para detalles de distribucion.\n\nR es un proyecto colaborativo con muchos contribuyentes.\nEscriba 'contributors()' para obtener más información y\n'citation()' para saber cómo citar R o paquetes de R en publicaciones.\n\nEscr",
+        "iba 'demo()' para demostraciones, 'help()' para el sistema on-line de ayuda,\no 'help.start()' para abrir el sistema de ayuda HTML con su navegador.\nEscriba 'q()' para salir de R.\n\n\u001BG3;Restarting R session...\u001Bg"
+    ]
+}

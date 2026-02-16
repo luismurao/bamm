@@ -1,0 +1,10 @@
+set.seed(111)
+pam <- matrix(rbinom(100,1,0.3),nrow = 20,ncol = 5)
+bioindices <- bamm::pam2bioindex(pam=pam,biodiv_index="all")
+# Return results as sparse models
+bioindices <- bamm::pam2bioindex(pam=pam,biodiv_index="all",as_sparse=TRUE)
+bioindices@alpha
+bioindices@omega
+bioindices@dispersion_field
+bioindices@richness_field
+table(rowSums(pam))

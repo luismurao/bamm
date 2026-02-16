@@ -1,0 +1,26 @@
+{
+    "id": "FA8254C0",
+    "path": "~/Dropbox/bam_sep/bamm/R/pam2bioindex.R",
+    "project_path": "R/pam2bioindex.R",
+    "type": "r_source",
+    "hash": "915794499",
+    "contents": "",
+    "dirty": false,
+    "created": 1720275800911.0,
+    "source_on_save": false,
+    "relative_order": 6,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "102,0",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1720280847,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1720280847803,
+    "read_only": false,
+    "read_only_alternatives": []
+}

@@ -1,0 +1,196 @@
+[
+    {
+        "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+        "file_last_write": 1720112664.0,
+        "definitions": [
+            {
+                "usr": "c:@F@spList#$@N@Rcpp@S@Matrix>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "spList(Rcpp::NumericMatrix)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+                "line": 12,
+                "column": 12,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@conc#$@N@Rcpp@S@Vector>#VI13#@N@Rcpp@ST>1#T@PreserveStorage#S0_#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "conc(Rcpp::IntegerVector, Rcpp::IntegerVector)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+                "line": 30,
+                "column": 21,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@csample_num#$@N@Rcpp@S@Vector>#VI13#@N@Rcpp@ST>1#T@PreserveStorage#I#b#$@N@Rcpp@S@Vector>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "csample_num(Rcpp::IntegerVector, int, bool, Rcpp::NumericVector)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+                "line": 42,
+                "column": 15,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@intersectx#$@N@Rcpp@S@Vector>#VI13#@N@Rcpp@ST>1#T@PreserveStorage#S0_#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "intersectx(Rcpp::IntegerVector, Rcpp::IntegerVector)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+                "line": 55,
+                "column": 21,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@rList#$@N@Rcpp@S@Matrix>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "rList(Rcpp::NumericMatrix, int)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+                "line": 97,
+                "column": 12,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@fill_matrix#$@N@Rcpp@S@Matrix>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#$@N@Rcpp@S@Vector>#VI19#@N@Rcpp@ST>1#T@PreserveStorage#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "fill_matrix(Rcpp::NumericMatrix, Rcpp::List)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+                "line": 138,
+                "column": 21,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@fastball_cpp#$@N@Rcpp@S@Vector>#VI19#@N@Rcpp@ST>1#T@PreserveStorage#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "fastball_cpp(Rcpp::List, int)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+                "line": 168,
+                "column": 12,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@permute_matrix#$@N@Rcpp@S@Matrix>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "permute_matrix(Rcpp::NumericMatrix, int)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+                "line": 318,
+                "column": 21,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@permute_matrix_fb#$@N@Rcpp@S@Matrix>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "permute_matrix_fb(Rcpp::NumericMatrix, int)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+                "line": 331,
+                "column": 21,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@intrand#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "intrand(int)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+                "line": 343,
+                "column": 5,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@permute_matrix_indswap#$@N@Rcpp@S@Matrix>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "permute_matrix_indswap(Rcpp::NumericMatrix, int)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+                "line": 363,
+                "column": 21,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@Quantile#$@N@Rcpp@S@Vector>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#S0_#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "Quantile(Rcpp::NumericVector, Rcpp::NumericVector)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+                "line": 394,
+                "column": 21,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@null_dispersion_field_cat#$@N@Rcpp@S@Matrix>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#S0_#d#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "null_dispersion_field_cat(Rcpp::NumericMatrix, Rcpp::NumericMatrix, double, double)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/randomize_pams.cpp",
+                "line": 425,
+                "column": 21,
+                "hidden": false
+            }
+        ],
+        "hidden": false
+    },
+    {
+        "file": "/home/luis/Dropbox/bam_sep/bamm/src/sdm_sim.cpp",
+        "file_last_write": 1752422083.0,
+        "definitions": [
+            {
+                "usr": "c:sdm_sim.cpp@8@macro@ARMA_64BIT_WORD",
+                "kind": 9,
+                "parent_name": "",
+                "name": "ARMA_64BIT_WORD",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/sdm_sim.cpp",
+                "line": 1,
+                "column": 9,
+                "hidden": false
+            },
+            {
+                "usr": "c:@S@NeighborCache",
+                "kind": 3,
+                "parent_name": "",
+                "name": "NeighborCache",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/sdm_sim.cpp",
+                "line": 12,
+                "column": 8,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@safe_spmat_mult#&1$@N@arma@S@SpMat>#d#S0_#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "safe_spmat_mult(const arma::sp_mat &, const arma::sp_mat &)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/sdm_sim.cpp",
+                "line": 18,
+                "column": 8,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@safe_spmat_conversion#*$@S@SEXPREC#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "safe_spmat_conversion(SEXP)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/sdm_sim.cpp",
+                "line": 38,
+                "column": 8,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@sdm_sim_rcpp#*$@S@SEXPREC#S0_#S0_#&1$@N@Rcpp@S@Vector>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#&1$@N@Rcpp@S@Vector>#VI19#@N@Rcpp@ST>1#T@PreserveStorage#I#b#b#d#b#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "sdm_sim_rcpp(SEXP, SEXP, SEXP, const Rcpp::NumericVector &, const Rcpp::List &, int, bool, bool, double, bool)",
+                "file": "/home/luis/Dropbox/bam_sep/bamm/src/sdm_sim.cpp",
+                "line": 69,
+                "column": 6,
+                "hidden": false
+            }
+        ],
+        "hidden": false
+    }
+]

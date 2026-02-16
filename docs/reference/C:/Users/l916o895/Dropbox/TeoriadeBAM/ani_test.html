@@ -1,0 +1,64 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="generator" content="R package animation 2.7">
+	<title>Animations Using the R Language</title>
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/styles.css" />
+	<link rel="stylesheet" href="css/scianimator.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/github.min.css">
+
+	<script src="js/jquery-1.4.4.min.js"></script>
+	<script src="js/jquery.scianimator.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/languages/r.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+<body>
+
+	<div class="scianimator"><div id="sdm_sim" style="display: inline-block;"></div></div>
+	<div class="scianimator" style="width: 1200px; text-align: left"><pre><code class="r">## Animations generated in R version 4.2.1 (2022-06-23) using the package animation
+library(purrr)
+library(bamm)
+for (i in seq_along(which_steps)) {
+    sdm_st <- sdm_simul@niche_model * 0
+    valuess <- sdm_simul@sdm_sim[[which_steps[i]]]
+    no_cero <- .nonzero(valuess)
+    sdm_st[sdm_simul@cellIDs] <- sdm_simul@sdm_sim[[which_steps[i]]]
+    sdm_st <- sdm_simul@niche_model + sdm_st
+    maxv <- raster::maxValue(sdm_st)
+    minv <- raster::minValue(sdm_st)
+    if (maxv == 1 && minv == 1) {
+        colores <- suit_color
+    }
+    else if (maxv == 2 && minv == 2) {
+        colores <- occupied_color
+    }
+    else if (maxv == 2 && minv != 0) {
+        colores <- c(suit_color, occupied_color)
+    }
+    else if ((maxv == 2 && nrow(no_cero) > 2) || (maxv == 
+        2 && minv == 0)) {
+        colores <- c(bg_color, suit_color, occupied_color)
+    }
+    else {
+        colores <- c(bg_color, suit_color)
+    }
+    graphics::par(xpd = FALSE)
+    raster::plot(sdm_st, main = titles[i], col = colores, 
+        legend = FALSE, xaxt = "n", yaxt = "n")
+    graphics::par(xpd = TRUE)
+    graphics::legend("bottom", legend = c("Unsuitable", "Suitable", 
+        "Occupied"), fill = c(bg_color, suit_color, occupied_color), 
+        horiz = TRUE, inset = -0.2, cex = 0.75, bty = "n")
+    utils::setTxtProgressBar(pb, i)
+}
+## R version 4.2.1 (2022-06-23)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Other packages: purrr 0.3.5, bamm 0.4.2.5</code></pre></div>
+	<script src="js/sdm_sim.js"></script>
+<!-- highlight R code -->
+
+</body>
+</html>

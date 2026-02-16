@@ -1,0 +1,55 @@
+library(bamm)
+rm(list = ls())
+
+model_path <- system.file("extdata/Lepus_californicus_cont.tif",
+                          package = "bamm")
+model <- raster::raster(model_path)
+
+set_A = modelsparse <- sparse_mod <- bamm::model2sparse(model,threshold=0.05)
+set_M <- adj_mod <- bamm::adj_mat(modelsparse = set_A,ngbs=1)
+occs_lep_cal <- data.frame(longitude = c(-110.08880,
+                                         -98.89638),
+                           latitude = c(30.43455,
+                                        25.19919))
+nsteps = 2000
+disper_prop=0.5
+stochastic_dispersal = TRUE
+progress_bar=TRUE
+rcpp = TRUE
+initial_points <- bamm::occs2sparse(modelsparse = set_A,
+                                 occs = occs_lep_cal)
+occs_sparse <- initial_points
+sp_interaction_model <- set_A@niche_model
+disp_prop2_suitability =T
+sp_interaction_model[set_A@cellIDs] <- set_A@suit_values
+suit_val <- sp_interaction_model
+tictoc::tic()
+sdm_lep_cal_cpp <- bamm::sdm_sim(set_A = sparse_mod,
+                             set_M = adj_mod,
+                             sp_interaction_model = suit_val,
+                             initial_points = occs_sparse,
+                             nsteps = 2000,
+                             stochastic_dispersal = TRUE,
+                             disp_prop2_suitability=TRUE,
+                             disper_prop=0.5,
+                             progress_bar=TRUE,
+                             rcpp = TRUE)
+tictoc::toc()
+tictoc::tic()
+sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
+                           set_M = adj_mod,sp_interaction_model = NULL,
+                           initial_points = occs_sparse,
+                           nsteps = 2000,
+                           stochastic_dispersal = TRUE,
+                           disp_prop2_suitability=TRUE,
+                           disper_prop=0.5,
+                           progress_bar=TRUE,rcpp = FALSE)
+tictoc::toc()
+
+
+
+sim_res <- bamm::sim2Raster(sdm_lep_cal,which_steps = 1:100)
+sim_res_cpp <- bamm::sim2Raster(sdm_lep_cal_cpp,which_steps = 1:100)
+
+raster::plot(sim_res[[1:20]])
+raster::plot(sim_res_cpp[[1:20]])

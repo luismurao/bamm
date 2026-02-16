@@ -1,0 +1,101 @@
+## set your user name and email:
+usethis::use_git_config(user.name = "luismurao", user.email = "luismurao@gmail.com")
+## create a personal access token for authentication:
+usethis::create_github_token()
+
+usethis::use_git_config(helper="cache --timeout=2600000") #> cache timeout ~30 days
+
+## set personal access token:
+credentials::set_github_pat("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")
+usethis::edit_r_environ()
+usethis::git_sitrep()
+rhub::rhub_setup() # Commit, push, merge
+rhub::rhub_doctor()
+rhub::rhub_platforms()
+rhub::rhub_check(platforms = c("linux","macos",
+                               "macos-arm64","windows",
+                               "ubuntu-clang"))# launch manually
+
+
+#usethis::use_github_actions()
+#usethis::use_github_action_check_standard()
+#usethis::use_github_action_check_release()
+#usethis::use_badge()
+#?usethis::use_badge()
+#usethis::use_coverage(type = c("codecov", "coveralls"),
+#                      repo_spec = "luismurao/smop")
+
+library(pkgdown)
+build_site()
+build_site(override = list(destination = tempdir()))
+# Prepare for CRAN ----
+#usethis::use_github_actions_badge(name = "R-CMD-check.yaml", repo_spec = NULL)
+# Update dependencies in DESCRIPTION
+# install.packages('attachment', repos = 'https://thinkr-open.r-universe.dev')
+#attachment::att_amend_desc()
+
+# Run tests and examples
+devtools::test()
+devtools::run_examples()
+# autotest::autotest_package(test = TRUE)
+
+# Check package as CRAN
+rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"))
+
+# Check content
+# install.packages('checkhelper', repos = 'https://thinkr-open.r-universe.dev')
+checkhelper::find_missing_tags()
+# _Check that you let the house clean after the check, examples and tests
+all_files_remaining <- checkhelper::check_clean_userspace()
+all_files_remaining
+
+# Check spelling
+# usethis::use_spell_check()
+spelling::spell_check_package()
+
+# Check URL are correct
+# install.packages('urlchecker', repos = 'https://r-lib.r-universe.dev')
+urlchecker::url_check()
+urlchecker::url_update()
+
+
+devtools::revdep()
+library(revdepcheck)
+# In another session
+id <- rstudioapi::terminalExecute("Rscript -e 'revdepcheck::revdep_check(num_workers = 4)'")
+rstudioapi::terminalKill(id)
+# See outputs
+revdep_details(revdep = "pkg")
+revdep_summary()                 # table of results by package
+revdep_report() # in revdep/
+# Clean up when on CRAN
+revdep_reset()
+
+# Update NEWS
+# Bump version manually and add list of changes
+
+# Add comments for CRAN
+usethis::use_cran_comments(open = rlang::is_interactive())
+
+# Upgrade version number
+usethis::use_version(which = c("patch", "minor", "major", "dev")[1])
+attachment::att_amend_desc()
+covr::package_coverage()
+
+# Check reverse dependencies
+# remotes::install_github("r-lib/revdepcheck")
+usethis::use_git_ignore("revdep/")
+usethis::use_build_ignore("revdep/")
+
+devtools::revdep()
+library(revdepcheck)
+# In another session because Rstudio interactive change your config:
+id <- rstudioapi::terminalExecute("Rscript -e 'revdepcheck::revdep_check(num_workers = 4)'")
+rstudioapi::terminalKill(id)
+# if [Exit Code] is not 0, there is a problem !
+# to see the problem: execute the command in a new terminal manually.
+
+
+# Verify you're ready for release, and release
+devtools::release()
+

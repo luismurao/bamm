@@ -1,0 +1,37 @@
+library(usethis)
+library(rhub)
+library(gitcreds)
+usethis::use_spell_check()
+# Para poder hacer los check r-hub hay que crear un token de r-hub primero
+
+# Esto abrirá GitHub en tu navegador para crear el token
+#create_github_token(
+#  scopes = c("repo", "workflow", "user:email"),
+#  description = "R-hub checks"
+#)
+
+# Despues eliminar el anterior
+
+#gitcreds::gitcreds_delete()
+# Debe estar vacío
+#Sys.getenv("GITHUB_PAT")
+
+# Guardar el nuevo en el ambiente de R
+#usethis::edit_r_environ()
+# En este caso el nuevo token es
+# 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
+
+#gitcreds_set()
+# Esto es para comprobar que se configuro bien el token
+library(gh)
+gh_whoami()
+
+# Ahora se configurara todo con R-hub
+rhub_setup()
+
+rhub::rhub_doctor()
+rhub::rhub_check()
+
+# 1,4,5,16, 27,30
+devtools::check_win_devel()
+devtools::release()

@@ -1,0 +1,26 @@
+{
+    "id": "F6DCF8F2",
+    "path": "~/Dropbox/bam_sep/bamm/R/csim2pam.R",
+    "project_path": "R/csim2pam.R",
+    "type": "r_source",
+    "hash": "3929802078",
+    "contents": "",
+    "dirty": false,
+    "created": 1671309990883.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "41,17",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1671394799,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1671394799,
+    "read_only": false,
+    "read_only_alternatives": []
+}

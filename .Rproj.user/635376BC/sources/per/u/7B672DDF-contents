@@ -1,0 +1,3 @@
+library(benchmarkme)
+res = benchmark_std(runs = 10)
+plot(res)

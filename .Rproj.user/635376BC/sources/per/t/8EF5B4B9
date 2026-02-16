@@ -1,0 +1,26 @@
+{
+    "id": "8EF5B4B9",
+    "path": "~/Dropbox/bam_sep/bamm/R/adj_mat.R",
+    "project_path": "R/adj_mat.R",
+    "type": "r_source",
+    "hash": "295663463",
+    "contents": "",
+    "dirty": false,
+    "created": 1696098164376.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "69,16",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1696098331,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1696098331837,
+    "read_only": false,
+    "read_only_alternatives": []
+}

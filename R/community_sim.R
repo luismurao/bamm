@@ -16,7 +16,6 @@
 #' @param disper_prop Probability of dispersal to reachable cells.
 #' @param disp_prop2_suitability Logical. If probability of dispersal
 #' is proportional to the suitability of reachable cells. The proportional
-#' @param rcpp Logical. Use native C++ code to run the model.
 #' value must be declared in the parameter `disper_prop`.
 #' @return An object of class community_sim. The object contains simulation
 #' results for each species in the community.
@@ -59,7 +58,7 @@ community_sim <- function(en_models,
                           threshold_vec = NULL,
                           stochastic_dispersal = FALSE,
                           disp_prop2_suitability=TRUE,
-                          disper_prop=0.5, rcpp = TRUE){
+                          disper_prop=0.5){
 
   models <- raster::stack(en_models)
   n_models <- raster::nlayers(models)
@@ -83,7 +82,7 @@ community_sim <- function(en_models,
   if(is.null(threshold_vec) || length(threshold_vec) != n_models){
     threshold_vec <- rep(0.1,n_models)
   }
-  sdmsimL <- seq_len(n_models) |> furrr::future_map(function(x){
+  sdmsimL <- seq_len(n_models) %>% furrr::future_map(function(x){
 
     sparse_mod <- bamm::model2sparse(model = models[[x]],
                                      threshold = threshold_vec[x])
@@ -103,8 +102,7 @@ community_sim <- function(en_models,
                               nsteps = nsteps,
                               stochastic_dispersal = stochastic_dispersal,
                               disp_prop2_suitability=disp_prop2_suitability,
-                              disper_prop=disper_prop,progress_bar = FALSE,
-                              rcpp = rcpp)
+                              disper_prop=disper_prop)
     utils::setTxtProgressBar(pb, x)
 
     return(sdmsimul)

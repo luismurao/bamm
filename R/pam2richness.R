@@ -46,7 +46,7 @@ pam2richness <- function(pamobj,which_steps){
                               max = nsteps,
                               style = 3)
 
-  richneesL <- 1:nsteps |> purrr::map(function(x){
+  richneesL <- 1:nsteps %>% purrr::map(function(x){
     grid_base <- pamobj@grid
     grid_base[pamobj@cellIDs] <- Matrix::rowSums(pams2covert[[x]][,-(1:2)])
     utils::setTxtProgressBar(pb, x)

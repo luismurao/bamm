@@ -1,0 +1,26 @@
+{
+    "id": "BFA49DBB",
+    "path": "~/Dropbox/bam_sep/bamm/R/diversity_range_analysis.R",
+    "project_path": "R/diversity_range_analysis.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1766960258508.0,
+    "source_on_save": false,
+    "relative_order": 11,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "81,55",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1766960264,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1766960264246,
+    "read_only": false,
+    "read_only_alternatives": []
+}

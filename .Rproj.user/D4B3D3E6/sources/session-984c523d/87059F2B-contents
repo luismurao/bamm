@@ -1,0 +1,10 @@
+library(raster)
+
+# Example with sample data
+uicn <- readRDS(system.file("extdata/uicn.rds",package = "bamm"))
+sudam <- readRDS(system.file("extdata/suam.rds",package = "bamm"))
+# Convert to PAM with 0.5 degree resolution
+pam_result <- bamm::pol2pam(poly = uicn,
+                            taxon_attribute = "binomial",
+                            resolution = 0.5,
+                            polymask = NULL)

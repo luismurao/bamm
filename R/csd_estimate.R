@@ -38,7 +38,7 @@ csd_estimate <- function(model,dispersal_steps=c(2,4,8,16,32,64)){
   ds <- seq_along(dispersal_steps)
   pb <- utils::txtProgressBar(min = 0, max = max(ds), style = 3)
   #testworks <- TRUE
-  csd <- ds |> purrr::map(function(x){
+  csd <- ds %>% purrr::map(function(x){
     #if(testworks){
     bclust <- try({
       r <- bamm::bam_clusters(model,ngbs = dispersal_steps[x])
@@ -59,7 +59,7 @@ csd_estimate <- function(model,dispersal_steps=c(2,4,8,16,32,64)){
 
 
   ndisp <- length(csd)
-  d_all <- seq_len(ndisp) |> purrr::map_df(function(x){
+  d_all <- 1:ndisp %>% purrr::map_df(function(x){
     if(methods::is(csd[[x]],"csd")){
       d1 <- data.frame(csd[[x]]@connections,
                        d=dispersal_steps[x])
@@ -67,12 +67,12 @@ csd_estimate <- function(model,dispersal_steps=c(2,4,8,16,32,64)){
     }
   })
 
-  #d_clust <- d_all |>
-  #  dplyr::group_by(d) |>
+  #d_clust <- d_all %>%
+  #  dplyr::group_by(d) %>%
   #  dplyr::summarise(n_clusters=max(clusterID))
   d <- NULL; clusterID <- NULL; nclust <-NULL
-  d_clust <- d_all  |> dplyr::group_by(d,clusterID) |>
-    dplyr::summarise(nclust=dplyr::n()) |> dplyr::group_by(d) |>
+  d_clust <- d_all  %>% dplyr::group_by(d,clusterID) %>%
+    dplyr::summarise(nclust=dplyr::n()) %>% dplyr::group_by(d) %>%
     dplyr::summarise(Clusters=max(clusterID),
                      mean_area=mean(nclust))
 

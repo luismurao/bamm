@@ -1,0 +1,26 @@
+{
+    "id": "158B1302",
+    "path": "~/Dropbox/bam_sep/CRAN_SUB.R",
+    "project_path": null,
+    "type": "r_source",
+    "hash": "619242179",
+    "contents": "",
+    "dirty": false,
+    "created": 1720281150854.0,
+    "source_on_save": false,
+    "relative_order": 7,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "87,25",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1720284649,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1720284649,
+    "read_only": false,
+    "read_only_alternatives": []
+}
