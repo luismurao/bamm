@@ -27,7 +27,7 @@ library(gh)
 gh_whoami()
 
 # Ahora se configurara todo con R-hub
-rhub_setup()
+rhub::rhub_setup()
 
 rhub::rhub_doctor()
 rhub::rhub_check()
