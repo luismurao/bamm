@@ -1,4 +1,7 @@
-# February 15
+# February 16
+
+   * Fixed memory safety issue in sdm_sim that caused segfaults with sanitizers
+
 
 ## Known Issue
 Package fails ASAN/UBSAN checks with segfault in sdm_sim_rcpp despite extensive input validation. 

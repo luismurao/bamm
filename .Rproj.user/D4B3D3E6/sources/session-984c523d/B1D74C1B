@@ -1,9 +1,9 @@
 {
     "id": "B1D74C1B",
-    "path": "~/Dropbox/bam_sep/bamm/DESCRIPTION",
+    "path": "~/Dropbox/bam_sep/bamm_cpp/bamm/DESCRIPTION",
     "project_path": "DESCRIPTION",
     "type": "dcf",
-    "hash": "3186683963",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1671457328537.0,
@@ -16,11 +16,11 @@
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1771175347,
+    "lastKnownWriteTime": 1771284110,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1771175347574,
+    "last_content_update": 1771284110374,
     "read_only": false,
     "read_only_alternatives": []
 }

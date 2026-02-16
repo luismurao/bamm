@@ -1,7 +1,7 @@
 {
     "id": "A26C71D0",
     "path": "~/Dropbox/bam_sep/bamm/src/sdm_sim.cpp",
-    "project_path": "src/sdm_sim.cpp",
+    "project_path": null,
     "type": "cpp",
     "hash": "0",
     "contents": "",
@@ -13,7 +13,7 @@
         "source_window_id": "",
         "Source": "Source",
         "cursorPosition": "11,22",
-        "scrollLine": "5"
+        "scrollLine": "0"
     },
     "folds": "",
     "lastKnownWriteTime": 1771278883,

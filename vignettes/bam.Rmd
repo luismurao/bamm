@@ -1,0 +1,133 @@
+---
+title: "bamm"
+output: rmarkdown::html_vignette
+author: "Luis Osorio-Olvera and Jorge Soberon"
+vignette: >
+  %\VignetteIndexEntry{bamm}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+The `bamm` package is an R package designed to create and operate on large 
+(tens of millions of cells) matrices regarding to each element of the 
+$\textbf{BAM}$ scheme, for example, the adjacency matrix (connectivity matrix), 
+and the niche suitability matrices. 
+
+The following vignette presents the basic functions and methods of the `bamm` 
+package. The package has three main functionalities related to each element of
+the **BAM** scheme.
+
+```{r setup}
+library(bamm)
+```
+
+## **A** functions
+
+### Convert niche models to sparse matrices 
+
+The package uses sparse matrices to represent those objects which allows it to 
+optimize computers memory and make important speed ups in computation times by 
+eliminating operations on zero elements. The basic function of 
+the package is `model2sparse` which converts a raster model to an **setA** class
+
+```{r}
+model_path <- system.file("extdata/Lepus_californicus_cont.tif",
+                          package = "bamm")
+model <- raster::raster(model_path) 
+# binary model
+model_bin <- model > 0.7
+sparse_mod <- bamm::model2sparse(model = model_bin)
+
+```
+
+The slots of the object are 
+
+```{r}
+sparse_mod
+```
+
+
+
+## M functions
+
+### Connectivity matrix 
+
+The function to estimate connectivity between pixels of a given raster is `adj_mat`,
+(generally is the M area but can be any matrix); 
+it uses  sparse adjacency matrices.  
+
+
+```{r}
+ # Adjacency matrix from a niche model
+
+
+adj_mod <- adj_mat(sparse_mod,ngbs=1,eigen_sys = T)
+adj_mod
+```
+
+The map of the connectivity matrix `adj_mod` is
+
+
+```{r fig.cap="Fig. 1 Connectivity map of `adj_mod` object. Here green color means more connected."}
+model_eig <- model
+model_eig[sparse_mod@cellIDs] <- abs(adj_mod@eigen_vec)
+raster::plot(model_eig)
+```
+
+
+## AM objects 
+
+These are objects that combine **SetA** and **SetM** .
+
+### Connectivity Suitability diagram
+
+Estimates the connectivity suitability and dispersal diagram. It shows the 
+number of geographic clusters as a function of dispersal and suitability. 
+
+
+```{r}
+clustersin <- bamm::bam_clusters(model=sparse_mod,
+                                ngbs=1,plot_model=FALSE)
+```
+The function returns the following slots
+
+```{r}
+clustersin
+```
+Lets see the geographic clusters as function of suitability and dispersal
+
+```{r fig.cap="Figure 2. An interative map showing the geographic clusters for a species that can travel two steps per unit time"}
+clustersin@interactive_map
+```
+
+```{r fig.cap="Figure 3. An raster map showing the geographic clusters for a species that can travel two steps per unit time"}
+raster::plot(clustersin@raster_map)
+```
+
+
+### The CSD diagram
+
+The CSD diagram is a simple but useful tool to estimate the number of dispersal
+steps that a species needs to travel per unit time in order to occupy its potential
+area of distribution. In this example the approximate number of dispersal steps to
+archive all suitable patches is 30 (not shown here).
+
+```{r fig.width=4,fig.height=4,fig.cap="Figure 4. Connectivity Sutitability Dispersal plot (CSD plot).\nThe mean number of connected cells (MNCC) is showed in the legend."}
+csd_plot <- bamm::csd_estimate(sparse_mod,
+                              dispersal_steps=c(2,4,8))
+plot(csd_plot$csd$`dispersal_step:_4`@raster_map,
+     main="CSD clusters")
+
+```
+
+
+
+

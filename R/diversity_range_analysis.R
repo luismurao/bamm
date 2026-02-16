@@ -79,7 +79,7 @@
 diversity_range_analysis <- function(pam,xy_mat=NULL,lower_interval=0.05,
                                      upper_interval=0.95, raster_templete=NULL,
                                      niter=100,return_null_dfield=FALSE,
-                                     randal = "indep_swap",
+                                     randal = "fastball",
                                      parallel=TRUE,
                                      n_cores=2){
 
