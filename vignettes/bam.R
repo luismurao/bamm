@@ -39,7 +39,10 @@ clustersin <- bamm::bam_clusters(model=sparse_mod,
 clustersin
 
 ## ----fig.cap="Figure 2. An interative map showing the geographic clusters for a species that can travel two steps per unit time"----
-clustersin@interactive_map
+if(interactive()){
+  clustersin@interactive_map
+}
+
 
 ## ----fig.cap="Figure 3. An raster map showing the geographic clusters for a species that can travel two steps per unit time"----
 raster::plot(clustersin@raster_map)
