@@ -2,20 +2,33 @@
 # December 2019
 # Version 0.3.2
 # Licence GPL v3
-
-#' S4 classes to organize data and results of \code{bamm} objects
-#' @aliases coordinates-class
-#' @importFrom methods new
-#' @slot coordinates A two column matrix with coordinates
-#' @slot eigen_vec Eigen vector of adjacency matrix
-#' @slot eigen_val Eigen value of adjacency matrix
-#' slot g_model A raster representing the geographic area
-#' slot g_sparse A sparse matrix of the geographic area
-#' @author Luis Osorio-Olvera & Jorge Soberón
-#' @return An object of class g_area
-#' @exportClass g_area
-#' @export
+#' @title S4 Class Hierarchy for BAM (Biotic-Abiotic-Movement) Modeling
 #'
+#' @description
+#' This documentation describes the S4 class system used in the \code{bamm} package
+#' for modeling species distributions using the BAM (Biotic-Abiotic-Movement) framework.
+#' The classes organize data and results for ecological niche modeling, dispersal
+#' simulation, and biodiversity analysis.
+
+
+# Base Class --------------------------------------------------------------
+
+#' @title Base Geographic Area Class
+#'
+#' @description
+#' The foundational class containing geographic coordinates and optional eigen
+#' analysis results for spectral graph methods.
+#'
+#' @slot coordinates A numeric matrix with two columns (x, y) representing
+#'        geographic coordinates of non-NA cells
+#' @slot eigen_vec Matrix containing eigenvectors from adjacency matrix analysis
+#' @slot eigen_val Numeric vector containing eigenvalues from adjacency matrix analysis
+#'
+#' @seealso \code{\link{setA-class}}, \code{\link{setM-class}}
+#'
+#' @author Luis Osorio-Olvera & Jorge Soberón
+#' @exportClass g_area
+#' @aliases g_area-class
 g_area <- methods::setClass(Class = "g_area",
                             slots = c(coordinates="matrix",
                                       eigen_vec = "matrix",
@@ -24,20 +37,25 @@ g_area <- methods::setClass(Class = "g_area",
                                       #g_sparse = "dgCMatrix"
                                       ))
 
-#' Class for the A set of the BAM diagram
+# Core BAM Classes --------------------------------------------------------
+
+#' @title Class for the A (Abiotic) Set of BAM Diagram
 #'
-#' A class for the A set of the BAM diagram. It contains raster models and
-#' IDs of pixels with values different than NA.
+#' @description
+#' Represents the abiotic component (environmental suitability) in the BAM framework.
+#' Contains raster-based niche models and their sparse matrix representations.
 #'
-#' @slot niche_model A niche model in raster format. It can be a binary model
-#' or continuous.
-#' If the model is in a continuous format.
-#' @slot suit_threshold Suitability value used to binarize continuous model
-#' @slot cellIDs A numeric vector with the IDs of the cells with prediction
-#' values
-#' @slot suit_values A numeric vector with suitability value of the continuous
-#' map
-#' @slot sparse_model A niche model in sparse matrix format
+#' @slot niche_model A \code{RasterLayer} or \code{RasterStack} representing the
+#'        environmental suitability model (binary or continuous)
+#' @slot suit_threshold Numeric value used to binarize continuous models
+#' @slot cellIDs Numeric vector of raster cell IDs with non-NA values
+#' @slot suit_values Numeric vector of suitability values for continuous models
+#' @slot sparse_model A sparse matrix (\code{dgCMatrix}) representation of the niche model
+#'
+#' @section Validity:
+#' The \code{niche_model} slot must be either a \code{RasterLayer} or \code{RasterStack}.
+#'
+#' @seealso \code{\link{model2sparse}}, \code{\link{setM-class}}
 #' @importClassesFrom raster RasterLayer
 #' @importClassesFrom raster RasterStack
 #' @importClassesFrom Matrix dgCMatrix

@@ -390,13 +390,16 @@ methods::setMethod(f = "plot",
                                               "LE/HR")
 
                              COLORES <- cols[names(cols) %in% names(codifi)]
+                             COLORES <- COLORES[COLORES %in% levels(labs)]
+
                              levels(labs) <-  names(COLORES)[order(COLORES,
                                                                    levels(labs))
                                                              ]
 
-
                              randiv <- x@diversity_range_raster
-                             vals <- stats::na.omit(randiv[])
+                             #vals <- stats::na.omit(randiv[])
+                             cvals <- raster::cellFromXY(randiv,x@xy_coordinates)
+                             vals <- randiv[cvals]
                              cols1 <- ifelse(
                                vals == 0,"#000000",
                                ifelse(vals ==1,
@@ -424,7 +427,7 @@ methods::setMethod(f = "plot",
                              diversity <- crosstalk::SharedData$new(div1)
 
                             p1 <-  crosstalk::bscols(
-                              plotly::plot_ly() %>%
+                              plotly::plot_ly() |>
                                   plotly::add_trace(
                                     data=diversity, x = ~alpha,
                                     y = ~dispersion_field,
@@ -435,7 +438,7 @@ methods::setMethod(f = "plot",
                                     color = ~labs,
                                     colors = COLORES,
                                     inherit = TRUE
-                                  )  %>%
+                                  )  |>
                                 plotly::add_polygons(x=c(vx,vx[1]),
                                                      y=c(vy,vy[1]),
                                                   #name = paste0("Cluster ",1),
@@ -444,19 +447,19 @@ methods::setMethod(f = "plot",
                                                      fillcolor='transparent',
                                                      hoverinfo = "none",
                                                      showlegend = FALSE,
-                                                     inherit = FALSE) %>%
+                                                     inherit = FALSE) |>
                                   plotly::highlight('plotly_selected',
                                                     off = 'plotly_deselect',
                                                     dynamic = FALSE,
                                                     persistent = FALSE),
-                              leaflet::leaflet(diversity,height = 900,...) %>%
-                                leaflet::addTiles() %>%
+                              leaflet::leaflet(diversity,height = 900,...) |>
+                                leaflet::addTiles() |>
                                 leaflet::addCircleMarkers(
                                   radius = radius,
                                   lng = ~Longitude,
                                   lat = ~Latitude,
                                   fillColor = ~col,
-                                  color = ~col,opacity = 0.9,...) %>%
+                                  color = ~col,opacity = 0.9,...) |>
                                 plotly::highlight('plotly_click',
                                                   selectize=FALSE,
                                           off = 'plotly_deselect',
@@ -676,15 +679,17 @@ methods::setMethod(f = "predict",
                      } else{
                        ad_mat <- lapply(seq_len(n_enm), function(x){
                          methods::new("setM",
-                                      adj_matrix=object@adj_matrix)
+                                      adj_matrix=object@adj_matrix,
+                                      adj_list = object@adj_list
+                                      )
                        })
 
                      }
 
                      sim_results <- list(object)
 
-                     initial_points <- Matrix::t(object@sdm_sim[[
-                       length(object@sdm_sim)]])
+                     initial_points <- object@sdm_sim[[
+                       length(object@sdm_sim)]]
                      nsteps <- nsteps_vec[1]
                      niche_mod <- niche_layers[[1]]
                      suit_th <- ifelse(!is.na(object@suit_threshold),
@@ -699,7 +704,8 @@ methods::setMethod(f = "predict",
                                          disp_prop2_suitability =
                                            disp_prop2_suitability,
                                          progress_bar = TRUE,
-                                         nsteps = nsteps)
+                                         nsteps = nsteps,
+                                         rcpp = TRUE)
 
 
                      periods <- raster::stack(object@niche_model,niche_layers)
@@ -713,8 +719,8 @@ methods::setMethod(f = "predict",
                            model = niche_mod,
                            threshold = suit_th)
                          bam_object <- sim_results[[x]]
-                         initial_points <- Matrix::t(
-                           bam_object@sdm_sim[[bam_object@sim_steps]])
+                         initial_points <-
+                           bam_object@sdm_sim[[bam_object@sim_steps]]
 
                          sdm <- bamm::sdm_sim(set_A = sparse_mod,
                                              set_M = ad_mat[[x]],
@@ -776,7 +782,7 @@ methods::setMethod(f = "predict",
                        titles <- unlist(titles)
 
 
-                       sdm_st <- seq_along(sim_results) %>%
+                       sdm_st <- seq_along(sim_results) |>
                          purrr::map(function(x){
                            #nsims <-length(sim_results[[x]]@sdm_sim) -1
                            sdm_ani <- bamm::sim2Raster(

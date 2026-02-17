@@ -4,13 +4,16 @@
 \alias{bam_clusters}
 \title{bam_clusters: Function to estimate the connectivity of suitable areas}
 \usage{
-bam_clusters(model, ngbs = 1, plot_model = FALSE)
+bam_clusters(model, ngbs = 1, set_M = NULL, plot_model = FALSE)
 }
 \arguments{
 \item{model}{A niche model in raster format or a \code{\link[bamm]{setA}}
 object (see \code{\link[bamm]{model2sparse}}).}
 
 \item{ngbs}{Numeric. Number of neighbors (see details).}
+
+\item{set_M}{A setM object containing the adjacency matrix of the
+study area. The default value is set to NULL}
 
 \item{plot_model}{Logical. Indicates whether to plot the niche model using a
 leaflet map, connected suitable cells shown in the same color.}

@@ -4,6 +4,7 @@
 #' @param sdm_simul A bam object. See \code{\link[bamm]{sdm_sim}}
 #' @param which_steps A numeric vector indicating the simulation steps that
 #'  are going to be converted into raster layers.
+#' @param progress_bar Show progress bar
 #' @return A RasterStack of species' distribution at each simulation step
 #' @author Luis Osorio-Olvera & Jorge Soberón
 #' @export
@@ -34,7 +35,7 @@
 #'
 #' }
 
-sim2Raster <- function(sdm_simul,which_steps = NULL){
+sim2Raster <- function(sdm_simul,which_steps = NULL,progress_bar= TRUE){
 
   if(!inherits(sdm_simul,"bam")){
     stop("sdm_simul should be of class bam")
@@ -50,12 +51,16 @@ sim2Raster <- function(sdm_simul,which_steps = NULL){
   else{
     stepsvec <- which_steps
   }
-
-  sim_stack <- stepsvec %>% purrr::map(function(x){
-    grid_base <- sdm_simul@niche_model * 0
-    grid_base[sdm_simul@cellIDs] <- sdm_simul@sdm_sim[[x]]
+  grid_base <- sdm_simul@niche_model * 0
+  global_vars <- c("grid_base","sdm_simul","stepsvec","progress_bar","pb")
+  # Progress bar
+  if (progress_bar) pb <- utils::txtProgressBar(0, max(stepsvec), style = 3)
+  sim_stack <- seq_along(stepsvec) |> furrr::future_map(function(x){
+    grid_base[sdm_simul@cellIDs] <- sdm_simul@sdm_sim[[stepsvec[x]]]
+    if (progress_bar) utils::setTxtProgressBar(pb, x)
     return(grid_base)
-  })
+  },.progress = progress_bar,
+  .options = furrr::furrr_options(seed = NULL,globals = global_vars))
   sim_stack <- raster::stack(sim_stack)
   names(sim_stack) <- paste0("sim_",stepsvec)
   return(sim_stack)

@@ -1,15 +1,11 @@
- # bamm 0.6.1
-   
-   * Fixed memory safety issue in sdm_sim that caused segfaults with sanitizers
-   * Added input validation to prevent null pointer errors
-
-# bamm 0.6.0
+# bamm 0.7.0
 
   - This version implements a C++ port of the `sdm_sim` function, 
     delivering at least a 10-fold speedup in simulation performance.
   
   - A new function (pol2pam) has been added to generate Presence-Absence-Matrices 
     (PAMs) from polygon data.
+
 
 
 # bamm 0.5.0
