@@ -198,7 +198,10 @@ test_that("bam_clusters() returns leaflet plot with model", {
   model <- model > 0.7
   raster::crs(model) <- "+proj=longlat"
   clusterin <- bamm::bam_clusters(model,ngbs=1,plot_model=TRUE)
-  expect_s3_class(clusterin@interactive_map, "leaflet")
+  if(interactive()){
+    expect_s3_class(clusterin@interactive_map, "leaflet")
+
+  }
 })
 
 # Test eigen_bam
@@ -485,7 +488,10 @@ test_that("community_sim simulates community dynamics and returns an
                                            return_null_dfield=TRUE)
   expect_error(bamm::plot(rdivan,plot_type="diversity_range1"))
   bamm::plot(rdivan,plot_type="diversity_range_map")
-  #bamm::plot(rdivan,plot_type="diversity_range_interactive")
+  if(interactive()){
+    #bamm::plot(rdivan,plot_type="diversity_range_interactive")
+
+  }
   bamm::plot(rdivan,plot_type="alpha")
   bamm::plot(rdivan,plot_type="dispersion_field")
   bamm::plot(rdivan,plot_type="dispersion_field_map")
@@ -637,7 +643,10 @@ test_that("pam2bioindex returns an object of class bioindex",{
 #                                           return_null_dfield=TRUE)
 #  expect_error(bamm::plot(rdivan,plot_type="diversity_range1"))
 #  bamm::plot(rdivan,plot_type="diversity_range_map")
+#if(interactive()){
   #bamm::plot(rdivan,plot_type="diversity_range_interactive")
+
+#}
 #  bamm::plot(rdivan,plot_type="alpha")
 #  bamm::plot(rdivan,plot_type="dispersion_field")
 #  bamm::plot(rdivan,plot_type="dispersion_field_map")

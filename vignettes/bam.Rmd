@@ -105,7 +105,10 @@ clustersin
 Lets see the geographic clusters as function of suitability and dispersal
 
 ```{r fig.cap="Figure 2. An interative map showing the geographic clusters for a species that can travel two steps per unit time"}
-clustersin@interactive_map
+if(interactive()){
+  clustersin@interactive_map
+}
+
 ```
 
 ```{r fig.cap="Figure 3. An raster map showing the geographic clusters for a species that can travel two steps per unit time"}

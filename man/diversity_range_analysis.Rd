@@ -94,7 +94,7 @@ rdivan <- bamm::diversity_range_analysis(pam=pam,
                                          return_null_dfield=TRUE)
 bamm::plot(rdivan,plot_type="diversity_range")
 bamm::plot(rdivan,plot_type="diversity_range_map")
-if(require(plotly) && require(crosstalk)){
+if(interactive() && require(plotly) && require(crosstalk)){
 #bamm::plot(rdivan,plot_type="diversity_range_interactive")
 }
 }
