@@ -73,6 +73,26 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sdm_sim_rcpp
+List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input, const Rcpp::NumericVector& suit_values, const Rcpp::List& adj_list, int nsteps, bool stochastic_dispersal, bool disp_prop2_suitability, double disper_prop, bool progress_bar);
+RcppExport SEXP _bamm_sdm_sim_rcpp(SEXP ASEXP, SEXP M_origSEXP, SEXP g0_inputSEXP, SEXP suit_valuesSEXP, SEXP adj_listSEXP, SEXP nstepsSEXP, SEXP stochastic_dispersalSEXP, SEXP disp_prop2_suitabilitySEXP, SEXP disper_propSEXP, SEXP progress_barSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type A(ASEXP);
+    Rcpp::traits::input_parameter< SEXP >::type M_orig(M_origSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type g0_input(g0_inputSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type suit_values(suit_valuesSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type adj_list(adj_listSEXP);
+    Rcpp::traits::input_parameter< int >::type nsteps(nstepsSEXP);
+    Rcpp::traits::input_parameter< bool >::type stochastic_dispersal(stochastic_dispersalSEXP);
+    Rcpp::traits::input_parameter< bool >::type disp_prop2_suitability(disp_prop2_suitabilitySEXP);
+    Rcpp::traits::input_parameter< double >::type disper_prop(disper_propSEXP);
+    Rcpp::traits::input_parameter< bool >::type progress_bar(progress_barSEXP);
+    rcpp_result_gen = Rcpp::wrap(sdm_sim_rcpp(A, M_orig, g0_input, suit_values, adj_list, nsteps, stochastic_dispersal, disp_prop2_suitability, disper_prop, progress_bar));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_bamm_rList", (DL_FUNC) &_bamm_rList, 2},
@@ -80,6 +100,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_bamm_permute_matrix_fb", (DL_FUNC) &_bamm_permute_matrix_fb, 2},
     {"_bamm_permute_matrix_indswap", (DL_FUNC) &_bamm_permute_matrix_indswap, 2},
     {"_bamm_null_dispersion_field_cat", (DL_FUNC) &_bamm_null_dispersion_field_cat, 4},
+    {"_bamm_sdm_sim_rcpp", (DL_FUNC) &_bamm_sdm_sim_rcpp, 10},
     {NULL, NULL, 0}
 };
 
