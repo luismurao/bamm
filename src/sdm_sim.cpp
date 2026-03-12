@@ -74,6 +74,7 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
                   bool disp_prop2_suitability,
                   double disper_prop,
                   bool progress_bar) {
+
   // Set random seed if needed
   if(stochastic_dispersal){
     Rcpp::Environment baseEnv("package:base");
@@ -84,12 +85,57 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
   // Convert inputs with dimension checks
   sp_mat A_mat = Rcpp::as<arma::sp_mat>(A);
   sp_mat M_mat = Rcpp::as<arma::sp_mat>(M_orig);
-  sp_mat g0 = Rcpp::as<arma::sp_mat>(g0_input);
+  sp_mat g0    = Rcpp::as<arma::sp_mat>(g0_input);
   const uword n = A_mat.n_rows;
 
-  if (g0.n_rows != n || g0.n_cols != 1) {
-    stop("Initial state vector must be Nx1");
+  // ── Input validation ────────────────────────────────────────────────────────
+  if (n == 0) {
+    stop("set_A sparse matrix has zero rows. "
+           "Check the threshold used in model2sparse(): it may be too high, "
+           "leaving no valid cells in the model.");
   }
+  if (A_mat.n_rows != A_mat.n_cols) {
+    stop("set_A must be a square matrix (n x n).");
+  }
+  if (M_mat.n_rows == 0 || M_mat.n_cols == 0) {
+    stop("set_M sparse matrix has zero dimensions. "
+           "Check the output of adj_mat().");
+  }
+  if (M_mat.n_rows != n || M_mat.n_cols != n) {
+    char msg[256];
+    snprintf(msg, sizeof(msg),
+             "set_M dimensions (%llux%llu) must match set_A (%llux%llu).",
+             (unsigned long long)M_mat.n_rows, (unsigned long long)M_mat.n_cols,
+             (unsigned long long)n, (unsigned long long)n);
+    stop(msg);
+  }
+  if (g0.n_rows != n || g0.n_cols != 1) {
+    char msg[256];
+    snprintf(msg, sizeof(msg),
+             "initial_points must be a %llux1 sparse vector, got %llux%llu.",
+             (unsigned long long)n,
+             (unsigned long long)g0.n_rows, (unsigned long long)g0.n_cols);
+    stop(msg);
+  }
+  if ((uword)suit_values.size() != n) {
+    char msg[256];
+    snprintf(msg, sizeof(msg),
+             "suit_values length (%llu) must match matrix dimension (%llu).",
+             (unsigned long long)suit_values.size(), (unsigned long long)n);
+    stop(msg);
+  }
+  if (nsteps <= 0) {
+    stop("nsteps must be a positive integer.");
+  }
+  if (disper_prop < 0.0 || disper_prop > 1.0) {
+    stop("disper_prop must be a value between 0 and 1.");
+  }
+  // Check that initial_points has at least one occupied cell
+  if (g0.n_nonzero == 0) {
+    stop("initial_points has no occupied cells. "
+           "Check that occurrence coordinates fall within the model extent.");
+  }
+  // ────────────────────────────────────────────────────────────────────────────
 
   // Binary suitability
   vec binary_suit(n, fill::zeros);
@@ -147,6 +193,7 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
     for (int i = 0; i < bar_width; i++) Rprintf(" ");
     Rprintf("]\r[");
   }
+
   // Main simulation loop
   sp_mat g0_next;
   for (int step = 1; step <= nsteps; ++step) {
@@ -155,27 +202,30 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
     g0_next = g0;
 
     if (stochastic_dispersal) {
-      // Generate random numbers in bulk
-      vec rand_values(n, fill::randu);
       const uvec& occ_locs = find(g0 > 0);
       const uword n_occ = occ_locs.n_elem;
 
-      for (uword i = 0; i < n_occ; ++i) {
-        const uword cell = occ_locs(i);
-        if (cell >= neighbors.size()) continue;
-        const std::vector<uword>& cell_neighbors = neighbors[cell];
-        const uword n_nb = cell_neighbors.size();
+      // Only proceed if there are occupied cells
+      if (n_occ > 0) {
+        // Generate random numbers in bulk — safe because n > 0 (validated above)
+        vec rand_values(n, fill::randu);
 
-        for (uword j = 0; j < n_nb; ++j) {
-          const uword nb_index = cell_neighbors[j];
+        for (uword i = 0; i < n_occ; ++i) {
+          const uword cell = occ_locs(i);
+          if (cell >= neighbors.size()) continue;
+          const std::vector<uword>& cell_neighbors = neighbors[cell];
+          const uword n_nb = cell_neighbors.size();
 
-          if (binary_suit(nb_index) < 0.5) continue;
-          const double prob = disp_prop2_suitability ?
-          suit_probs(nb_index) : disper_prop;
+          for (uword j = 0; j < n_nb; ++j) {
+            const uword nb_index = cell_neighbors[j];
 
-          if (rand_values(nb_index) < prob) {
-            // Use rand_values[j] for THIS specific dispersal event
-            g0_next(nb_index, 0) = 1.0;
+            if (binary_suit(nb_index) < 0.5) continue;
+            const double prob = disp_prop2_suitability ?
+            suit_probs(nb_index) : disper_prop;
+
+            if (rand_values(nb_index) < prob) {
+              g0_next(nb_index, 0) = 1.0;
+            }
           }
         }
       }
