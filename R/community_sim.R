@@ -45,6 +45,7 @@
 #' sdm_comm <- bamm::community_sim(en_models = en_models,
 #'                                 ngbs_vect = ngbs_vect,
 #'                                 init_coords = init_coords,
+#'                                 threshold_vec = 0.05,
 #'                                 nsteps = nsteps)
 #'
 #' com_pam <- bamm::csim2pam(sdm_comm,which_steps = seq(1,nsteps))

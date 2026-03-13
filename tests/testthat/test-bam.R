@@ -9,7 +9,7 @@ test_that("model2sparse returns an object of class setA", {
   model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                             package = "bamm")
   model <- raster::raster(model_path)
-  sparse_mod <- bamm::model2sparse(model,threshold=0.1)
+  sparse_mod <- bamm::model2sparse(model,threshold=0.05)
   print(sparse_mod)
   expect_s4_class(sparse_mod, "setA")
 })
@@ -20,7 +20,7 @@ test_that("model2sparse, test if setA matrix is a square matrix", {
   model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                             package = "bamm")
   model <- raster::raster(model_path)
-  sparese_mod <- bamm::model2sparse(model,threshold=0.1)
+  sparese_mod <- bamm::model2sparse(model,threshold=0.05)
   setA_dim <- dim(sparese_mod@sparse_model)
   expect_equal(setA_dim, setA_dim)
 })
@@ -357,7 +357,7 @@ test_that("bam_ssim A simple simultation of predator-prey interaction.
                              periods_suitable=3,
                              nsteps=10))
   ura_sim <- bamm::bam_ssim(sp1=ura, sp2=omp, set_M=set_M,
-                            dispersal_prob = 0.1,
+                            dispersal_prob = 0.05,
                             initial_points=initial_points,
                             periods_toxic=2,
                             periods_suitable=3,
@@ -423,7 +423,7 @@ test_that("community_sim simulates community dynamics and returns an
   enm_path <- list.files(lagos_path,
                          pattern = ".tif",
                          full.names = TRUE)[1:5]
-  en_models <- raster::stack(enm_path) >0.1
+  en_models <- raster::stack(enm_path) >0.05
   ngbs_vect <- sample(1:2,replace = TRUE,
                       size = raster::nlayers(en_models))
   init_coords <- read.csv(file.path(lagos_path,
@@ -433,17 +433,17 @@ test_that("community_sim simulates community dynamics and returns an
                                   ngbs_vect = ngbs_vect,
                                   init_coords = init_coords[1:5,],
                                   nsteps = nsteps,
-                                  threshold = 0.1)
+                                  threshold = 0.05)
   expect_error(bamm::community_sim(en_models = enm_path,
                                    ngbs_vect = 1,
                                    init_coords = init_coords[1:5,],
                                    nsteps = nsteps,
-                                   threshold = 0.1))
+                                   threshold = 0.05))
   expect_error(bamm::community_sim(en_models = enm_path,
                                    ngbs_vect = ngbs_vect,
                                    init_coords = init_coords[c(-1,2,3,4,5),],
                                    nsteps = nsteps,
-                                   threshold = 0.1))
+                                   threshold = 0.05))
   expect_s4_class(sdm_comm,"community_sim")
 
   # Tests for pam2richness function
@@ -571,8 +571,8 @@ test_that("jaccard returns a data.frame", {
                          package = "bamm")
   m1 <- raster::raster(m1_path) > 0.01
   m2 <- raster::raster(m2_path) >0.01
-  m1s <- bamm::model2sparse(m1,threshold = 0.1)
-  m2s <- bamm::model2sparse(m2,threshold = 0.1)
+  m1s <- bamm::model2sparse(m1,threshold = 0.05)
+  m2s <- bamm::model2sparse(m2,threshold = 0.05)
   jcc <- bamm::jaccard(m1,m2)
   jccs <- bamm::jaccard(m1s,m2s)
   expect_error(bamm::jaccard("m1",m2))
@@ -672,7 +672,7 @@ test_that("predict retuns a prediction",{
                             package = "bamm")
   model <- raster::raster(model_path)
   # Convert model to sparse
-  sparse_mod <- bamm::model2sparse(model = model,0.1)
+  sparse_mod <- bamm::model2sparse(model = model,0.05)
   # Compute adjacency matrix
   adj_mod <- bamm::adj_mat(sparse_mod,ngbs=1)
 
@@ -769,7 +769,7 @@ testthat::test_that("sim2Animation",{
   model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                             package = "bamm")
   model <- raster::raster(model_path)
-  sparse_mod <- bamm::model2sparse(model,0.1)
+  sparse_mod <- bamm::model2sparse(model,0.05)
   adj_mod <- bamm::adj_mat(sparse_mod,ngbs=2)
   occs_lep_cal <- data.frame(longitude = c(-115.10417,
                                            -104.90417),
