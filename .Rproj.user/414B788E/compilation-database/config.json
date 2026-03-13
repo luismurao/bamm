@@ -4,7 +4,7 @@
         "-I/usr/share/R/include",
         "-DNDEBUG",
         "-fpic",
-        "-ffile-prefix-map=/build/r-base-0RQCNp/r-base-4.5.1=.",
+        "-ffile-prefix-map=/build/r-base-xupQTd/r-base-4.5.2=.",
         "-fstack-protector-strong",
         "-D_FORTIFY_SOURCE=2",
         "-I/home/luis/R/x86_64-pc-linux-gnu-library/4.5/Rcpp/include",
@@ -21,8 +21,8 @@
     ],
     "pch": "RcppArmadillo",
     "is_cpp": true,
-    "hash": "1752285081",
-    "compiler": "3842177633958818519",
-    "rversion": "4.5.1",
+    "hash": "1773422554",
+    "compiler": "5138688679841221398",
+    "rversion": "4.5.2",
     "dbversion": 4
 }

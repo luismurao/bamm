@@ -21,22 +21,28 @@ sp_mat safe_spmat_conversion(SEXP mat) {
   const uword n_cols = (uword)dims[1];
   const uword nnz    = (uword)x_vec.size();
 
+  // Retorno limpio para matrices vacías — sin crear vectores de tamaño 0
   if (n_rows == 0 || n_cols == 0 || nnz == 0) {
     return sp_mat(n_rows, n_cols);
   }
 
-  umat locations(2, nnz);
-  vec  values(nnz);
+  // Construcción por batch insert — segura bajo UBSAN
+  arma::urowvec row_idx(nnz);
+  arma::urowvec col_idx(nnz);
+  arma::vec     values(nnz);
 
-  uword idx = 0;
+  uword k = 0;
   for (int col = 0; col < (int)n_cols; col++) {
-    for (int j = p_vec[col]; j < p_vec[col + 1]; j++) {
-      locations(0, idx) = (uword)i_vec[j];
-      locations(1, idx) = (uword)col;
-      values(idx)       = x_vec[j];
-      idx++;
+    for (int j = p_vec[col]; j < p_vec[col + 1]; j++, k++) {
+      row_idx(k) = (uword)i_vec[j];
+      col_idx(k) = (uword)col;
+      values(k)  = x_vec[j];
     }
   }
+
+  arma::umat locations(2, nnz);
+  locations.row(0) = row_idx;
+  locations.row(1) = col_idx;
 
   return sp_mat(locations, values, n_rows, n_cols);
 }
