@@ -288,7 +288,7 @@ test_that("sdm_sim returns an object of class bam with results from simulation"
   sdm_lep_cal <- bamm::sdm_sim(set_A = sparse_mod,
                                set_M = adj_mod,
                                initial_points = occs_sparse,
-                               nsteps = 10,
+                               nsteps = 1000,
                                stochastic_dispersal = TRUE,
                                disp_prop2_suitability=TRUE,
                                disper_prop=0.5,

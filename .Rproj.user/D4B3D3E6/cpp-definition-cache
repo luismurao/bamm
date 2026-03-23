@@ -275,7 +275,7 @@
     },
     {
         "file": "/Users/luis.osorio/Dropbox/bam_sep/bamm_cpp/bamm/src/sdm_sim.cpp",
-        "file_last_write": 1773430130.0,
+        "file_last_write": 1774297642.0,
         "definitions": [
             {
                 "usr": "c:sdm_sim.cpp@8@macro@ARMA_64BIT_WORD",
@@ -288,12 +288,32 @@
                 "hidden": false
             },
             {
-                "usr": "c:@F@safe_spmat_mult#&1$@N@arma@S@SpMat>#d#S0_#",
+                "usr": "c:@F@is_valid_sparse_matrix#&1$@N@arma@S@SpMat>#d#",
                 "kind": 6,
                 "parent_name": "",
-                "name": "safe_spmat_mult(const sp_mat &, const sp_mat &)",
+                "name": "is_valid_sparse_matrix(const sp_mat &)",
                 "file": "/Users/luis.osorio/Dropbox/bam_sep/bamm_cpp/bamm/src/sdm_sim.cpp",
                 "line": 13,
+                "column": 6,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@safe_spmat_conversion#*$@S@SEXPREC#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "safe_spmat_conversion(SEXP)",
+                "file": "/Users/luis.osorio/Dropbox/bam_sep/bamm_cpp/bamm/src/sdm_sim.cpp",
+                "line": 18,
+                "column": 8,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@safe_matrix_multiply#&1$@N@arma@S@SpMat>#d#S0_#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "safe_matrix_multiply(const sp_mat &, const sp_mat &)",
+                "file": "/Users/luis.osorio/Dropbox/bam_sep/bamm_cpp/bamm/src/sdm_sim.cpp",
+                "line": 134,
                 "column": 8,
                 "hidden": false
             },
@@ -303,7 +323,7 @@
                 "parent_name": "",
                 "name": "sdm_sim_rcpp(SEXP, SEXP, SEXP, const Rcpp::NumericVector &, const Rcpp::List &, int, bool, bool, double, bool)",
                 "file": "/Users/luis.osorio/Dropbox/bam_sep/bamm_cpp/bamm/src/sdm_sim.cpp",
-                "line": 30,
+                "line": 155,
                 "column": 6,
                 "hidden": false
             }
