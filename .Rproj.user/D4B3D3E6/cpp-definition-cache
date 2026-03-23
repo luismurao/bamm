@@ -275,7 +275,7 @@
     },
     {
         "file": "/Users/luis.osorio/Dropbox/bam_sep/bamm_cpp/bamm/src/sdm_sim.cpp",
-        "file_last_write": 1771278883.0,
+        "file_last_write": 1773430130.0,
         "definitions": [
             {
                 "usr": "c:sdm_sim.cpp@8@macro@ARMA_64BIT_WORD",
@@ -288,32 +288,12 @@
                 "hidden": false
             },
             {
-                "usr": "c:@S@NeighborCache",
-                "kind": 3,
-                "parent_name": "",
-                "name": "NeighborCache",
-                "file": "/Users/luis.osorio/Dropbox/bam_sep/bamm_cpp/bamm/src/sdm_sim.cpp",
-                "line": 12,
-                "column": 8,
-                "hidden": false
-            },
-            {
                 "usr": "c:@F@safe_spmat_mult#&1$@N@arma@S@SpMat>#d#S0_#",
                 "kind": 6,
                 "parent_name": "",
                 "name": "safe_spmat_mult(const sp_mat &, const sp_mat &)",
                 "file": "/Users/luis.osorio/Dropbox/bam_sep/bamm_cpp/bamm/src/sdm_sim.cpp",
-                "line": 18,
-                "column": 8,
-                "hidden": false
-            },
-            {
-                "usr": "c:@F@safe_spmat_conversion#*$@S@SEXPREC#",
-                "kind": 6,
-                "parent_name": "",
-                "name": "safe_spmat_conversion(SEXP)",
-                "file": "/Users/luis.osorio/Dropbox/bam_sep/bamm_cpp/bamm/src/sdm_sim.cpp",
-                "line": 38,
+                "line": 13,
                 "column": 8,
                 "hidden": false
             },
@@ -323,7 +303,7 @@
                 "parent_name": "",
                 "name": "sdm_sim_rcpp(SEXP, SEXP, SEXP, const Rcpp::NumericVector &, const Rcpp::List &, int, bool, bool, double, bool)",
                 "file": "/Users/luis.osorio/Dropbox/bam_sep/bamm_cpp/bamm/src/sdm_sim.cpp",
-                "line": 69,
+                "line": 30,
                 "column": 6,
                 "hidden": false
             }

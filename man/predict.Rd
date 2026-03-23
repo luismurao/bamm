@@ -88,7 +88,7 @@ model_path <- system.file("extdata/Lepus_californicus_cont.tif",
                           package = "bamm")
 model <- raster::raster(model_path)
 # Convert model to sparse
-sparse_mod <- bamm::model2sparse(model = model,threshold=0.1)
+sparse_mod <- bamm::model2sparse(model = model,threshold=0.05)
 # Compute adjacency matrix
 adj_mod <- bamm::adj_mat(sparse_mod,ngbs=1)
 
