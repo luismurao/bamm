@@ -11,40 +11,86 @@ using namespace arma;
 
 // ── Conversión segura de dgCMatrix → arma::sp_mat ───────────────────────────
 sp_mat safe_spmat_conversion(SEXP mat) {
-  S4 dgC(mat);
-  IntegerVector dims  = dgC.slot("Dim");
-  IntegerVector i_vec = dgC.slot("i");
-  IntegerVector p_vec = dgC.slot("p");
-  NumericVector x_vec = dgC.slot("x");
+  try {
+    S4 dgC(mat);
+    IntegerVector dims  = dgC.slot("Dim");
+    IntegerVector i_vec = dgC.slot("i");
+    IntegerVector p_vec = dgC.slot("p");
+    NumericVector x_vec = dgC.slot("x");
 
-  const uword n_rows = (uword)dims[0];
-  const uword n_cols = (uword)dims[1];
-  const uword nnz    = (uword)x_vec.size();
+    const uword n_rows = (uword)dims[0];
+    const uword n_cols = (uword)dims[1];
+    const uword nnz    = (uword)x_vec.size();
 
-  // Retorno limpio para matrices vacías — sin crear vectores de tamaño 0
-  if (n_rows == 0 || n_cols == 0 || nnz == 0) {
-    return sp_mat(n_rows, n_cols);
-  }
-
-  // Construcción por batch insert — segura bajo UBSAN
-  arma::urowvec row_idx(nnz);
-  arma::urowvec col_idx(nnz);
-  arma::vec     values(nnz);
-
-  uword k = 0;
-  for (int col = 0; col < (int)n_cols; col++) {
-    for (int j = p_vec[col]; j < p_vec[col + 1]; j++, k++) {
-      row_idx(k) = (uword)i_vec[j];
-      col_idx(k) = (uword)col;
-      values(k)  = x_vec[j];
+    // Retorno para matrices vacías
+    if (n_rows == 0 || n_cols == 0) {
+      return sp_mat(0, 0);
     }
+
+    if (nnz == 0) {
+      return sp_mat(n_rows, n_cols);
+    }
+
+    // Validar tamaños
+    if (p_vec.size() != (size_t)n_cols + 1) {
+      Rcpp::warning("p_vec size mismatch: expected %llu, got %llu",
+                    (unsigned long long)n_cols + 1,
+                    (unsigned long long)p_vec.size());
+      return sp_mat(n_rows, n_cols);
+    }
+
+    // Construcción por batch insert — segura bajo UBSAN
+    arma::urowvec row_idx(nnz);
+    arma::urowvec col_idx(nnz);
+    arma::vec     values(nnz);
+
+    uword k = 0;
+    const int n_cols_int = (int)n_cols;
+
+    for (int col = 0; col < n_cols_int; col++) {
+      int start = p_vec[col];
+      int end = (col + 1 < n_cols_int) ? p_vec[col + 1] : (int)n_cols;
+
+      // Validar límites
+      if (start < 0 || end > (int)i_vec.size()) {
+        Rcpp::warning("Invalid index range at column %d: [%d, %d)", col, start, end);
+        continue;
+      }
+
+      for (int j = start; j < end && k < nnz; j++, k++) {
+        int row_idx_val = i_vec[j];
+        if (row_idx_val < 0 || row_idx_val >= (int)n_rows) {
+          Rcpp::warning("Row index %d out of range at column %d", row_idx_val, col);
+          continue;
+        }
+
+        row_idx(k) = (uword)row_idx_val;
+        col_idx(k) = (uword)col;
+        values(k)  = x_vec[j];
+      }
+    }
+
+    if (k == 0) {
+      return sp_mat(n_rows, n_cols);
+    }
+
+    // Redimensionar si no se usaron todos los elementos
+    if (k < nnz) {
+      row_idx.resize(k);
+      col_idx.resize(k);
+      values.resize(k);
+    }
+
+    arma::umat locations(2, k);
+    locations.row(0) = row_idx;
+    locations.row(1) = col_idx;
+
+    return sp_mat(locations, values, n_rows, n_cols);
+
+  } catch (std::exception& e) {
+    Rcpp::stop("Error in sparse matrix conversion: %s", e.what());
   }
-
-  arma::umat locations(2, nnz);
-  locations.row(0) = row_idx;
-  locations.row(1) = col_idx;
-
-  return sp_mat(locations, values, n_rows, n_cols);
+  return sp_mat(0, 0);
 }
 
 // [[Rcpp::export]]
@@ -132,7 +178,17 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
   for (R_xlen_t i = 0; i < adj_list.size(); i++) {
     if (adj_list[i] == R_NilValue) continue;
 
-    int src_cell_1based = std::stoi(as<std::string>(list_names[i]));
+    // Validar que el nombre existe y es convertible
+    if (i >= list_names.size()) continue;
+
+    std::string name = as<std::string>(list_names[i]);
+    int src_cell_1based;
+    try {
+      src_cell_1based = std::stoi(name);
+    } catch (...) {
+      continue;
+    }
+
     uword src_cell = static_cast<uword>(src_cell_1based - 1);
     if (src_cell >= n) continue;
 
@@ -140,12 +196,18 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
     if (!df.containsElementNamed("ToNonNaCell")) continue;
 
     NumericVector to_non_na = df["ToNonNaCell"];
-    neighbors[src_cell].reserve(to_non_na.size());
 
-    for (R_xlen_t j = 0; j < to_non_na.size(); j++) {
-      uword nb_index = static_cast<uword>(to_non_na[j] - 1);
-      if (nb_index < n) {
-        neighbors[src_cell].push_back(nb_index);
+    if (to_non_na.size() > 0) {
+      neighbors[src_cell].reserve(to_non_na.size());
+
+      for (R_xlen_t j = 0; j < to_non_na.size(); j++) {
+        double nb_val = to_non_na[j];
+        if (NumericVector::is_na(nb_val)) continue;
+
+        uword nb_index = static_cast<uword>(nb_val - 1);
+        if (nb_index < n) {
+          neighbors[src_cell].push_back(nb_index);
+        }
       }
     }
   }
@@ -157,6 +219,10 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
   // Setup determinístico
   sp_mat AMA_base;
   if (!stochastic_dispersal) {
+    // Validar que las multiplicaciones son posibles
+    if (A_mat.n_cols != M_mat.n_rows || M_mat.n_cols != A_mat.n_rows) {
+      Rf_error("Matrix dimensions incompatible for AMA multiplication");
+    }
     AMA_base = A_mat * M_mat * A_mat;
   }
 
@@ -181,7 +247,7 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
       const uword n_occ = occ_locs.n_elem;
 
       if (n_occ > 0) {
-        vec rand_values(n, fill::randu);
+        vec rand_values = randu<vec>(n);
 
         for (uword i = 0; i < n_occ; ++i) {
           const uword cell = occ_locs(i);
@@ -193,12 +259,18 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
           for (uword j = 0; j < n_nb; ++j) {
             const uword nb_index = cell_neighbors[j];
 
+            // Validar que nb_index está en rango
+            if (nb_index >= n) continue;
+
+            // Verificar suitability
             if (binary_suit(nb_index) < 0.5) continue;
 
             const double prob = disp_prop2_suitability ?
             suit_probs(nb_index) : disper_prop;
 
-            if (rand_values(nb_index) < prob) {
+            // Verificar que prob es válida
+            if (prob <= 0.0) continue;
+            if (prob >= 1.0 || rand_values(nb_index) < prob) {
               g0_next(nb_index, 0) = 1.0;
             }
           }
@@ -207,8 +279,14 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
 
     } else {
       // Dispersal determinístico
-      g0_next = AMA_base * g0 + g0;
-      g0_next.transform([](double val) { return val > 0 ? 1.0 : 0.0; });
+      sp_mat temp = AMA_base * g0;
+      g0_next = temp + g0;
+      // Transformación segura
+      for (uword i = 0; i < g0_next.n_rows; ++i) {
+        if (g0_next(i, 0) > 0) {
+          g0_next(i, 0) = 1.0;
+        }
+      }
     }
 
     g0 = g0_next;
@@ -217,6 +295,7 @@ List sdm_sim_rcpp(SEXP A, SEXP M_orig, SEXP g0_input,
     // Actualización barra de progreso
     if (progress_bar && (step % progress_interval == 0 || step == nsteps)) {
       int pos = static_cast<int>(bar_width * static_cast<double>(step) / nsteps);
+      if (pos > bar_width) pos = bar_width;
       Rprintf("\r[");
       for (int i = 0; i < pos; i++) Rprintf("=");
       if (pos < bar_width) Rprintf(">");
