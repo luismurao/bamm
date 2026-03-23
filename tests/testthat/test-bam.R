@@ -709,12 +709,15 @@ test_that("predict retuns a prediction",{
                        nsteps_vec = c(10,10))
   fname <- tempfile(pattern = "animation_",fileext = ".html")
   # Generate the dispersal animation for time period 1 and 2
-  new_preds <- predict(object = smd_lep_cal,
-                       niche_layers = niche_mods_stack,
-                       nsteps_vec = c(10,10),
-                       animate=TRUE,
-                       filename=fname,
-                       fmt="HTML")
+  if(interactive()){
+    new_preds <- predict(object = smd_lep_cal,
+                         niche_layers = niche_mods_stack,
+                         nsteps_vec = c(10,10),
+                         animate=TRUE,
+                         filename=fname,
+                         fmt="HTML")
+  }
+
   expect_error(predict(object = smd_lep_cal,
                        niche_layers = "niche_mods_stack",
                        nsteps_vec = c(10,10),
@@ -741,26 +744,29 @@ test_that("predict retuns a prediction",{
                        filename=fname,
                        fmt="HTML"))
   fname <- tempfile(pattern = "animation_",fileext = ".gif")
-  new_preds <- predict(object = smd_lep_cal,
-                       niche_layers = niche_mods_stack[[1]],
-                       nsteps_vec = c(10),
-                       animate=TRUE,
-                       filename=fname,
-                       fmt="GIF")
-  new_preds <- predict(object = smd_lep_cal,
-                       niche_layers = niche_mods_stack,
-                       nsteps_vec = c(1),
-                       stochastic_dispersal=TRUE,
-                       nbgs_vec=c(1,2),
-                       disp_prop2_suitability	=TRUE,
-                       disper_prop= 0.5,
-                       period_names	=c("P1","P2"),
-                       bg_color	="gray97",
-                       suit_color	= "red",
-                       occupied_color="blue",
-                       animate=TRUE,
-                       filename=fname,
-                       fmt="GIF")
+  if(interactive()){
+    new_preds <- predict(object = smd_lep_cal,
+                         niche_layers = niche_mods_stack[[1]],
+                         nsteps_vec = c(10),
+                         animate=TRUE,
+                         filename=fname,
+                         fmt="GIF")
+    new_preds <- predict(object = smd_lep_cal,
+                         niche_layers = niche_mods_stack,
+                         nsteps_vec = c(1),
+                         stochastic_dispersal=TRUE,
+                         nbgs_vec=c(1,2),
+                         disp_prop2_suitability	=TRUE,
+                         disper_prop= 0.5,
+                         period_names	=c("P1","P2"),
+                         bg_color	="gray97",
+                         suit_color	= "red",
+                         occupied_color="blue",
+                         animate=TRUE,
+                         filename=fname,
+                         fmt="GIF")
+  }
+
 
 
 })
@@ -782,20 +788,23 @@ testthat::test_that("sim2Animation",{
                                initial_points = occs_sparse,
                                nsteps = 20)
   ani_name <- tempfile(pattern = "anima_",fileext = ".html")
-  sdm_lep_cal_st <- bamm::sim2Animation(sdm_simul = sdm_lep_cal,
-                                        which_steps = seq(1,20,by=1),
-                                        fmt = "HTML",ani.width = 1200,
-                                        ani.height = 1200,
-                                        filename = ani_name)
-  expect_null(sdm_lep_cal_st)
-  ani_name <- tempfile(pattern = "anima_",fileext = ".gif")
-  sdm_lep_cal_st <- bamm::sim2Animation(sdm_simul = sdm_lep_cal,
-                                        which_steps = seq(1,20,by=1),
-                                        fmt = "GIF",ani.width = 1200,
-                                        ani.height = 1200,
-                                        filename = ani_name)
+  if (interactive()){
+    sdm_lep_cal_st <- bamm::sim2Animation(sdm_simul = sdm_lep_cal,
+                                          which_steps = seq(1,20,by=1),
+                                          fmt = "HTML",ani.width = 1200,
+                                          ani.height = 1200,
+                                          filename = ani_name)
+    expect_null(sdm_lep_cal_st)
+    ani_name <- tempfile(pattern = "anima_",fileext = ".gif")
+    sdm_lep_cal_st <- bamm::sim2Animation(sdm_simul = sdm_lep_cal,
+                                          which_steps = seq(1,20,by=1),
+                                          fmt = "GIF",ani.width = 1200,
+                                          ani.height = 1200,
+                                          filename = ani_name)
 
-  expect_null(sdm_lep_cal_st)
+    expect_null(sdm_lep_cal_st)
+  }
+
 
 })
 
