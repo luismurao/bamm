@@ -29,10 +29,10 @@ sp_mat safe_spmat_conversion(SEXP mat) {
     return sp_mat(n_rows, n_cols);
   }
 
-  // std::vector inicializa con sus propios allocators — no usa fill_zeros
-  std::vector<uword>  row_ind(nnz);
-  std::vector<uword>  col_ptr(n_cols + 1);
-  std::vector<double> vals(nnz);
+  // Construir directamente usando arma::Col (más eficiente)
+  arma::Col<uword> row_ind(nnz);
+  arma::Col<uword> col_ptr(n_cols + 1);
+  arma::Col<double> vals(nnz);
 
   for (uword k = 0; k < nnz; k++) {
     row_ind[k] = (uword)i_vec[k];
@@ -42,14 +42,8 @@ sp_mat safe_spmat_conversion(SEXP mat) {
     col_ptr[k] = (uword)p_vec[k];
   }
 
-  // Constructor con punteros externos: copia los datos sin llamar fill_zeros
-  arma::uvec arma_rowind(row_ind.data(), nnz,         true);
-  arma::uvec arma_colptr(col_ptr.data(), n_cols + 1,  true);
-  arma::vec  arma_vals  (vals.data(),    nnz,          true);
-
-  return sp_mat(arma_rowind, arma_colptr, arma_vals, n_rows, n_cols);
+  return sp_mat(row_ind, col_ptr, vals, n_rows, n_cols);
 }
-
 // ── Verificación de matriz sparse válida ─────────────────────────────────────
 bool is_valid_sparse_matrix(const sp_mat& mat) {
   return mat.n_rows > 0 && mat.n_cols > 0 &&
