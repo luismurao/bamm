@@ -29,7 +29,7 @@ sp_mat safe_spmat_conversion(SEXP mat) {
     return sp_mat(n_rows, n_cols);
   }
 
-  // Construir directamente usando arma::Col (más eficiente)
+  // Usar arma::Col en lugar de std::vector para evitar doble gestión
   arma::Col<uword> row_ind(nnz);
   arma::Col<uword> col_ptr(n_cols + 1);
   arma::Col<double> vals(nnz);
@@ -42,6 +42,7 @@ sp_mat safe_spmat_conversion(SEXP mat) {
     col_ptr[k] = (uword)p_vec[k];
   }
 
+  // Ahora Armadillo es el único propietario de la memoria
   return sp_mat(row_ind, col_ptr, vals, n_rows, n_cols);
 }
 // ── Verificación de matriz sparse válida ─────────────────────────────────────
