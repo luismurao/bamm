@@ -16,6 +16,10 @@ sp_mat safe_spmat_conversion(SEXP mat) {
   if (Rf_isNull(mat)) return sp_mat(0, 0);
 
   S4 dgC(mat);
+  if (!dgC.hasSlot("Dim") || !dgC.hasSlot("i") || !dgC.hasSlot("p") || !dgC.hasSlot("x")) {
+    Rf_error("Object is not a valid dgCMatrix (missing required slots)");
+  }
+
   IntegerVector dims  = dgC.slot("Dim");
   IntegerVector i_vec = dgC.slot("i");
   IntegerVector p_vec = dgC.slot("p");
@@ -25,11 +29,21 @@ sp_mat safe_spmat_conversion(SEXP mat) {
   const uword n_cols = (uword)dims[1];
   const uword nnz    = (uword)x_vec.size();
 
-  if (n_rows == 0 || n_cols == 0 || nnz == 0) {
+  // Validación de integridad básica de CSC
+  if (p_vec.size() != (R_xlen_t)(n_cols + 1)) {
+    Rf_error("Invalid dgCMatrix: length of 'p' (%lld) must equal ncol+1 (%llu)",
+             (long long)p_vec.size(), (unsigned long long)(n_cols + 1));
+  }
+  if (i_vec.size() != (R_xlen_t)nnz) {
+    Rf_error("Invalid dgCMatrix: length of 'i' (%lld) must equal length of 'x' (%llu)",
+             (long long)i_vec.size(), (unsigned long long)nnz);
+  }
+
+  // Si no hay elementos no nulos, devolvemos una matriz vacía directamente
+  if (nnz == 0) {
     return sp_mat(n_rows, n_cols);
   }
 
-  // Usar arma::Col en lugar de std::vector para evitar doble gestión
   arma::Col<uword> row_ind(nnz);
   arma::Col<uword> col_ptr(n_cols + 1);
   arma::Col<double> vals(nnz);
@@ -42,7 +56,6 @@ sp_mat safe_spmat_conversion(SEXP mat) {
     col_ptr[k] = (uword)p_vec[k];
   }
 
-  // Ahora Armadillo es el único propietario de la memoria
   return sp_mat(row_ind, col_ptr, vals, n_rows, n_cols);
 }
 // ── Verificación de matriz sparse válida ─────────────────────────────────────
